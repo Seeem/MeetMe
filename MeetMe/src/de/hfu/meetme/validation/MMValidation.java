@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.hfu.meetme.utilities;
+package de.hfu.meetme.validation;
 
 /**
  * @author Simeon Sembach
@@ -20,7 +20,7 @@ public class MMValidation
 
 	// Class-Members:
 	
-	private static String EMPTYMESSAGE = "";
+	private static final String EMPTYMESSAGE = "";
  	
 	// Constructors:
 	
@@ -60,7 +60,7 @@ public class MMValidation
 	// MM-API
 	
 	/** */
-	public void ifAbsent() throws IllegalArgumentException
+	public void generateExceptionIfNotValid() throws IllegalArgumentException
 	{
 		if (!isValid())
 			throw new IllegalArgumentException(getMessage());

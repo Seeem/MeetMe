@@ -2,8 +2,7 @@ package de.hfu.meetme.model;
 
 import java.util.Date;
 
-import de.hfu.meetme.utilities.MMValidation;
-import de.hfu.meetme.utilities.MMValidationUtil;
+import de.hfu.meetme.validation.MMValidationUser;
 
 /**
  * 
@@ -64,7 +63,7 @@ public class MMUser
 	 */
 	public void setNickname(String aNickName)
 	{
-		MMValidationUtil.isValidNickName(aNickName).ifAbsent();
+		MMValidationUser.isValidNickName(aNickName).generateExceptionIfNotValid();
 		
 		this.nickName = aNickName;
 	}
@@ -93,7 +92,6 @@ public class MMUser
 		return lastName;
 	}
 	
-
 	/**
 	 * @param aLastName the lastName to set
 	 */
@@ -102,7 +100,6 @@ public class MMUser
 		this.lastName = aLastName;
 	}
 
-	
 	/**
 	 * @return the birthday
 	 */
