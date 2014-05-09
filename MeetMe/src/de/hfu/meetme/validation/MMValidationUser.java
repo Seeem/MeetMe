@@ -12,78 +12,99 @@ public final class MMValidationUser
 
 	// Class-Members:
 	
-	/** */
-	public static final int MINIMUM_LENGHT_OF_A_NICKNAME = 3;
+	/** The minimum String-lenght of a nickname */
+	private static final int MINIMUM_LENGHT_OF_A_NICKNAME = 3;
 	
-	/** */
-	public static final int MAXIMUM_LENGHT_OF_A_NICKNAME = 6;
+	/** The maximum String-lenght of a nickname */
+	private static final int MAXIMUM_LENGHT_OF_A_NICKNAME = 6;
 	
-	/** */
-	public static final int MINIMUM_LENGHT_OF_A_FIRSTNAME = 1;
+	/** The minimum String-lenght of a first name */
+	private static final int MINIMUM_LENGHT_OF_A_FIRSTNAME = 1;
 	
-	/** */
-	public static final int MAXIMUM_LENGHT_OF_A_FIRSTNAME = 10;
+	/** The maximum String-lenght of a first name */
+	private static final int MAXIMUM_LENGHT_OF_A_FIRSTNAME = 10;
 	
-	/** */
-	public static final int MINIMUM_LENGHT_OF_A_LASTNAME = 1;
+	/** The minimum String-lenght of a last name */
+	private static final int MINIMUM_LENGHT_OF_A_LASTNAME = 1;
 	
-	/** */
-	public static final int MAXIMUM_LENGHT_OF_A_LASTNAME = 10;
+	/** The maximum String-lenght of a last name */
+	private static final int MAXIMUM_LENGHT_OF_A_LASTNAME = 10;
+	
+	/** The minimum String-lenght of a description */
+	private static final int MINIMUM_LENGHT_OF_A_DESCRIPTION = 0;
+	
+	/** The maximum String-lenght of a description */
+	private static final int MAXIMUM_LENGHT_OF_A_DESCRIPTION = 100;
 
-	/** */
-	private static final String STRING_IS_NULL = "String is null";
+	// Internals:
 	
-	/** */
-	private static final String STRING_IS_SMALLER = "String-Size is smaller than ";
-	
-	/** */
-	private static final String STRING_IS_BIGGER = "String-Size is bigger than ";
+	/** 
+	 * Returns a valid MMValidation-Object if the given String is between the given minimum-lenght and maximum-lenght,
+	 * otherwise it returns a not valid MMValidation-Object.
+	 * 
+	 * @param aString The String to validate
+	 * @param aMinimumStringLenght The minimum String-lenght
+	 * @param aMaximumStringLenght The maximum String-lenght
+	 * @return a MMValidation-Object
+	 */
+	private static MMValidation isValidString(String aString, int aMinimumStringLenght, int aMaximumStringLenght)
+	{
+		if (aString == null)
+			return new MMValidation("String is null");
+		
+		if (aString.length() < aMinimumStringLenght)
+			return new MMValidation("String-Lenght is smaller than " + aMinimumStringLenght);
+		
+		if (aString.length() > aMaximumStringLenght)
+			return new MMValidation("String-Lenght is bigger than " + aMaximumStringLenght);
+		
+		return new MMValidation();
+	}
 	
 	// MM-API:
 	
-	/** */
+	/**
+	 * Returns a valid MMValidation-Object if the given nickname-String is correct
+	 * otherwise it returns a not valid MMValidation-Object.
+	 * @param aNickName The nickname to validate 
+	 * @return a MMValidation-Object
+	 */
 	public static MMValidation isValidNickName(String aNickName)
 	{
-		if (aNickName == null)
-			return new MMValidation(STRING_IS_NULL);
-		
-		if (aNickName.length() < MINIMUM_LENGHT_OF_A_NICKNAME)
-			return new MMValidation(STRING_IS_SMALLER+MINIMUM_LENGHT_OF_A_NICKNAME);
-		
-		if (aNickName.length() > MAXIMUM_LENGHT_OF_A_NICKNAME)
-			return new MMValidation(STRING_IS_BIGGER+MAXIMUM_LENGHT_OF_A_NICKNAME);
-		
-		return new MMValidation();
+		return isValidString(aNickName, MINIMUM_LENGHT_OF_A_NICKNAME, MAXIMUM_LENGHT_OF_A_NICKNAME);
 	}
 	
-	/** */
+	/**
+	 * Returns a valid MMValidation-Object if the given first-name-String is correct
+	 * otherwise it returns a not valid MMValidation-Object.
+	 * @param aFirstName The first name to validate
+	 * @return a MMValidation-Object
+	 */
 	public static MMValidation isValidFirstName(String aFirstName)
 	{
-		if (aFirstName == null)
-			return new MMValidation(STRING_IS_NULL);	
-		
-		if (aFirstName.length() < MINIMUM_LENGHT_OF_A_FIRSTNAME)
-			return new MMValidation(STRING_IS_SMALLER+MINIMUM_LENGHT_OF_A_FIRSTNAME);
-		
-		if (aFirstName.length() > MAXIMUM_LENGHT_OF_A_FIRSTNAME)
-			return new MMValidation(STRING_IS_BIGGER+MAXIMUM_LENGHT_OF_A_FIRSTNAME);
-			
-		return new MMValidation();
+		return isValidString(aFirstName, MINIMUM_LENGHT_OF_A_FIRSTNAME, MAXIMUM_LENGHT_OF_A_FIRSTNAME);
 	}
 	
-	/** */
+	/**
+	 * Returns a valid MMValidation-Object if the given last-name-String is correct
+	 * otherwise it returns a not valid MMValidation-Object.
+	 * @param aLastName The last name to validate
+	 * @return a MMValidation-Object
+	 */
 	public static MMValidation isValidLastName(String aLastName)
 	{
-		if (aLastName == null)
-			return new MMValidation(STRING_IS_NULL);
-		
-		if (aLastName.length() < MINIMUM_LENGHT_OF_A_LASTNAME)
-			return new MMValidation(STRING_IS_SMALLER+MINIMUM_LENGHT_OF_A_LASTNAME);
-		
-		if (aLastName.length() > MAXIMUM_LENGHT_OF_A_LASTNAME)
-			return new MMValidation(STRING_IS_BIGGER+MAXIMUM_LENGHT_OF_A_LASTNAME);
-		
-		return new MMValidation();
+		return isValidString(aLastName, MINIMUM_LENGHT_OF_A_LASTNAME, MAXIMUM_LENGHT_OF_A_LASTNAME);
+	}
+	
+	/**
+	 * Returns a valid MMValidation-Object if the given description-String is correct
+	 * otherwise it returns a not valid MMValidation-Object.
+	 * @param aDescription The description-text to validate
+	 * @return a MMValidation-Object
+	 */
+	public static MMValidation isValidDescription(String aDescription)
+	{
+		return isValidString(aDescription, MINIMUM_LENGHT_OF_A_DESCRIPTION, MAXIMUM_LENGHT_OF_A_DESCRIPTION);
 	}
 
 }

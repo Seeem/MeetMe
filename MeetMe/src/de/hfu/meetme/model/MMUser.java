@@ -12,7 +12,7 @@ import de.hfu.meetme.validation.MMValidationUser;
 public class MMUser
 {
 
-	// Members:
+	// Instance-Members:
 	
 	/** The Nickname of an user */
 	private String nickName;
