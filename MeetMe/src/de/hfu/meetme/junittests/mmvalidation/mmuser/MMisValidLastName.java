@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import de.hfu.meetme.validation.MMValidationUser;
+import de.hfu.meetme.validation.MMUserValidation;
 
 /**
  * @author Simeon Sembach
@@ -19,13 +19,13 @@ public class MMisValidLastName
 	// Instance-Members:
 	
 	/** */
-	private String validLastName = new String(new char[MMValidationUser.MINIMUM_LENGHT_OF_A_LASTNAME]);
+	private String validLastName = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_LASTNAME]);
 	
 	/** */
-	private String tooShortLastName = new String(new char[MMValidationUser.MINIMUM_LENGHT_OF_A_LASTNAME-1]);
+	private String tooShortLastName = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_LASTNAME-1]);
 	
 	/** */
-	private String tooLongLastName = new String(new char[MMValidationUser.MAXIMUM_LENGHT_OF_A_LASTNAME+1]);
+	private String tooLongLastName = new String(new char[MMUserValidation.MAXIMUM_LENGHT_OF_A_LASTNAME+1]);
 	
 	/** */
 	private String nullLastName = null;
@@ -39,7 +39,7 @@ public class MMisValidLastName
 		
 		try
 		{
-			MMValidationUser.isValidLastName(validLastName).generateExceptionIfNotValid();
+			MMUserValidation.isValidLastName(validLastName).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
@@ -57,7 +57,7 @@ public class MMisValidLastName
 		
 		try
 		{
-			MMValidationUser.isValidLastName(nullLastName).generateExceptionIfNotValid();
+			MMUserValidation.isValidLastName(nullLastName).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
@@ -75,7 +75,7 @@ public class MMisValidLastName
 		
 		try
 		{
-			MMValidationUser.isValidLastName(tooShortLastName).generateExceptionIfNotValid();
+			MMUserValidation.isValidLastName(tooShortLastName).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
@@ -93,7 +93,7 @@ public class MMisValidLastName
 		
 		try
 		{
-			MMValidationUser.isValidLastName(tooLongLastName).generateExceptionIfNotValid();
+			MMUserValidation.isValidLastName(tooLongLastName).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{

@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import de.hfu.meetme.validation.MMValidationUser;
+import de.hfu.meetme.validation.MMUserValidation;
 
 /**
  * @author Simeon Sembach
@@ -19,13 +19,13 @@ public class MMisValidFirstName
 	// Instance-Members:
 	
 	/** */
-	private String validFirstName = new String(new char[MMValidationUser.MINIMUM_LENGHT_OF_A_FIRSTNAME]);
+	private String validFirstName = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_FIRSTNAME]);
 	
 	/** */
-	private String tooShortFirstName = new String(new char[MMValidationUser.MINIMUM_LENGHT_OF_A_FIRSTNAME-1]);
+	private String tooShortFirstName = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_FIRSTNAME-1]);
 	
 	/** */
-	private String tooLongFirstName = new String(new char[MMValidationUser.MAXIMUM_LENGHT_OF_A_FIRSTNAME+1]);
+	private String tooLongFirstName = new String(new char[MMUserValidation.MAXIMUM_LENGHT_OF_A_FIRSTNAME+1]);
 	
 	/** */
 	private String nullFirstName = null;
@@ -33,13 +33,13 @@ public class MMisValidFirstName
 	// Tests:
 	
 	@Test
-	public void testIsFirstNameIsValid_ShouldPass()
+	public void testFirstNameIsValid_ShouldPass()
 	{
 		boolean isExpected = true;
 		
 		try
 		{
-			MMValidationUser.isValidFirstName(validFirstName).generateExceptionIfNotValid();
+			MMUserValidation.isValidFirstName(validFirstName).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
@@ -57,7 +57,7 @@ public class MMisValidFirstName
 		
 		try
 		{
-			MMValidationUser.isValidFirstName(nullFirstName).generateExceptionIfNotValid();
+			MMUserValidation.isValidFirstName(nullFirstName).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
@@ -75,7 +75,7 @@ public class MMisValidFirstName
 		
 		try
 		{
-			MMValidationUser.isValidFirstName(tooShortFirstName).generateExceptionIfNotValid();
+			MMUserValidation.isValidFirstName(tooShortFirstName).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
@@ -93,7 +93,7 @@ public class MMisValidFirstName
 		
 		try
 		{
-			MMValidationUser.isValidFirstName(tooLongFirstName).generateExceptionIfNotValid();
+			MMUserValidation.isValidFirstName(tooLongFirstName).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{

@@ -4,7 +4,7 @@ package de.hfu.meetme.model;
 
 import java.util.Calendar;
 
-import de.hfu.meetme.validation.MMValidationUser;
+import de.hfu.meetme.validation.MMUserValidation;
 
 /**
  * 
@@ -65,7 +65,7 @@ public class MMUser
 	 */
 	public void setNickname(String aNickname)
 	{
-		MMValidationUser.isValidNickname(aNickname).generateExceptionIfNotValid();
+		MMUserValidation.isValidNickname(aNickname).generateExceptionIfNotValid();
 		
 		this.nickname = aNickname;
 	}
@@ -83,6 +83,8 @@ public class MMUser
 	 */
 	public void setFirstName(String aFirstName)
 	{
+		MMUserValidation.isValidFirstName(aFirstName).generateExceptionIfNotValid();
+		
 		this.firstName = aFirstName;
 	}
 
@@ -99,6 +101,8 @@ public class MMUser
 	 */
 	public void setLastName(String aLastName)
 	{
+		MMUserValidation.isValidLastName(aLastName).generateExceptionIfNotValid();
+		
 		this.lastName = aLastName;
 	}
 
@@ -115,6 +119,8 @@ public class MMUser
 	 */
 	public void setBirthday(Calendar aBirthday)
 	{
+		MMUserValidation.isValidBirthday(aBirthday).generateExceptionIfNotValid();
+		
 		this.birthday = aBirthday;
 	}
 
@@ -131,6 +137,8 @@ public class MMUser
 	 */
 	public void setDescription(String aDescription)
 	{
+		MMUserValidation.isValidDescription(aDescription).generateExceptionIfNotValid();
+		
 		this.description = aDescription;
 	}
 		

@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import de.hfu.meetme.validation.MMValidationUser;
+import de.hfu.meetme.validation.MMUserValidation;
 
 /**
  * @author Simeon Sembach
@@ -19,10 +19,10 @@ public class MMisValidDescription
 	// Instance-Members:
 	
 	/** */
-	private String validDescription = new String(new char[MMValidationUser.MINIMUM_LENGHT_OF_A_DESCRIPTION]);
+	private String validDescription = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_DESCRIPTION]);
 	
 	/** */
-	private String tooLongDescription = new String(new char[MMValidationUser.MAXIMUM_LENGHT_OF_A_DESCRIPTION+1]);
+	private String tooLongDescription = new String(new char[MMUserValidation.MAXIMUM_LENGHT_OF_A_DESCRIPTION+1]);
 	
 	/** */
 	private String nullDescription = null;
@@ -36,7 +36,7 @@ public class MMisValidDescription
 		
 		try
 		{
-			MMValidationUser.isValidDescription(validDescription).generateExceptionIfNotValid();
+			MMUserValidation.isValidDescription(validDescription).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
@@ -54,7 +54,7 @@ public class MMisValidDescription
 		
 		try
 		{
-			MMValidationUser.isValidDescription(nullDescription).generateExceptionIfNotValid();
+			MMUserValidation.isValidDescription(nullDescription).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
@@ -72,7 +72,7 @@ public class MMisValidDescription
 		
 		try
 		{
-			MMValidationUser.isValidDescription(tooLongDescription).generateExceptionIfNotValid();
+			MMUserValidation.isValidDescription(tooLongDescription).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{

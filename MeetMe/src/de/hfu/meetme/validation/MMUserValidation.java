@@ -9,7 +9,7 @@ import java.util.Calendar;
  * @author Simeon Sembach
  *
  */
-public final class MMValidationUser
+public final class MMUserValidation
 {
 
 	// Class-Members:

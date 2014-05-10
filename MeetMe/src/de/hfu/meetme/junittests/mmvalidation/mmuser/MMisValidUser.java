@@ -9,26 +9,29 @@ import java.util.Calendar;
 
 import org.junit.Test;
 
-import de.hfu.meetme.validation.MMUserValidation;
+import de.hfu.meetme.model.MMUser;
 
 /**
  * @author Simeon Sembach
  *
  */
-public class MMisValidDate
+public class MMisValidUser
 {
-
-	/** */
-	private Calendar nullBirthday = null;
+	// Tests:
 	
 	@Test
-	public void testBirthdayIsNull_ShouldThrowException()
+	public void testUserIsValid_ShouldPass()
 	{
-		boolean isExpected = false;
+		boolean isExpected = true;
 		
 		try
 		{
-			MMUserValidation.isValidBirthday(nullBirthday).generateExceptionIfNotValid();
+			new MMUser(
+					"Sem",
+					"Simeon",
+					"Sembach",
+					Calendar.getInstance(),
+					"Hi I want to meet you!");
 		} 
 		catch (IllegalArgumentException e)
 		{
@@ -39,5 +42,4 @@ public class MMisValidDate
 		assertTrue(isExpected);
 	}
 	
-
 }
