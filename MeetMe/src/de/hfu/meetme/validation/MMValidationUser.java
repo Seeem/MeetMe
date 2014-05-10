@@ -3,6 +3,8 @@
  */
 package de.hfu.meetme.validation;
 
+import java.util.Calendar;
+
 /**
  * @author Simeon Sembach
  *
@@ -13,38 +15,38 @@ public final class MMValidationUser
 	// Class-Members:
 	
 	/** The minimum String-lenght of a nickname */
-	private static final int MINIMUM_LENGHT_OF_A_NICKNAME = 3;
+	public static final int MINIMUM_LENGHT_OF_A_NICKNAME = 3;
 	
 	/** The maximum String-lenght of a nickname */
-	private static final int MAXIMUM_LENGHT_OF_A_NICKNAME = 6;
+	public static final int MAXIMUM_LENGHT_OF_A_NICKNAME = 6;
 	
 	/** The minimum String-lenght of a first name */
-	private static final int MINIMUM_LENGHT_OF_A_FIRSTNAME = 1;
+	public static final int MINIMUM_LENGHT_OF_A_FIRSTNAME = 1;
 	
 	/** The maximum String-lenght of a first name */
-	private static final int MAXIMUM_LENGHT_OF_A_FIRSTNAME = 10;
+	public static final int MAXIMUM_LENGHT_OF_A_FIRSTNAME = 10;
 	
 	/** The minimum String-lenght of a last name */
-	private static final int MINIMUM_LENGHT_OF_A_LASTNAME = 1;
+	public static final int MINIMUM_LENGHT_OF_A_LASTNAME = 1;
 	
 	/** The maximum String-lenght of a last name */
-	private static final int MAXIMUM_LENGHT_OF_A_LASTNAME = 10;
+	public static final int MAXIMUM_LENGHT_OF_A_LASTNAME = 10;
 	
 	/** The minimum String-lenght of a description */
-	private static final int MINIMUM_LENGHT_OF_A_DESCRIPTION = 0;
+	public static final int MINIMUM_LENGHT_OF_A_DESCRIPTION = 0;
 	
 	/** The maximum String-lenght of a description */
-	private static final int MAXIMUM_LENGHT_OF_A_DESCRIPTION = 100;
-
+	public static final int MAXIMUM_LENGHT_OF_A_DESCRIPTION = 100;
+	
 	// Internals:
 	
 	/** 
 	 * Returns a valid MMValidation-Object if the given String is between the given minimum-lenght and maximum-lenght,
 	 * otherwise it returns a not valid MMValidation-Object.
 	 * 
-	 * @param aString The String to validate
-	 * @param aMinimumStringLenght The minimum String-lenght
-	 * @param aMaximumStringLenght The maximum String-lenght
+	 * @param aString the String to validate
+	 * @param aMinimumStringLenght the minimum String-lenght
+	 * @param aMaximumStringLenght the maximum String-lenght
 	 * @return a MMValidation-Object
 	 */
 	private static MMValidation isValidString(String aString, int aMinimumStringLenght, int aMaximumStringLenght)
@@ -66,18 +68,18 @@ public final class MMValidationUser
 	/**
 	 * Returns a valid MMValidation-Object if the given nickname-String is correct
 	 * otherwise it returns a not valid MMValidation-Object.
-	 * @param aNickName The nickname to validate 
+	 * @param aNickname the nickname to validate 
 	 * @return a MMValidation-Object
 	 */
-	public static MMValidation isValidNickName(String aNickName)
+	public static MMValidation isValidNickname(String aNickname)
 	{
-		return isValidString(aNickName, MINIMUM_LENGHT_OF_A_NICKNAME, MAXIMUM_LENGHT_OF_A_NICKNAME);
+		return isValidString(aNickname, MINIMUM_LENGHT_OF_A_NICKNAME, MAXIMUM_LENGHT_OF_A_NICKNAME);
 	}
 	
 	/**
 	 * Returns a valid MMValidation-Object if the given first-name-String is correct
 	 * otherwise it returns a not valid MMValidation-Object.
-	 * @param aFirstName The first name to validate
+	 * @param aFirstName the first name to validate
 	 * @return a MMValidation-Object
 	 */
 	public static MMValidation isValidFirstName(String aFirstName)
@@ -88,7 +90,7 @@ public final class MMValidationUser
 	/**
 	 * Returns a valid MMValidation-Object if the given last-name-String is correct
 	 * otherwise it returns a not valid MMValidation-Object.
-	 * @param aLastName The last name to validate
+	 * @param aLastName the last name to validate
 	 * @return a MMValidation-Object
 	 */
 	public static MMValidation isValidLastName(String aLastName)
@@ -99,7 +101,7 @@ public final class MMValidationUser
 	/**
 	 * Returns a valid MMValidation-Object if the given description-String is correct
 	 * otherwise it returns a not valid MMValidation-Object.
-	 * @param aDescription The description-text to validate
+	 * @param aDescription the description-text to validate
 	 * @return a MMValidation-Object
 	 */
 	public static MMValidation isValidDescription(String aDescription)
@@ -107,4 +109,22 @@ public final class MMValidationUser
 		return isValidString(aDescription, MINIMUM_LENGHT_OF_A_DESCRIPTION, MAXIMUM_LENGHT_OF_A_DESCRIPTION);
 	}
 
+	/**
+	 * Returns a valid MMValidation-Object if the given date is correct
+	 * otherwise it returns a not valid MMValidation-Object
+	 * @param aBirthday
+	 * @return
+	 */
+	public static MMValidation isValidBirthday(Calendar aBirthday)
+	{
+		if (aBirthday == null)
+			return new MMValidation("Calendar is null");
+		
+		// TODO Geburtsdatum optional? Dann null erlaubt?
+		// TODO User muss mindestens x Jahre alt sein
+		// TODO Datum darf nicht in der Zukunft liegen
+		
+		return new MMValidation();
+	}
+	
 }

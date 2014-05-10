@@ -1,6 +1,8 @@
 package de.hfu.meetme.model;
 
-import java.util.Date;
+
+
+import java.util.Calendar;
 
 import de.hfu.meetme.validation.MMValidationUser;
 
@@ -15,7 +17,7 @@ public class MMUser
 	// Instance-Members:
 	
 	/** The Nickname of an user */
-	private String nickName;
+	private String nickname;
 	
 	/** The first name of an user */
 	private String firstName;
@@ -24,7 +26,7 @@ public class MMUser
 	private String lastName;
 	
 	/** The birthday of an user */
-	private Date birthday;
+	private Calendar birthday;
 	
 	/** The additional description of an user */
 	private String description;
@@ -39,7 +41,7 @@ public class MMUser
 	 * @param aBirthday the birthday to set
 	 * @param aDescription the description to set
 	 */
-	public MMUser(String aNickname, String aFirstName, String aLastName, Date aBirthday, String aDescription)
+	public MMUser(String aNickname, String aFirstName, String aLastName, Calendar aBirthday, String aDescription)
 	{
 		setNickname(aNickname);
 		setFirstName(aFirstName);
@@ -51,21 +53,21 @@ public class MMUser
 	// Accessors:
 	
 	/**
-	 * @return the nickName
+	 * @return the nickname
 	 */
 	public String getNickname()
 	{
-		return nickName;
+		return nickname;
 	}
 
 	/**
-	 * @param aNickName the nickName to set
+	 * @param aNickname the nickname to set
 	 */
-	public void setNickname(String aNickName)
+	public void setNickname(String aNickname)
 	{
-		MMValidationUser.isValidNickName(aNickName).generateExceptionIfNotValid();
+		MMValidationUser.isValidNickname(aNickname).generateExceptionIfNotValid();
 		
-		this.nickName = aNickName;
+		this.nickname = aNickname;
 	}
 
 	/**
@@ -103,7 +105,7 @@ public class MMUser
 	/**
 	 * @return the birthday
 	 */
-	public Date getBirthday()
+	public Calendar getBirthday()
 	{
 		return birthday;
 	}
@@ -111,7 +113,7 @@ public class MMUser
 	/**
 	 * @param aBirthday the birthday to set
 	 */
-	public void setBirthday(Date aBirthday)
+	public void setBirthday(Calendar aBirthday)
 	{
 		this.birthday = aBirthday;
 	}

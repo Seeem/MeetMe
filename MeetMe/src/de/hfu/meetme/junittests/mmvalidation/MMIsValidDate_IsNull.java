@@ -9,13 +9,13 @@ import org.junit.Test;
  * @author Simeon Sembach
  *
  */
-public class MMIsValidNickname_IsTooLong
+public class MMIsValidDate_IsNull
 {
 
 	@Test
 	public void test()
 	{
-		MMTestsSupport.testNotValidNickname(MMTestsSupport.getTooLongNickname());
+		MMTestsSupport.testNotValidBirthday(null);
 	}
 
 }

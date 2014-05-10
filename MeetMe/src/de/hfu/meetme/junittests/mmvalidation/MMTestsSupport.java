@@ -5,6 +5,7 @@ package de.hfu.meetme.junittests.mmvalidation;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import de.hfu.meetme.validation.MMValidationUser;
@@ -19,7 +20,7 @@ public final class MMTestsSupport
 	// Valid Values:
 	
 	/** */
-	public static String getValidNickName()
+	public static String getValidNickname()
 	{
 		return "Sem";
 	}
@@ -51,51 +52,57 @@ public final class MMTestsSupport
 	// Not Valid Values:
 	
 	/** */
-	public static String getTooShortNickName()
+	public static String getTooShortNickname()
 	{
-		return "";
+		return new String(new char[MMValidationUser.MINIMUM_LENGHT_OF_A_NICKNAME-1]);
 	}
 	
 	/** */
-	public static String getTooLongNickName()
+	public static String getTooLongNickname()
 	{
-		return "ThisIsAToLongNickName";
+		return new String(new char[MMValidationUser.MAXIMUM_LENGHT_OF_A_NICKNAME+1]);
 	}
 		
 	/** */
 	public static String getTooShortFirstName()
 	{
-		return "";
+		return new String(new char[MMValidationUser.MINIMUM_LENGHT_OF_A_FIRSTNAME-1]);
 	}
 	
 	/** */
 	public static String getTooLongFirstName()
 	{
-		return "ThisIsAToLongFirstName";
+		return new String(new char[MMValidationUser.MAXIMUM_LENGHT_OF_A_FIRSTNAME+1]);
 	}
 	
 	/** */
 	public static String getTooShortLastName()
 	{
-		return "";
+		return new String(new char[MMValidationUser.MINIMUM_LENGHT_OF_A_LASTNAME-1]);
 	}
 	
 	/** */
 	public static String getTooLongLastName()
 	{
-		return "ThisIsAToLongLastName";
+		return new String(new char[MMValidationUser.MAXIMUM_LENGHT_OF_A_LASTNAME+1]);
+	}
+	
+	/** */
+	public static String getTooLongDescription()
+	{		
+		return new String(new char[MMValidationUser.MAXIMUM_LENGHT_OF_A_DESCRIPTION+1]);
 	}
 	
 	// Tests:
 	
 	/** */
-	public static void testNotValidNickName(String aNotValidNickName)
+	public static void testNotValidNickname(String aNotValidNickname)
 	{
 		boolean isExpected = false;
 		
 		try
 		{
-			MMValidationUser.isValidNickName(aNotValidNickName).generateExceptionIfNotValid();
+			MMValidationUser.isValidNickname(aNotValidNickname).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
@@ -141,5 +148,60 @@ public final class MMTestsSupport
 		
 		assertTrue(isExpected);
 	}
+	
+	/** */
+	public static void testNotValidDescription(String aNotValidDescription)
+	{
+		boolean isExpected = false;
+		
+		try
+		{
+			MMValidationUser.isValidDescription(aNotValidDescription).generateExceptionIfNotValid();
+		} 
+		catch (IllegalArgumentException e)
+		{
+			e.printStackTrace();
+			isExpected = !isExpected;
+		}
+		
+		assertTrue(isExpected);
+	}
+	
+	/** */
+	public static void testValidDescription(String aValidDescription)
+	{
+		boolean isExpected = true;
+		
+		try
+		{
+			MMValidationUser.isValidDescription(aValidDescription).generateExceptionIfNotValid();
+		} 
+		catch (IllegalArgumentException e)
+		{
+			e.printStackTrace();
+			isExpected = !isExpected;
+		}
+		
+		assertTrue(isExpected);
+	}
+	
+	/** */
+	public static void testNotValidBirthday(Calendar aNotValidBirthday)
+	{
+		boolean isExpected = false;
+		
+		try
+		{
+			MMValidationUser.isValidBirthday(aNotValidBirthday).generateExceptionIfNotValid();
+		} 
+		catch (IllegalArgumentException e)
+		{
+			e.printStackTrace();
+			isExpected = !isExpected;
+		}
+		
+		assertTrue(isExpected);
+	}
+	
 	
 }

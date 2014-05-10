@@ -9,13 +9,13 @@ import org.junit.Test;
  * @author Simeon Sembach
  *
  */
-public class MMIsValidNickName_IsNull
+public class MMIsValidNickname_IsNull
 {
 
 	@Test
 	public void test()
 	{
-		MMTestsSupport.testNotValidNickName(null);
+		MMTestsSupport.testNotValidNickname(null);
 	}
 
 }
