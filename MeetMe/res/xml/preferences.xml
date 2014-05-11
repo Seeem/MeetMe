@@ -2,7 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <EditTextPreference
-        android:defaultValue="@string/default_port_broadcast"
         android:inputType="text"
         android:key="user_name"
         android:summary="Set your user name"

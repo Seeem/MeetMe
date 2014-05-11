@@ -40,7 +40,6 @@ public final class R {
         /**  Auto Generated 
          */
         public static final int app_name=0x7f060000;
-        public static final int default_port_broadcast=0x7f060003;
         public static final int hello_world=0x7f060001;
     }
     public static final class style {

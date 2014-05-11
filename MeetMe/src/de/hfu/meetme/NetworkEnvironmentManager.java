@@ -98,8 +98,8 @@ public class NetworkEnvironmentManager extends BroadcastReceiver {
 				userName, //The device name (e.g. Galaxy S5)
 				DeviceType.TYPE_UNKNOWN,  //The device type: laptop, desktop, smartphone...
 				EncryptionType.NONE, //The encryption to use
-				1338, //The port for data transmissions
-				1337, //The port for brodcasts
+				9001, //The port for data transmissions
+				9000, //The port for brodcasts
 				new byte[0] //The password to use
 				);
 		return s;
