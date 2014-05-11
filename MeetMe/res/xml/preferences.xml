@@ -7,8 +7,8 @@
 	    <EditTextPreference
 	        android:inputType="text"
 	        android:key="nickname"
-	        android:title="@string/pref_title_username"
-	        android:summary="@string/pref_summary_username" />
+	        android:title="@string/pref_title_nickname"
+	        android:summary="@string/pref_summary_nickname" />
 	    
 	    <EditTextPreference
 	        android:inputType="text"
