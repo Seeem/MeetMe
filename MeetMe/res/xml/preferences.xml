@@ -4,7 +4,31 @@
     <EditTextPreference
         android:inputType="text"
         android:key="user_name"
-        android:summary="Set your user name"
-        android:title="Username" />
-
+        android:title="@string/pref_title_username"
+        android:summary="@string/pref_summary_username" />
+    
+    <EditTextPreference
+        android:inputType="text"
+		android:key="first_name"
+		android:title="@string/pref_title_firstname"
+        android:summary="@string/pref_summary_firstname" />
+    
+    <EditTextPreference
+        android:inputType="text"
+		android:key="last_name"
+		android:title="@string/pref_title_lastname"
+        android:summary="@string/pref_summary_lastname" />
+    
+    <EditTextPreference
+        android:inputType="date"
+		android:key="date_of_birth"
+		android:title="@string/pref_title_date_of_birth"
+        android:summary="@string/pref_summary_date_of_birth" />
+    
+    <EditTextPreference
+        android:inputType="textMultiLine"
+		android:key="description"
+		android:title="@string/pref_title_description"
+        android:summary="@string/pref_summary_description" />
+    
 </PreferenceScreen>
