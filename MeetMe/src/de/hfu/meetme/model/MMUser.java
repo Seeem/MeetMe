@@ -3,6 +3,8 @@ package de.hfu.meetme.model;
 
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import de.hfu.meetme.validation.MMUserValidation;
 
@@ -15,6 +17,9 @@ public class MMUser
 {
 
 	// Instance-Members:
+	
+	/** The local ID of an user */
+	private String id;
 	
 	/** The Nickname of an user */
 	private String nickname;
@@ -31,7 +36,10 @@ public class MMUser
 	/** The additional description of an user */
 	private String description;
 	
+	// Class-Members:
+	
 	/** */
+	private static HashMap<String, MMUser> users = new HashMap<String,MMUser>();
 	
 	// Constructor:
 	
@@ -52,7 +60,37 @@ public class MMUser
 		setDescription(aDescription);
 	}
 	
-	// Accessors:
+	// MM-API (Class):
+	
+	/** */
+	public static void addUser(MMUser aUser)
+	{
+		// TODO Validation
+		
+		MMUser.getUsers().put(aUser.getId(), aUser);
+	}
+	
+	/** */
+	public static void removeUser(MMUser aUser)
+	{
+		// TODO Validation
+		
+		MMUser.getUsers().remove(aUser.getId());
+	}
+	
+	/** */
+	public static void removeAllUsers()
+	{
+		// According to the documentation, it's more efficient to iterate through the HashMap
+		// instead of removing every single entry based on the associated key
+		for (Iterator<String> theIterator = MMUser.getUsers().keySet().iterator(); theIterator.hasNext();)
+		{
+			theIterator.next();
+			theIterator.remove();
+		}
+	}
+	
+	// Accessors (Instance):
 	
 	/**
 	 * @return the nickname
@@ -143,5 +181,39 @@ public class MMUser
 		
 		this.description = aDescription;
 	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId()
+	{
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id)
+	{
+		// TODO Validation
 		
+		this.id = id;
+	}
+	
+	// Accessors (Class):
+	
+	/** */
+	public static void setUsers(HashMap<String, MMUser> aHashMap)
+	{
+		// TODO Validation
+		
+		users = aHashMap;
+	}
+	
+	/** */
+	public static HashMap<String, MMUser> getUsers()
+	{
+		return users;
+	}
+	
 }
