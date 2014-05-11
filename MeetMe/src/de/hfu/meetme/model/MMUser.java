@@ -216,4 +216,12 @@ public class MMUser
 		return users;
 	}
 	
+	// Print:
+	
+	/** */
+	@Override public String toString()
+	{
+		return "Nickname: " + getNickname();
+	}
+	
 }
