@@ -1,34 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory
+        android:title="@string/pref_category_name">
 
-    <EditTextPreference
-        android:inputType="text"
-        android:key="user_name"
-        android:title="@string/pref_title_username"
-        android:summary="@string/pref_summary_username" />
-    
-    <EditTextPreference
-        android:inputType="text"
-		android:key="first_name"
-		android:title="@string/pref_title_firstname"
-        android:summary="@string/pref_summary_firstname" />
-    
-    <EditTextPreference
-        android:inputType="text"
-		android:key="last_name"
-		android:title="@string/pref_title_lastname"
-        android:summary="@string/pref_summary_lastname" />
-    
-    <EditTextPreference
-        android:inputType="date"
-		android:key="date_of_birth"
-		android:title="@string/pref_title_date_of_birth"
-        android:summary="@string/pref_summary_date_of_birth" />
-    
-    <EditTextPreference
-        android:inputType="textMultiLine"
-		android:key="description"
-		android:title="@string/pref_title_description"
-        android:summary="@string/pref_summary_description" />
+	    <EditTextPreference
+	        android:inputType="text"
+	        android:key="user_name"
+	        android:title="@string/pref_title_username"
+	        android:summary="@string/pref_summary_username" />
+	    
+	    <EditTextPreference
+	        android:inputType="text"
+			android:key="first_name"
+			android:title="@string/pref_title_firstname"
+	        android:summary="@string/pref_summary_firstname" />
+	    
+	    <EditTextPreference
+	        android:inputType="text"
+			android:key="last_name"
+			android:title="@string/pref_title_lastname"
+	        android:summary="@string/pref_summary_lastname" />
+	    
+	    <EditTextPreference
+	        android:inputType="date"
+			android:key="date_of_birth"
+			android:title="@string/pref_title_date_of_birth"
+	        android:summary="@string/pref_summary_date_of_birth" />
+	    
+	    <SwitchPreference 
+	        android:key="gender"
+	        android:summary="@string/pref_summary_gender"
+	        android:title="@string/pref_title_gender"
+	        android:switchTextOn="@string/pref_switchTextOn_gender"
+	        android:switchTextOff="@string/pref_switchTextOff_gender" />
+  		     
+	    <EditTextPreference
+	        android:inputType="textMultiLine"
+			android:key="description"
+			android:title="@string/pref_title_description"
+	        android:summary="@string/pref_summary_description" />
+	  
+   	 </PreferenceCategory>
     
 </PreferenceScreen>
