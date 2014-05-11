@@ -3,6 +3,9 @@
  */
 package de.hfu.meetme.junittests;
 
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -28,6 +31,8 @@ public class MMsendMessage
 	@Test
 	public void testSaveAndReadAValidUser_ShouldPass()
 	{
+		boolean isExpected = true;
+		
 		try
 		{
 			sendUser(new MMUser("Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!"));		
@@ -36,8 +41,15 @@ public class MMsendMessage
 		} 
 		catch (Exception e)
 		{
-			e.printStackTrace();
-		}	
+//			e.printStackTrace();
+			isExpected = !isExpected;
+		}
+		finally
+		{
+			new File("user.tmp").delete();
+		}
+		
+		assertTrue(isExpected);
 	}
 	
 	/** */
