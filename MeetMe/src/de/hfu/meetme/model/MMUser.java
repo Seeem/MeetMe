@@ -30,7 +30,9 @@ public class MMUser
 	
 	/** The additional description of an user */
 	private String description;
-
+	
+	/** */
+	
 	// Constructor:
 	
 	/**
