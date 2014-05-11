@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.hfu.meetme.junittests.mmvalidation.mmuser;
+package de.hfu.meetme.junittests;
 
 import static org.junit.Assert.*;
 
@@ -9,7 +9,7 @@ import java.util.Calendar;
 
 import org.junit.Test;
 
-import de.hfu.meetme.validation.MMUserValidation;
+import de.hfu.meetme.model.validation.MMUserValidation;
 
 /**
  * @author Simeon Sembach

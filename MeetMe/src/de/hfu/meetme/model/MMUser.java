@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import de.hfu.meetme.validation.MMUserValidation;
+import de.hfu.meetme.model.validation.MMUserValidation;
 
 /**
  * 

@@ -20,7 +20,8 @@ public class MMUserMessage extends MMMessage
 	// Constructor:
 	
 	/**
-	 * @param aMessage
+	 * 
+	 * @param aUser the user to send
 	 */
 	public MMUserMessage(MMUser aUser)
 	{
@@ -28,17 +29,17 @@ public class MMUserMessage extends MMMessage
 	}
 
 	// Accessors (Instance):
-	
-	/** */
-	public MMUser getUser()
-	{
-		return (MMUser) super.getMessage();
-	}
-	
+
 	/** */
 	public void setUser(MMUser aUser)
 	{
 		super.setMessage(aUser);
 	}
 	
+	/** */
+	public MMUser getUser()
+	{
+		return (MMUser) super.getMessage();
+	}
+
 }

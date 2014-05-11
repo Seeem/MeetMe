@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.hfu.meetme.junittests.mmvalidation.mmuser;
+package de.hfu.meetme.junittests;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -14,8 +14,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({ MMisValidDate.class, MMisValidDescription.class,
 		MMisValidFirstName.class, MMisValidLastName.class,
-		MMisValidNickname.class, MMisValidUser.class })
-public class All_MMUser_Tests
+		MMisValidNickname.class, MMisValidUser.class, MMsendMessage.class })
+public class AllTests
 {
 
 }

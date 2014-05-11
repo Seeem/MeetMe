@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.hfu.meetme.validation;
+package de.hfu.meetme.model.validation;
 
 import java.util.Calendar;
 

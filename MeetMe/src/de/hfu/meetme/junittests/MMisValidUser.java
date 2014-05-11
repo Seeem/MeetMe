@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.hfu.meetme.junittests.mmvalidation.mmuser;
+package de.hfu.meetme.junittests;
 
 import static org.junit.Assert.*;
 
