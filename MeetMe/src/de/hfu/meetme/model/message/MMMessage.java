@@ -43,7 +43,7 @@ public abstract class MMMessage implements Serializable
 	/**
 	 * @return the message
 	 */
-	public Object getMessage()
+	protected Object getMessage()
 	{
 		return message;
 	}
@@ -51,7 +51,7 @@ public abstract class MMMessage implements Serializable
 	/**
 	 * @param aMessage the message to set
 	 */
-	public void setMessage(Object aMessage)
+	protected void setMessage(Object aMessage)
 	{
 		this.message = aMessage;
 	}

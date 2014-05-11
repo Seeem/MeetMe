@@ -2,6 +2,8 @@ package de.hfu.meetme.model;
 
 
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,11 +15,11 @@ import de.hfu.meetme.validation.MMUserValidation;
  * @author Simeon Sembach
  *
  */
-public class MMUser
+public class MMUser implements Serializable
 {
 
 	// Instance-Members:
-	
+
 	/** The local ID of an user */
 	private String id;
 	
@@ -37,6 +39,9 @@ public class MMUser
 	private String description;
 	
 	// Class-Members:
+	
+	/** */
+	private static final long serialVersionUID = 4091994199398642117L;
 	
 	/** */
 	private static HashMap<String, MMUser> users = new HashMap<String,MMUser>();
@@ -221,7 +226,22 @@ public class MMUser
 	/** */
 	@Override public String toString()
 	{
-		return "Nickname: " + getNickname();
+		SimpleDateFormat theDateFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
+		
+		StringBuffer theStringBuffer = new StringBuffer();
+		
+		theStringBuffer.append("Nickname: ");
+		theStringBuffer.append(getNickname());
+		theStringBuffer.append("; FirstName: ");
+		theStringBuffer.append(getFirstName());
+		theStringBuffer.append("; LastName: ");
+		theStringBuffer.append(getLastName());
+		theStringBuffer.append("; Birthday: ");
+		theStringBuffer.append(theDateFormat.format(getBirthday().getTime()));
+		theStringBuffer.append("; Description: ");
+		theStringBuffer.append(getDescription());
+		
+		return theStringBuffer.toString();
 	}
 	
 }

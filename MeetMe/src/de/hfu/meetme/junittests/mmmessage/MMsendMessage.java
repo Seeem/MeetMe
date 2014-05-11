@@ -3,18 +3,19 @@
  */
 package de.hfu.meetme.junittests.mmmessage;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
 
 import org.junit.Test;
 
 import de.hfu.meetme.model.MMUser;
-import de.hfu.meetme.model.message.MMMessage;
 import de.hfu.meetme.model.message.MMUserMessage;
 
 /**
@@ -29,9 +30,7 @@ public class MMsendMessage
 	{
 		try
 		{
-			PipedOutputStream pos = new PipedOutputStream();
-			PipedInputStream pis = new PipedInputStream();			
-			pos.connect(pis);
+			OutputStream theOutputStream = new FileOutputStream("user.tmp");
 			
 			MMUser theUser = new MMUser(
 					"Sem",
@@ -40,18 +39,21 @@ public class MMsendMessage
 					Calendar.getInstance(),
 					"Hi I want to meet you!");
 			
-			MMMessage theMessage = new MMUserMessage(theUser);
+			MMUserMessage theMessage = new MMUserMessage(theUser);
 				
-			ObjectOutputStream oos = new ObjectOutputStream(pos);
+			ObjectOutputStream oos = new ObjectOutputStream(theOutputStream);
 			oos.writeObject(theMessage);
-						
-		    ObjectInputStream ois = new ObjectInputStream(pis);
-		    theMessage = (MMMessage) ois.readObject();
+			oos.flush();
+			oos.close();
+			
+			InputStream theInputStream = new FileInputStream("user.tmp");
+					
+		    ObjectInputStream ois = new ObjectInputStream(theInputStream);
+		    theMessage = (MMUserMessage) ois.readObject();
 		   		
-		    System.out.println(theMessage.getMessage());
-		    
-		    oos.close();
 		    ois.close();
+		    
+		    System.out.println(theMessage.getUser());
 		    
 		} catch (FileNotFoundException e)
 		{

@@ -27,6 +27,8 @@ public class MMUserMessage extends MMMessage
 		setUser(aUser);
 	}
 
+	// Accessors (Instance):
+	
 	/** */
 	public MMUser getUser()
 	{
