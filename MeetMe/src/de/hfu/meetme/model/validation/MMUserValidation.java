@@ -20,7 +20,7 @@ public final class MMUserValidation
 	public static final int MINIMUM_LENGHT_OF_A_USERNAME = 3;
 	
 	/** The maximum String-lenght of a username */
-	public static final int MAXIMUM_LENGHT_OF_A_USERNAME = 6;
+	public static final int MAXIMUM_LENGHT_OF_A_USERNAME = 10;
 	
 	/** The minimum String-lenght of a first name */
 	public static final int MINIMUM_LENGHT_OF_A_FIRSTNAME = 1;
@@ -68,27 +68,12 @@ public final class MMUserValidation
 	// MM-API:
 	
 	/** TODO */
-	public static MMValidation isMan(MMGender aGender)
+	public static MMValidation isValidGender(MMGender aGender)
 	{
-		if (aGender == MMGender.MAN)
-			return new MMValidation();
+		if (aGender != MMGender.WOMAN || aGender != MMGender.MAN)
+			return new MMValidation("Unknown Gender");
 		
-		if (aGender == MMGender.WOMAN)
-			return new MMValidation("It's a woman");
-		
-		return new MMValidation("Unknown Gender");
-	}
-	
-	/** TODO */
-	public static MMValidation isWoman(MMGender aGender)
-	{
-		if (aGender == MMGender.WOMAN)
-			return new MMValidation();
-		
-		if (aGender == MMGender.MAN)
-			return new MMValidation("It's a man");
-		
-		return new MMValidation("Unknown Gender");
+		return new MMValidation();
 	}
 	
 	/**

@@ -8,8 +8,8 @@
     
     <!-- Preferences -->
     <string name="pref_category_name">Your userprofile</string>
-    <string name="pref_title_nickname">Nickname</string>
-    <string name="pref_summary_nickname">Set your nickname</string>
+    <string name="pref_title_username">Username</string>
+    <string name="pref_summary_username">Set your username</string>
     <string name="pref_title_firstname">First name</string>
     <string name="pref_summary_firstname">Set your first name</string>
     <string name="pref_title_lastname">Lastname</string>

@@ -14,7 +14,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({ MMisValidDateTest.class, MMisValidDescriptionTest.class,
 		MMisValidFirstNameTest.class, MMisValidLastNameTest.class,
-		MMisValidNicknameTest.class, MMisValidUserTest.class, MMsendMessage.class,
+		MMisValidUsernameTest.class, MMisValidUserTest.class, MMsendMessage.class,
 		MMgenderTest.class})
 public class AllTests
 {

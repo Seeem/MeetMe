@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import de.hfu.meetme.model.validation.MMUserValidation;
-import de.hfu.meetme.model.validation.MMValidation;
 
 /**
  * 
@@ -79,7 +78,7 @@ public class MMUser implements Serializable
 		return getGender() == MMGender.MAN;
 	}
 	
-	/** */
+	/** TODO */
 	public boolean isWoman()
 	{
 		return !isMan();

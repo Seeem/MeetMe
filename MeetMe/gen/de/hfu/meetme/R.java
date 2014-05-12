@@ -70,7 +70,7 @@ public final class R {
         public static final int pref_summary_firstname=0x7f060007;
         public static final int pref_summary_gender=0x7f06000d;
         public static final int pref_summary_lastname=0x7f060009;
-        public static final int pref_summary_nickname=0x7f060005;
+        public static final int pref_summary_username=0x7f060005;
         public static final int pref_switchTextOff_gender=0x7f06000f;
         public static final int pref_switchTextOn_gender=0x7f06000e;
         public static final int pref_title_add_friends_to_messages=0x7f060018;
@@ -81,11 +81,11 @@ public final class R {
         public static final int pref_title_gender=0x7f06000c;
         public static final int pref_title_lastname=0x7f060008;
         public static final int pref_title_new_message_notifications=0x7f06001d;
-        public static final int pref_title_nickname=0x7f060004;
         public static final int pref_title_ringtone=0x7f06001e;
         public static final int pref_title_social_recommendations=0x7f060014;
         public static final int pref_title_sync_frequency=0x7f06001a;
         public static final int pref_title_system_sync_settings=0x7f06001b;
+        public static final int pref_title_username=0x7f060004;
         public static final int pref_title_vibrate=0x7f060020;
         public static final int title_activity_settings=0x7f060012;
     }

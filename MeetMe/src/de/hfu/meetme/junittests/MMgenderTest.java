@@ -3,12 +3,11 @@
  */
 package de.hfu.meetme.junittests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import de.hfu.meetme.model.MMGender;
-import de.hfu.meetme.model.validation.MMUserValidation;
+import de.hfu.meetme.model.MMUser;
 
 /**
  * @author Simeon Sembach
@@ -22,35 +21,19 @@ public class MMgenderTest
 	{
 		boolean isExpected = true;
 		
-		try
-		{
-			MMUserValidation.isMan(MMGender.MAN).generateExceptionIfNotValid();
-		} 
-		catch (IllegalArgumentException e)
-		{
-//			e.printStackTrace();
-			isExpected = !isExpected;
-		}
+		MMUser theUser = MMTestSupport.createANewValidMan();
 		
-		assertTrue(isExpected);
+		assertEquals(isExpected, theUser.isMan());
 	}
-
+	
 	@Test
-	public void testGenderIsNoMan_ShouldThrowException()
+	public void testGenderIsNoMan_ShouldPass()
 	{
 		boolean isExpected = false;
 		
-		try
-		{
-			MMUserValidation.isMan(MMGender.WOMAN).generateExceptionIfNotValid();
-		} 
-		catch (IllegalArgumentException e)
-		{
-//			e.printStackTrace();
-			isExpected = !isExpected;
-		}
+		MMUser theUser = MMTestSupport.createANewValidWoman();
 		
-		assertTrue(isExpected);
+		assertEquals(isExpected, theUser.isMan());
 	}
 	
 	@Test
@@ -58,35 +41,19 @@ public class MMgenderTest
 	{
 		boolean isExpected = true;
 		
-		try
-		{
-			MMUserValidation.isWoman(MMGender.WOMAN).generateExceptionIfNotValid();
-		} 
-		catch (IllegalArgumentException e)
-		{
-//			e.printStackTrace();
-			isExpected = !isExpected;
-		}
+		MMUser theUser = MMTestSupport.createANewValidWoman();
 		
-		assertTrue(isExpected);
+		assertEquals(isExpected, theUser.isWoman());
 	}
-
+	
 	@Test
-	public void testGenderIsNoWoman_ShouldThrowException()
+	public void testGenderIsNoWoman_ShouldPass()
 	{
 		boolean isExpected = false;
 		
-		try
-		{
-			MMUserValidation.isWoman(MMGender.MAN).generateExceptionIfNotValid();
-		} 
-		catch (IllegalArgumentException e)
-		{
-//			e.printStackTrace();
-			isExpected = !isExpected;
-		}
+		MMUser theUser = MMTestSupport.createANewValidMan();
 		
-		assertTrue(isExpected);
+		assertEquals(isExpected, theUser.isWoman());
 	}
 	
 }
