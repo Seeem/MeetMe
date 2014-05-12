@@ -7,13 +7,14 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import de.hfu.meetme.junittests.support.MMTestSupport;
 import de.hfu.meetme.model.MMUser;
 
 /**
  * @author Simeon Sembach
  *
  */
-public class MMgenderTest
+public class MMGenderTest
 {
 
 	@Test

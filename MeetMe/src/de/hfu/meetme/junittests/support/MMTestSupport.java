@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.hfu.meetme.junittests;
+package de.hfu.meetme.junittests.support;
 
 import java.util.Calendar;
 
@@ -18,6 +18,11 @@ public final class MMTestSupport
 	public static MMUser createANewValidUser()
 	{
 		return new MMUser(MMGender.MAN, "Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!");
+	}
+	
+	public static MMUser createANewValidUser(String aId)
+	{
+		return new MMUser(aId, MMGender.MAN, "Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!");
 	}
 	
 	public static MMUser createANewNotValidUser()

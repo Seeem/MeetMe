@@ -43,13 +43,13 @@ public final class MMUserValidation
 	// Internals (Class):
 	
 	/** 
-	 * Returns a valid MMValidation-Object if the given String is between the given minimum-lenght and maximum-lenght,
-	 * otherwise it returns a not valid MMValidation-Object.
+	 * Returns a valid {@link MMValidation} if the given String is between the given minimum-lenght and maximum-lenght,
+	 * otherwise it returns a not valid {@link MMValidation}.
 	 * 
 	 * @param aString the String to validate
 	 * @param aMinimumStringLenght the minimum String-lenght
 	 * @param aMaximumStringLenght the maximum String-lenght
-	 * @return a MMValidation-Object
+	 * @return a {@link MMValidation}
 	 */
 	private static MMValidation isStringInRange(String aString, int aMinimumStringLenght, int aMaximumStringLenght)
 	{
@@ -67,20 +67,25 @@ public final class MMUserValidation
 	
 	// MM-API:
 	
-	/** TODO */
+	/**
+	 * Returns a valid {@link MMValidation} if the given gender is man oder woman,
+	 * otherwise it returns a not valid {@link MMValidation}.
+	 * @param aGender the gender to valid
+	 * @return a {@link MMValidation} object
+	 */
 	public static MMValidation isValidGender(MMGender aGender)
 	{
-		if (aGender != MMGender.WOMAN || aGender != MMGender.MAN)
+		if (aGender != MMGender.WOMAN && aGender != MMGender.MAN)
 			return new MMValidation("Unknown Gender");
 		
 		return new MMValidation();
 	}
 	
 	/**
-	 * Returns a valid MMValidation-Object if the given username-String is correct
-	 * otherwise it returns a not valid MMValidation-Object.
+	 * Returns a valid {@link MMValidation} if the given username-String is correct
+	 * otherwise it returns a not valid {@link MMValidation}.
 	 * @param aUsername the username to validate 
-	 * @return a MMValidation-Object
+	 * @return a {@link MMValidation}
 	 */
 	public static MMValidation isValidUsername(String aUsername)
 	{
@@ -88,10 +93,10 @@ public final class MMUserValidation
 	}
 	
 	/**
-	 * Returns a valid MMValidation-Object if the given first-name-String is correct
-	 * otherwise it returns a not valid MMValidation-Object.
+	 * Returns a valid {@link MMValidation} if the given first-name-String is correct
+	 * otherwise it returns a not valid {@link MMValidation}.
 	 * @param aFirstName the first name to validate
-	 * @return a MMValidation-Object
+	 * @return a {@link MMValidation}
 	 */
 	public static MMValidation isValidFirstName(String aFirstName)
 	{
@@ -99,10 +104,10 @@ public final class MMUserValidation
 	}
 	
 	/**
-	 * Returns a valid MMValidation-Object if the given last-name-String is correct
-	 * otherwise it returns a not valid MMValidation-Object.
+	 * Returns a valid {@link MMValidation} if the given last-name-String is correct
+	 * otherwise it returns a not valid {@link MMValidation}.
 	 * @param aLastName the last name to validate
-	 * @return a MMValidation-Object
+	 * @return a {@link MMValidation}
 	 */
 	public static MMValidation isValidLastName(String aLastName)
 	{
@@ -110,10 +115,10 @@ public final class MMUserValidation
 	}
 	
 	/**
-	 * Returns a valid MMValidation-Object if the given description-String is correct
-	 * otherwise it returns a not valid MMValidation-Object.
+	 * Returns a valid {@link MMValidation} if the given description-String is correct
+	 * otherwise it returns a not valid {@link MMValidation}.
 	 * @param aDescription the description-text to validate
-	 * @return a MMValidation-Object
+	 * @return a {@link MMValidation}
 	 */
 	public static MMValidation isValidDescription(String aDescription)
 	{
@@ -121,10 +126,10 @@ public final class MMUserValidation
 	}
 
 	/**
-	 * Returns a valid MMValidation-Object if the given date is correct
-	 * otherwise it returns a not valid MMValidation-Object
-	 * @param aBirthday
-	 * @return
+	 * Returns a valid {@link MMValidation} if the given birthday-date is correct
+	 * otherwise it returns a not valid {@link MMValidation}
+	 * @param aBirthday the birthday to valid
+	 * @return {@link MMValidation}
 	 */
 	public static MMValidation isValidBirthday(Calendar aBirthday)
 	{

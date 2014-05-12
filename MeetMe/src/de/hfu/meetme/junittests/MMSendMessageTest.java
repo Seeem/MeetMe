@@ -15,6 +15,7 @@ import java.io.OutputStream;
 
 import org.junit.Test;
 
+import de.hfu.meetme.junittests.support.MMTestSupport;
 import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.message.MMUserMessage;
 
@@ -22,7 +23,7 @@ import de.hfu.meetme.model.message.MMUserMessage;
  * @author Simeon Sembach
  *
  */
-public class MMsendMessage
+public class MMSendMessageTest
 {
 
 	// TODO Implement a "real" sending test
@@ -35,8 +36,7 @@ public class MMsendMessage
 		try
 		{
 			sendUser(MMTestSupport.createANewValidUser());		
-			MMUser theUser = receiveUser();    
-		    System.out.println(theUser);	    
+			receiveUser();    	    
 		} 
 		catch (Exception e)
 		{

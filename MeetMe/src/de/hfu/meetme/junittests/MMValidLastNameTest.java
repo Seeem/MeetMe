@@ -13,7 +13,7 @@ import de.hfu.meetme.model.validation.MMUserValidation;
  * @author Simeon Sembach
  *
  */
-public class MMisValidLastNameTest
+public class MMValidLastNameTest
 {
 
 	// Instance-Members:

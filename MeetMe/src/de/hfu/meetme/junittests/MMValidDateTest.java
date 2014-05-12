@@ -15,7 +15,7 @@ import de.hfu.meetme.model.validation.MMUserValidation;
  * @author Simeon Sembach
  *
  */
-public class MMisValidDateTest
+public class MMValidDateTest
 {
 
 	/** */
