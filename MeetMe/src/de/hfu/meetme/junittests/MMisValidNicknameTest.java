@@ -13,19 +13,19 @@ import de.hfu.meetme.model.validation.MMUserValidation;
  * @author Simeon Sembach
  *
  */
-public class MMisValidNickname
+public class MMisValidNicknameTest
 {
 
 	// Instance-Members:
 	
 	/** */
-	private String validNickname = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_NICKNAME]);
+	private String validNickname = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_USERNAME]);
 	
 	/** */
-	private String tooShortNickname = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_NICKNAME-1]);
+	private String tooShortNickname = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_USERNAME-1]);
 	
 	/** */
-	private String tooLongNickname = new String(new char[MMUserValidation.MAXIMUM_LENGHT_OF_A_NICKNAME+1]);
+	private String tooLongNickname = new String(new char[MMUserValidation.MAXIMUM_LENGHT_OF_A_USERNAME+1]);
 	
 	/** */
 	private String nullNickname = null;
@@ -39,7 +39,7 @@ public class MMisValidNickname
 		
 		try
 		{
-			MMUserValidation.isValidNickname(validNickname).generateExceptionIfNotValid();
+			MMUserValidation.isValidUsername(validNickname).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
@@ -57,7 +57,7 @@ public class MMisValidNickname
 		
 		try
 		{
-			MMUserValidation.isValidNickname(nullNickname).generateExceptionIfNotValid();
+			MMUserValidation.isValidUsername(nullNickname).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
@@ -75,7 +75,7 @@ public class MMisValidNickname
 		
 		try
 		{
-			MMUserValidation.isValidNickname(tooShortNickname).generateExceptionIfNotValid();
+			MMUserValidation.isValidUsername(tooShortNickname).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
@@ -93,7 +93,7 @@ public class MMisValidNickname
 		
 		try
 		{
-			MMUserValidation.isValidNickname(tooLongNickname).generateExceptionIfNotValid();
+			MMUserValidation.isValidUsername(tooLongNickname).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{

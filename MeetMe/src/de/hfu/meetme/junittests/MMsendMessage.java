@@ -16,6 +16,7 @@ import java.util.Calendar;
 
 import org.junit.Test;
 
+import de.hfu.meetme.model.MMGender;
 import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.message.MMUserMessage;
 
@@ -35,7 +36,7 @@ public class MMsendMessage
 		
 		try
 		{
-			sendUser(new MMUser("Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!"));		
+			sendUser(new MMUser(MMGender.MAN, "Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!"));		
 			MMUser theUser = receiveUser();    
 		    System.out.println(theUser);	    
 		} 

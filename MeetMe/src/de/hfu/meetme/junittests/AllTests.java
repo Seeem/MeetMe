@@ -12,9 +12,10 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ MMisValidDate.class, MMisValidDescription.class,
-		MMisValidFirstName.class, MMisValidLastName.class,
-		MMisValidNickname.class, MMisValidUser.class, MMsendMessage.class })
+@SuiteClasses({ MMisValidDateTest.class, MMisValidDescriptionTest.class,
+		MMisValidFirstNameTest.class, MMisValidLastNameTest.class,
+		MMisValidNicknameTest.class, MMisValidUserTest.class, MMsendMessage.class,
+		MMgenderTest.class})
 public class AllTests
 {
 

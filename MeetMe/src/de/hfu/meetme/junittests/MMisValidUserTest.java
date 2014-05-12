@@ -9,13 +9,14 @@ import java.util.Calendar;
 
 import org.junit.Test;
 
+import de.hfu.meetme.model.MMGender;
 import de.hfu.meetme.model.MMUser;
 
 /**
  * @author Simeon Sembach
  *
  */
-public class MMisValidUser
+public class MMisValidUserTest
 {
 	// Tests:
 	
@@ -26,12 +27,7 @@ public class MMisValidUser
 		
 		try
 		{
-			new MMUser(
-					"Sem",
-					"Simeon",
-					"Sembach",
-					Calendar.getInstance(),
-					"Hi I want to meet you!");
+			new MMUser(MMGender.MAN, "Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!");
 		} 
 		catch (IllegalArgumentException e)
 		{

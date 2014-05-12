@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import de.hfu.meetme.model.validation.MMUserValidation;
+import de.hfu.meetme.model.validation.MMValidation;
 
 /**
  * 
@@ -23,8 +24,11 @@ public class MMUser implements Serializable
 	/** The local ID of an user */
 	private String id;
 	
-	/** The Nickname of an user */
-	private String nickname;
+	/** The gender of an user */
+	private MMGender gender;
+	
+	/** The username of an user */
+	private String username;
 	
 	/** The first name of an user */
 	private String firstName;
@@ -50,19 +54,35 @@ public class MMUser implements Serializable
 	
 	/**
 	 * The MMUser Constructor
-	 * @param aNickname the nickname to set
+	 * @param aUsername the username to set
 	 * @param aFirstName the first name to set
 	 * @param aLastName the last name to set
 	 * @param aBirthday the birthday to set
 	 * @param aDescription the description to set
 	 */
-	public MMUser(String aNickname, String aFirstName, String aLastName, Calendar aBirthday, String aDescription)
+	public MMUser(MMGender aGender, String aUsername, String aFirstName, String aLastName, Calendar aBirthday, String aDescription)
 	{
-		setNickname(aNickname);
+		// TODO setID
+		setGender(aGender);
+		setUsername(aUsername);
 		setFirstName(aFirstName);
 		setLastName(aLastName);
 		setBirthday(aBirthday);
 		setDescription(aDescription);
+	}
+	
+	// MM_API (Instance):
+	
+	/** TODO */
+	public boolean isMan()
+	{
+		return getGender() == MMGender.MAN;
+	}
+	
+	/** */
+	public boolean isWoman()
+	{
+		return !isMan();
 	}
 	
 	// MM-API (Class):
@@ -98,21 +118,38 @@ public class MMUser implements Serializable
 	// Accessors (Instance):
 	
 	/**
-	 * @return the nickname
+	 * @return the gender
 	 */
-	public String getNickname()
+	public MMGender getGender()
 	{
-		return nickname;
+		return gender;
 	}
 
 	/**
-	 * @param aNickname the nickname to set
+	 * @param aGender the gender to set
 	 */
-	public void setNickname(String aNickname)
+	public void setGender(MMGender aGender)
 	{
-		MMUserValidation.isValidNickname(aNickname).generateExceptionIfNotValid();
+		// TODO Validation?
+		this.gender = aGender;
+	}
+	
+	/**
+	 * @return the username
+	 */
+	public String getUsername()
+	{
+		return username;
+	}
+
+	/**
+	 * @param aUsername the username to set
+	 */
+	public void setUsername(String aUsername)
+	{
+		MMUserValidation.isValidUsername(aUsername).generateExceptionIfNotValid();
 		
-		this.nickname = aNickname;
+		this.username = aUsername;
 	}
 
 	/**
@@ -230,8 +267,10 @@ public class MMUser implements Serializable
 		
 		StringBuffer theStringBuffer = new StringBuffer();
 		
-		theStringBuffer.append("Nickname: ");
-		theStringBuffer.append(getNickname());
+		theStringBuffer.append("Gender: ");
+		theStringBuffer.append(getGender());
+		theStringBuffer.append("; Username: ");
+		theStringBuffer.append(getUsername());
 		theStringBuffer.append("; FirstName: ");
 		theStringBuffer.append(getFirstName());
 		theStringBuffer.append("; LastName: ");
@@ -243,5 +282,6 @@ public class MMUser implements Serializable
 		
 		return theStringBuffer.toString();
 	}
+
 	
 }
