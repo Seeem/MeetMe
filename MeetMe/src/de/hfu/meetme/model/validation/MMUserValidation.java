@@ -78,7 +78,7 @@ public final class MMUserValidation
 	 */
 	public static MMValidation isValidGender(MMGender aGender)
 	{
-		if (aGender != MMGender.WOMAN && aGender != MMGender.MAN)
+		if (aGender != MMGender.FEMALE && aGender != MMGender.MALE)
 			return new MMValidation("Unknown Gender");
 		
 		return new MMValidation();

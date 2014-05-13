@@ -85,7 +85,7 @@ public class MMUser implements Serializable
 	 */
 	public boolean isMan()
 	{
-		return getGender() == MMGender.MAN;
+		return getGender() == MMGender.MALE;
 	}
 	
 	/**
@@ -94,7 +94,7 @@ public class MMUser implements Serializable
 	 */
 	public boolean isWoman()
 	{
-		return getGender() == MMGender.WOMAN;
+		return getGender() == MMGender.FEMALE;
 	}
 	
 	// MM-API (Class):

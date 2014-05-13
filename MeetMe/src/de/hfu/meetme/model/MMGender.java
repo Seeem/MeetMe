@@ -10,6 +10,6 @@ package de.hfu.meetme.model;
 public enum MMGender
 {
 
-	MAN, WOMAN
+	MALE, FEMALE
 	
 }

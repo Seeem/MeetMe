@@ -17,27 +17,27 @@ public final class MMTestSupport
 	
 	public static MMUser createANewValidUser()
 	{
-		return new MMUser("", MMGender.MAN, "Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!");
+		return new MMUser("", MMGender.MALE, "Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!");
 	}
 	
 	public static MMUser createANewValidUser(String aId)
 	{
-		return new MMUser(aId, MMGender.MAN, "Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!");
+		return new MMUser(aId, MMGender.MALE, "Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!");
 	}
 	
 	public static MMUser createANewNotValidUser()
 	{
-		return new MMUser("", MMGender.MAN, "", "", "", null, "");
+		return new MMUser("", MMGender.MALE, "", "", "", null, "");
 	}
 	
 	public static MMUser createANewValidMan()
 	{
-		return new MMUser("", MMGender.MAN, "Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!");
+		return new MMUser("", MMGender.MALE, "Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!");
 	}
 	
 	public static MMUser createANewValidWoman()
 	{
-		return new MMUser("", MMGender.WOMAN, "Quotenfrau", "Leona", "Musterfrau", Calendar.getInstance(), "Hi I want to meet you!");
+		return new MMUser("", MMGender.FEMALE, "Quotenfrau", "Leona", "Musterfrau", Calendar.getInstance(), "Hi I want to meet you!");
 	}
 	
 }
