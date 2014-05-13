@@ -3,10 +3,10 @@
 
     <!-- Auto Generated -->
     <string name="app_name">MeetMe</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">Hello Domi!</string>
     <string name="action_settings">Settings</string>
     
-    <!-- Preferences -->
+    <!-- SettingsFragment -->
     <string name="pref_category_name">Your userprofile</string>
     <string name="pref_title_username">Username</string>
     <string name="pref_summary_username">Set your username</string>
@@ -23,5 +23,7 @@
     <string name="pref_title_description">Description</string>
     <string name="pref_summary_description">Describe yourself</string>
     
+    <!-- SettingsSaveButtonFragment -->
+    <string name ="settings_save_button_text">Save your profile!</string>
 
 </resources>

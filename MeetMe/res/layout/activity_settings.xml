@@ -1,0 +1,23 @@
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_settings"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="de.hfu.meetme.SettingsActivity"
+    tools:ignore="MergeRootFrame">
+    
+    <fragment 
+        android:name="de.hfu.meetme.SettingsFragment"
+        android:id="@+id/preference_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+    <fragment 
+        android:name="de.hfu.meetme.SettingsSaveButtonFragment"
+        android:id="@+id/preference_save_button_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+</LinearLayout>
