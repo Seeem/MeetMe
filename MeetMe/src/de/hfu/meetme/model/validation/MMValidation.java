@@ -4,6 +4,7 @@
 package de.hfu.meetme.model.validation;
 
 /**
+ * 
  * @author Simeon Sembach
  *
  */
@@ -20,12 +21,15 @@ public class MMValidation
 
 	// Class-Members:
 	
+	/** The EMPTYMESSAGE-constant */
 	private static final String EMPTYMESSAGE = "";
  	
 	// Constructors:
 	
 	/**
-	 * 
+	 * Creates a MMValidation with a corresponding validation-boolean and a message.
+	 * @param aIsValidBoolean the validation-boolean to set
+	 * @param aMessage the message to set
 	 */
 	public MMValidation(boolean aIsValidBoolean, String aMessage)
 	{
@@ -34,7 +38,8 @@ public class MMValidation
 	}
 	
 	/**
-	 * 
+	 * Creates a not valid MMValidation with a corresponding message.
+	 * @param aMessage the message to set
 	 */
 	public MMValidation(String aMessage)
 	{
@@ -42,7 +47,8 @@ public class MMValidation
 	}
 	
 	/**
-	 * 
+	 * Creates a MMValidation with an empty message.
+	 * @param aIsValidBoolean the validation-boolean to set
 	 */
 	public MMValidation(boolean aIsValidBoolean)
 	{
@@ -50,7 +56,7 @@ public class MMValidation
 	}
 	
 	/**
-	 * 
+	 * Creates a valid MMValidation with an empty message.
 	 */
 	public MMValidation()
 	{
@@ -59,7 +65,11 @@ public class MMValidation
 
 	// MM-API
 	
-	/** */
+	/**
+	 * In case the object is not valid this method generates an {@link IllegalArgumentException}
+	 * with its associated validation-message.
+	 * @throws IllegalArgumentException the validation-message
+	 */
 	public void generateExceptionIfNotValid() throws IllegalArgumentException
 	{
 		if (!isValid())

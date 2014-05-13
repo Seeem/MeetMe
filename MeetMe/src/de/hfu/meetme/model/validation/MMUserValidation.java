@@ -6,10 +6,13 @@ package de.hfu.meetme.model.validation;
 import java.util.Calendar;
 
 import de.hfu.meetme.model.MMGender;
+import de.hfu.meetme.model.MMUser;
 
 /**
+ * This class supports some validations for the {@link MMUser}-class.
+ * Every available validation-method returns a {@link MMValidation}-Object.
+ * 
  * @author Simeon Sembach
- *
  */
 public final class MMUserValidation
 {
@@ -68,7 +71,7 @@ public final class MMUserValidation
 	// MM-API:
 	
 	/**
-	 * Returns a valid {@link MMValidation} if the given gender is man oder woman,
+	 * Returns a valid {@link MMValidation} if the given gender is man or woman,
 	 * otherwise it returns a not valid {@link MMValidation}.
 	 * @param aGender the gender to valid
 	 * @return a {@link MMValidation} object
