@@ -48,6 +48,8 @@ public class SettingsSaveButtonFragment extends Fragment
 		return view;
 	}
 	
+	/**Reads the user profile data from the SharedPreferences, set in the settings.
+	 * Currently expects the input to be correct*/
 	private MMUser getUser() {
 		
 		final SharedPreferences settings = getActivity().getPreferences(0);
@@ -73,9 +75,9 @@ public class SettingsSaveButtonFragment extends Fragment
         MMGender gender;
         
         if(isGenderMale)
-        	gender = MMGender.MAN;
+        	gender = MMGender.MALE;
         else
-        	gender = MMGender.WOMAN;
+        	gender = MMGender.FEMALE;
 		
 		return new MMUser(id, gender, username, firstName, lastName, cal, description);
 	}
