@@ -1,5 +1,6 @@
-package de.hfu.meetme;
+package de.hfu.meetme.views;
 
+import de.hfu.meetme.R;
 import android.app.Activity;
 import android.os.Bundle;
 

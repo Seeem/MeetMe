@@ -1,15 +1,16 @@
-package de.hfu.meetme;
+package de.hfu.meetme.views;
 
-import de.hfu.meetme.model.MMUser;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import de.hfu.meetme.R;
+import de.hfu.meetme.model.MMUser;
 
 public class MainActivity extends Activity {
 
-	MMUser myself = null;
+	protected static MMUser myself = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -17,8 +18,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		if (myself == null) {
-			Intent intent = new Intent(this, de.hfu.meetme.SettingsActivity.class);
-			startActivity(intent);
+			intentSettingsActivity();
 		}
 		
 	}
@@ -38,10 +38,16 @@ public class MainActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			intentSettingsActivity();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
+	/** Intents the SettingsActivity */
+	private void intentSettingsActivity() {
+		Intent intent = new Intent(this, de.hfu.meetme.views.SettingsActivity.class);
+		startActivity(intent);
+	}
 
 }
