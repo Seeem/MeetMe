@@ -70,17 +70,11 @@ public class MMUser implements Serializable
 		setBirthday(aBirthday);
 		setDescription(aDescription);
 	}
-
-	/** Just for testing! */
-	public MMUser(MMGender aGender, String aUsername, String aFirstName, String aLastName, Calendar aBirthday, String aDescription)
-	{
-		this("", aGender, aUsername, aFirstName, aLastName, aBirthday, aDescription);
-	}
 	
-	/** */
-	public MMUser(MMGender aGender, String aUsername, String aFirstName, String aLastName, Calendar aBirthday)
+	/** Creates a MMUser with an empty description */
+	public MMUser(String aId, MMGender aGender, String aUsername, String aFirstName, String aLastName, Calendar aBirthday)
 	{
-		this(aGender, aUsername, aFirstName, aLastName, aBirthday, "");
+		this(aId, aGender, aUsername, aFirstName, aLastName, aBirthday, "");
 	}
 	
 	// MM-API (Instance):
