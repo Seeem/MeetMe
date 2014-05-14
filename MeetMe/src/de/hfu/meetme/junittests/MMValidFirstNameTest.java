@@ -19,13 +19,13 @@ public class MMValidFirstNameTest
 	// Instance-Members:
 	
 	/** */
-	private String validFirstName = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_FIRSTNAME]);
+	private String validFirstName = "Simeon";
 	
 	/** */
-	private String tooShortFirstName = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_FIRSTNAME-1]);
+	private String tooShortFirstName = "";
 	
 	/** */
-	private String tooLongFirstName = new String(new char[MMUserValidation.MAXIMUM_LENGHT_OF_A_FIRSTNAME+1]);
+	private String tooLongFirstName = "Thisisamuchtoolongfirstname";
 	
 	/** */
 	private String nullFirstName = null;

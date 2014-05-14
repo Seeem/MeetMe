@@ -19,31 +19,30 @@ public class MMValidUsernameTest
 	// Instance-Members:
 	
 	/** */
-	private String validNickname = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_USERNAME]);
+	private String validUsername = "Username";
 	
 	/** */
-	private String tooShortNickname = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_USERNAME-1]);
+	private String tooShortUsername = "";
 	
 	/** */
-	private String tooLongNickname = new String(new char[MMUserValidation.MAXIMUM_LENGHT_OF_A_USERNAME+1]);
+	private String tooLongUsername = "ThisIsATooLongUserName";
 	
 	/** */
-	private String nullNickname = null;
+	private String nullUsername = null;
 	
 	// Tests:
 	
 	@Test
-	public void testNicknameIsValid_ShouldPass()
+	public void testUsernameIsValid_ShouldPass()
 	{
 		boolean isExpected = true;
 		
 		try
 		{
-			MMUserValidation.isValidUsername(validNickname).generateExceptionIfNotValid();
+			MMUserValidation.isValidUsername(validUsername).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
-//			e.printStackTrace();
 			isExpected = !isExpected;
 		}
 		
@@ -51,17 +50,16 @@ public class MMValidUsernameTest
 	}
 	
 	@Test
-	public void testNicknameIsNull_ShouldThrowException()
+	public void testUsernameIsNull_ShouldThrowException()
 	{
 		boolean isExpected = false;
 		
 		try
 		{
-			MMUserValidation.isValidUsername(nullNickname).generateExceptionIfNotValid();
+			MMUserValidation.isValidUsername(nullUsername).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
-//			e.printStackTrace();
 			isExpected = !isExpected;
 		}
 		
@@ -69,17 +67,16 @@ public class MMValidUsernameTest
 	}
 	
 	@Test
-	public void testNicknameIsTooShort_ShouldThrowException()
+	public void testUsernameIsTooShort_ShouldThrowException()
 	{
 		boolean isExpected = false;
 		
 		try
 		{
-			MMUserValidation.isValidUsername(tooShortNickname).generateExceptionIfNotValid();
+			MMUserValidation.isValidUsername(tooShortUsername).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
-//			e.printStackTrace();
 			isExpected = !isExpected;
 		}
 		
@@ -87,17 +84,16 @@ public class MMValidUsernameTest
 	}
 	
 	@Test
-	public void testNicknameIsTooLong_ShouldThrowException()
+	public void testUsernameIsTooLong_ShouldThrowException()
 	{
 		boolean isExpected = false;
 		
 		try
 		{
-			MMUserValidation.isValidUsername(tooLongNickname).generateExceptionIfNotValid();
+			MMUserValidation.isValidUsername(tooLongUsername).generateExceptionIfNotValid();
 		} 
 		catch (IllegalArgumentException e)
 		{
-//			e.printStackTrace();
 			isExpected = !isExpected;
 		}
 		

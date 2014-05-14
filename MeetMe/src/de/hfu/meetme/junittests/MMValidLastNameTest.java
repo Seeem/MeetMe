@@ -19,13 +19,13 @@ public class MMValidLastNameTest
 	// Instance-Members:
 	
 	/** */
-	private String validLastName = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_LASTNAME]);
+	private String validLastName = "Sembach";
 	
 	/** */
-	private String tooShortLastName = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_LASTNAME-1]);
+	private String tooShortLastName = "";
 	
 	/** */
-	private String tooLongLastName = new String(new char[MMUserValidation.MAXIMUM_LENGHT_OF_A_LASTNAME+1]);
+	private String tooLongLastName = "Thisisamuchtoolonglastname";
 	
 	/** */
 	private String nullLastName = null;
