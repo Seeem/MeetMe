@@ -19,10 +19,10 @@ public class MMValidDescriptionTest
 	// Instance-Members:
 	
 	/** */
-	private String validDescription = new String(new char[MMUserValidation.MINIMUM_LENGHT_OF_A_DESCRIPTION]);
+	private String validDescription = "I want to meet you!";
 	
 	/** */
-	private String tooLongDescription = new String(new char[MMUserValidation.MAXIMUM_LENGHT_OF_A_DESCRIPTION+1]);
+	private String tooLongDescription = new String(new char[101]);
 	
 	/** */
 	private String nullDescription = null;

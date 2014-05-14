@@ -1,7 +1,7 @@
 #
 # A fatal error has been detected by the Java Runtime Environment:
 #
-#  Internal Error (javaClasses.cpp:136), pid=53634, tid=6403
+#  Internal Error (javaClasses.cpp:136), pid=58520, tid=6403
 #  fatal error: Invalid layout of preloaded class
 #
 # JRE version:  (7.0_45-b18) (build )
@@ -14,9 +14,9 @@
 
 ---------------  T H R E A D  ---------------
 
-Current thread (0x00007f8eac802800):  JavaThread "Unknown thread" [_thread_in_vm, id=6403, stack(0x0000000103a54000,0x0000000103b54000)]
+Current thread (0x00007f8001001000):  JavaThread "Unknown thread" [_thread_in_vm, id=6403, stack(0x000000010feb0000,0x000000010ffb0000)]
 
-Stack: [0x0000000103a54000,0x0000000103b54000],  sp=0x0000000103b53810,  free space=1022k
+Stack: [0x000000010feb0000,0x000000010ffb0000],  sp=0x000000010ffaf810,  free space=1022k
 Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
 V  [libjvm.dylib+0x524ee9]  VMError::report_and_die()+0x5d5
 V  [libjvm.dylib+0x1ec38d]  report_vm_error(char const*, int, char const*, char const*)+0x54
@@ -40,7 +40,7 @@ Java Threads: ( => current thread )
 
 Other Threads:
 
-=>0x00007f8eac802800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=6403, stack(0x0000000103a54000,0x0000000103b54000)]
+=>0x00007f8001001000 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=6403, stack(0x000000010feb0000,0x000000010ffb0000)]
 
 VM state:not at safepoint (not fully initialized)
 
@@ -56,16 +56,16 @@ Internal exceptions (0 events):
 No events
 
 Events (10 events):
-Event: 0.011 loading class 0x000000010be2b6e0 done
-Event: 0.011 loading class 0x000000010be2b100 done
-Event: 0.011 loading class 0x000000010be2b0e0
-Event: 0.011 loading class 0x000000010be331e0
-Event: 0.011 loading class 0x000000010be331e0 done
-Event: 0.011 loading class 0x000000010be33210
-Event: 0.011 loading class 0x000000010be33210 done
-Event: 0.011 loading class 0x000000010be33240
-Event: 0.011 loading class 0x000000010be33240 done
-Event: 0.011 loading class 0x000000010be2b0e0 done
+Event: 0.007 loading class 0x00000001195316e0 done
+Event: 0.008 loading class 0x0000000119531100 done
+Event: 0.008 loading class 0x00000001195310e0
+Event: 0.008 loading class 0x00000001195391e0
+Event: 0.008 loading class 0x00000001195391e0 done
+Event: 0.008 loading class 0x0000000119539210
+Event: 0.008 loading class 0x0000000119539210 done
+Event: 0.008 loading class 0x0000000119539240
+Event: 0.008 loading class 0x0000000119539240 done
+Event: 0.008 loading class 0x00000001195310e0 done
 
 
 Dynamic libraries:
@@ -216,11 +216,11 @@ Dynamic libraries:
 0x000000000a4e9000 	/System/Library/PrivateFrameworks/CoreSymbolication.framework/Versions/A/CoreSymbolication
 0x000000000a4e9000 	/System/Library/PrivateFrameworks/Symbolication.framework/Versions/A/Symbolication
 0x000000000a4e9000 	/System/Library/PrivateFrameworks/DebugSymbols.framework/Versions/A/DebugSymbols
-0x0000000103000000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/server/libjvm.dylib
+0x0000000110800000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/server/libjvm.dylib
 0x000000000a4e9000 	/usr/lib/libstdc++.6.dylib
-0x00000001027a9000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/libverify.dylib
-0x00000001027b6000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/libjava.dylib
-0x00000001027f0000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/libzip.dylib
+0x000000010ffb2000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/libverify.dylib
+0x000000010ffbf000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/libjava.dylib
+0x0000000111253000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/libzip.dylib
 
 VM Arguments:
 jvm_args: -Dfile.encoding=US-ASCII -Xbootclasspath:/Applications/adt-bundle-mac-x86_64-20131030/sdk/platforms/android-19/android.jar 
@@ -251,7 +251,7 @@ SIGQUIT: SIG_DFL, sa_mask[0]=0xfffefeff, sa_flags=0x00000042
 
 OS:Bsduname:Darwin 13.1.0 Darwin Kernel Version 13.1.0: Wed Apr  2 23:52:02 PDT 2014; root:xnu-2422.92.1~2/RELEASE_X86_64 x86_64
 rlimit: STACK 8192k, CORE 0k, NPROC 709, NOFILE 10240, AS infinity
-load average:1.38 1.36 1.31
+load average:1.13 1.16 1.13
 
 CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 69 stepping 1, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, erms, ht, tsc, tscinvbit
 
@@ -262,6 +262,6 @@ Memory: 4k page, physical 8388608k(2097152k free)
 
 vm_info: Java HotSpot(TM) 64-Bit Server VM (24.45-b08) for bsd-amd64 JRE (1.7.0_45-b18), built on Oct  8 2013 05:54:16 by "java_re" with gcc 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.11.00)
 
-time: Tue May 13 14:43:08 2014
+time: Wed May 14 17:39:56 2014
 elapsed time: 0 seconds
 

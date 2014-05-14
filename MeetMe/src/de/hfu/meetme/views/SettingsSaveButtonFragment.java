@@ -63,10 +63,10 @@ public class SettingsSaveButtonFragment extends Fragment
         final String description = settings.getString("description", "");
         
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("DD.MM.yyyy");
+        SimpleDateFormat theDateFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
         try
 		{
-			cal.setTime(sdf.parse(settings.getString("date_of_birth", "01.01.2001")));
+			cal.setTime(theDateFormat.parse(settings.getString("date_of_birth", "01.01.2001")));
 		} catch (ParseException e)
 		{
 			e.printStackTrace();
