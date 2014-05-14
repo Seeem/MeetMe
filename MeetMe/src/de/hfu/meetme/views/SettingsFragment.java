@@ -4,6 +4,11 @@ import de.hfu.meetme.R;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
+/**
+ * 
+ * @author Dominik Jung
+ *
+ */
 public class SettingsFragment extends PreferenceFragment
 {
 	@Override
