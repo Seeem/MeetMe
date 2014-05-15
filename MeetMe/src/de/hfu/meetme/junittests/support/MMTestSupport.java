@@ -15,14 +15,21 @@ import de.hfu.meetme.model.MMUser;
 public final class MMTestSupport
 {
 	
-	public static MMUser createANewValidUser()
+	private static Calendar getValidBirthday()
 	{
-		return new MMUser("", MMGender.MALE, "Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!");
+		Calendar theBirthday = Calendar.getInstance();
+		theBirthday.set(Calendar.YEAR, theBirthday.get(Calendar.YEAR)-12);
+		return theBirthday;
+	}
+	
+	public static MMUser createANewValidUser()
+	{	
+		return new MMUser("", MMGender.MALE, "Sem", "Simeon", "Sembach", getValidBirthday(), "Hi I want to meet you!");
 	}
 	
 	public static MMUser createANewValidUser(String aId)
 	{
-		return new MMUser(aId, MMGender.MALE, "Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!");
+		return new MMUser(aId, MMGender.MALE, "Sem", "Simeon", "Sembach", getValidBirthday(), "Hi I want to meet you!");
 	}
 	
 	public static MMUser createANewNotValidUser()
@@ -32,12 +39,12 @@ public final class MMTestSupport
 	
 	public static MMUser createANewValidMan()
 	{
-		return new MMUser("", MMGender.MALE, "Sem", "Simeon", "Sembach", Calendar.getInstance(), "Hi I want to meet you!");
+		return new MMUser("", MMGender.MALE, "Sem", "Simeon", "Sembach", getValidBirthday(), "Hi I want to meet you!");
 	}
 	
 	public static MMUser createANewValidWoman()
 	{
-		return new MMUser("", MMGender.FEMALE, "Quotenfrau", "Leona", "Musterfrau", Calendar.getInstance(), "Hi I want to meet you!");
+		return new MMUser("", MMGender.FEMALE, "Quotenfrau", "Leona", "Musterfrau", getValidBirthday(), "Hi I want to meet you!");
 	}
 	
 }

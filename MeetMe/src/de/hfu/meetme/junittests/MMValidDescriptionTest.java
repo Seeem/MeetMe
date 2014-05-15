@@ -38,9 +38,8 @@ public class MMValidDescriptionTest
 		{
 			MMUserValidation.isValidDescription(validDescription).generateExceptionIfNotValid();
 		} 
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
-//			e.printStackTrace();
 			isExpected = !isExpected;
 		}
 		
@@ -56,9 +55,8 @@ public class MMValidDescriptionTest
 		{
 			MMUserValidation.isValidDescription(nullDescription).generateExceptionIfNotValid();
 		} 
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
-//			e.printStackTrace();
 			isExpected = !isExpected;
 		}
 		
@@ -74,9 +72,8 @@ public class MMValidDescriptionTest
 		{
 			MMUserValidation.isValidDescription(tooLongDescription).generateExceptionIfNotValid();
 		} 
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
-//			e.printStackTrace();
 			isExpected = !isExpected;
 		}
 		

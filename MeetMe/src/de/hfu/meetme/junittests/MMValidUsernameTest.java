@@ -41,7 +41,7 @@ public class MMValidUsernameTest
 		{
 			MMUserValidation.isValidUsername(validUsername).generateExceptionIfNotValid();
 		} 
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
 			isExpected = !isExpected;
 		}
@@ -58,7 +58,7 @@ public class MMValidUsernameTest
 		{
 			MMUserValidation.isValidUsername(nullUsername).generateExceptionIfNotValid();
 		} 
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
 			isExpected = !isExpected;
 		}
@@ -75,7 +75,7 @@ public class MMValidUsernameTest
 		{
 			MMUserValidation.isValidUsername(tooShortUsername).generateExceptionIfNotValid();
 		} 
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
 			isExpected = !isExpected;
 		}
@@ -92,7 +92,7 @@ public class MMValidUsernameTest
 		{
 			MMUserValidation.isValidUsername(tooLongUsername).generateExceptionIfNotValid();
 		} 
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
 			isExpected = !isExpected;
 		}

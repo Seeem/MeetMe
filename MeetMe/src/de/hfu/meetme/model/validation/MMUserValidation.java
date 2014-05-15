@@ -11,7 +11,6 @@ import de.hfu.meetme.model.MMUser;
 
 /**
  * This class supports some validations for the {@link MMUser}-class.
- * Every available validation-method returns a {@link MMValidation}-Object.
  * 
  * @author Simeon Sembach
  */
@@ -19,6 +18,9 @@ public final class MMUserValidation
 {
 
 	// Class-Members:
+	
+	/** the minimum age of an user */
+	public static final int MINIMUM_AGE_OF_AN_USER = 12;
 	
 	/** the username pattern */
 	public static final Pattern USERNAME_PATTERN = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{2,14}");
@@ -32,6 +34,44 @@ public final class MMUserValidation
 	/** the description pattern */
 	public static final Pattern DESCRIPTION_PATTERN = Pattern.compile(".{0,100}");
 
+	// Internal (Class):
+	
+	/** */
+	private static MMValidation isUserOldEnough(Calendar aDate)
+	{
+		if (aDate == null)
+			return new MMValidation("date is null");
+		
+		Calendar theTodayDate = Calendar.getInstance();
+		
+		int theDeltaYears  = theTodayDate.get(Calendar.YEAR) - aDate.get(Calendar.YEAR);
+		int theDeltaMonths = theTodayDate.get(Calendar.MONTH) - aDate.get(Calendar.MONTH);
+		int theDeltaDays   = theTodayDate.get(Calendar.DAY_OF_MONTH) - aDate.get(Calendar.DAY_OF_MONTH);
+		
+		// TODO TESTEN
+		if (theDeltaYears < MINIMUM_AGE_OF_AN_USER || 
+				(theDeltaYears == MINIMUM_AGE_OF_AN_USER && 
+				(theDeltaMonths < 0 ||
+						(theDeltaMonths == 0 && 
+						(theDeltaDays < 0)))))
+			return new MMValidation("not old enough");
+				
+		return new MMValidation();
+	}
+	
+	/** */
+	private static MMValidation isDateInTheFuture(Calendar aDate)
+	{
+		if (aDate == null)
+			return new MMValidation("date is null");
+		
+		if (aDate.compareTo(Calendar.getInstance()) == 1)
+			return new MMValidation("date is in the future");
+		
+		return new MMValidation();
+	}
+	
+	
 	// MM-API (Class):
 	
 	/**
@@ -128,11 +168,17 @@ public final class MMUserValidation
 	public static MMValidation isValidBirthday(Calendar aBirthday)
 	{
 		if (aBirthday == null)
-			return new MMValidation("Calendar is null");
+			return new MMValidation("birthday is null");
 		
-		// TODO Geburtsdatum optional? Dann null erlaubt?
-		// TODO User muss mindestens x Jahre alt sein
-		// TODO Datum darf nicht in der Zukunft liegen
+		MMValidation validation = isUserOldEnough(aBirthday);
+		
+		if (!validation.isValid())
+			return validation;
+
+		validation = isDateInTheFuture(aBirthday);
+		
+		if(validation.isValid())
+			return validation;
 		
 		return new MMValidation();
 	}

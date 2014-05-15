@@ -41,7 +41,7 @@ public class MMValidFirstNameTest
 		{
 			MMUserValidation.isValidFirstName(validFirstName).generateExceptionIfNotValid();
 		} 
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
 //			e.printStackTrace();
 			isExpected = !isExpected;
@@ -59,7 +59,7 @@ public class MMValidFirstNameTest
 		{
 			MMUserValidation.isValidFirstName(nullFirstName).generateExceptionIfNotValid();
 		} 
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
 //			e.printStackTrace();
 			isExpected = !isExpected;
@@ -77,7 +77,7 @@ public class MMValidFirstNameTest
 		{
 			MMUserValidation.isValidFirstName(tooShortFirstName).generateExceptionIfNotValid();
 		} 
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
 //			e.printStackTrace();
 			isExpected = !isExpected;
@@ -95,7 +95,7 @@ public class MMValidFirstNameTest
 		{
 			MMUserValidation.isValidFirstName(tooLongFirstName).generateExceptionIfNotValid();
 		} 
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
 //			e.printStackTrace();
 			isExpected = !isExpected;

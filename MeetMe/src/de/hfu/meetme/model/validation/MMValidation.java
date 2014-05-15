@@ -70,10 +70,10 @@ public class MMValidation
 	 * with its associated validation-message.
 	 * @throws IllegalArgumentException the validation-message
 	 */
-	public void generateExceptionIfNotValid() throws IllegalArgumentException
+	public void generateExceptionIfNotValid() throws RuntimeException
 	{
 		if (!isValid())
-			throw new IllegalArgumentException(getMessage());
+			throw new RuntimeException(getMessage());
 	}
 	
 	// Accessors:

@@ -30,7 +30,7 @@ public class MMValidDateTest
 		{
 			MMUserValidation.isValidBirthday(nullBirthday).generateExceptionIfNotValid();
 		} 
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
 //			e.printStackTrace();
 			isExpected = !isExpected;
