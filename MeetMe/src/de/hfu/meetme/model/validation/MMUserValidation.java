@@ -22,6 +22,9 @@ public final class MMUserValidation
 	/** the minimum age of an user */
 	public static final int MINIMUM_AGE_OF_AN_USER = 12;
 	
+	/** the maximum age of an user */
+	public static final int MAXIMUM_AGE_OF_AN_USER = 80;
+	
 	/** the username pattern */
 	public static final Pattern USERNAME_PATTERN = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{2,14}");
 	
@@ -33,44 +36,6 @@ public final class MMUserValidation
 	
 	/** the description pattern */
 	public static final Pattern DESCRIPTION_PATTERN = Pattern.compile(".{0,100}");
-
-	// Internal (Class):
-	
-	/** */
-	private static MMValidation isUserOldEnough(Calendar aDate)
-	{
-		if (aDate == null)
-			return new MMValidation("date is null");
-		
-		Calendar theTodayDate = Calendar.getInstance();
-		
-		int theDeltaYears  = theTodayDate.get(Calendar.YEAR) - aDate.get(Calendar.YEAR);
-		int theDeltaMonths = theTodayDate.get(Calendar.MONTH) - aDate.get(Calendar.MONTH);
-		int theDeltaDays   = theTodayDate.get(Calendar.DAY_OF_MONTH) - aDate.get(Calendar.DAY_OF_MONTH);
-		
-		// TODO TESTEN
-		if (theDeltaYears < MINIMUM_AGE_OF_AN_USER || 
-				(theDeltaYears == MINIMUM_AGE_OF_AN_USER && 
-				(theDeltaMonths < 0 ||
-						(theDeltaMonths == 0 && 
-						(theDeltaDays < 0)))))
-			return new MMValidation("not old enough");
-				
-		return new MMValidation();
-	}
-	
-	/** */
-	private static MMValidation isDateInTheFuture(Calendar aDate)
-	{
-		if (aDate == null)
-			return new MMValidation("date is null");
-		
-		if (aDate.compareTo(Calendar.getInstance()) == 1)
-			return new MMValidation("date is in the future");
-		
-		return new MMValidation();
-	}
-	
 	
 	// MM-API (Class):
 	
@@ -170,15 +135,20 @@ public final class MMUserValidation
 		if (aBirthday == null)
 			return new MMValidation("birthday is null");
 		
-		MMValidation validation = isUserOldEnough(aBirthday);
+		Calendar theTodayDate = Calendar.getInstance();
 		
-		if (!validation.isValid())
-			return validation;
+		if (aBirthday.compareTo(theTodayDate) == 1)
+			return new MMValidation("birthday is in the future");
+		
+		int theDeltaYears  = theTodayDate.get(Calendar.YEAR) - aBirthday.get(Calendar.YEAR);
+		int theDeltaMonths = theTodayDate.get(Calendar.MONTH) - aBirthday.get(Calendar.MONTH);
+		int theDeltaDays   = theTodayDate.get(Calendar.DAY_OF_MONTH) - aBirthday.get(Calendar.DAY_OF_MONTH);
 
-		validation = isDateInTheFuture(aBirthday);
-		
-		if(validation.isValid())
-			return validation;
+		if (theDeltaYears < MINIMUM_AGE_OF_AN_USER || (theDeltaYears == MINIMUM_AGE_OF_AN_USER && (theDeltaMonths > 0 || (theDeltaMonths == 0 && (theDeltaDays > 0)))))
+			return new MMValidation("user is not old enough");
+				
+		if (theDeltaYears > MAXIMUM_AGE_OF_AN_USER || (theDeltaYears == MAXIMUM_AGE_OF_AN_USER && (theDeltaMonths < 0 || (theDeltaMonths == 0 && (theDeltaDays < 0)))))
+			return new MMValidation("user is too old");
 		
 		return new MMValidation();
 	}

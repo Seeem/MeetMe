@@ -18,7 +18,7 @@ public class CalendarTest
 	public void test()
 	{
 		Calendar theBirthdayDate = Calendar.getInstance();
-		theBirthdayDate.set(2014-13, Calendar.MAY, 13, 0, 0, 0);
+		theBirthdayDate.set(2014-12, Calendar.MAY, 17, 0, 0, 0);
 		
 		Calendar theTodayDate = Calendar.getInstance();
 			
@@ -30,17 +30,12 @@ public class CalendarTest
 		System.out.println("Delta Months: "+theDeltaMonths);
 		System.out.println("Delta Days: "+theDeltaDays);
 		
-		if (theDeltaYears > 12 || (theDeltaYears == 12 && (theDeltaMonths < 0 || (theDeltaMonths == 0 && theDeltaDays <= 0))))
-		{
-			System.out.println("Alt genug");	
-		}
-		
-		if (theDeltaYears < 12 || (theDeltaYears == 12 && (theDeltaMonths >= 0 && (theDeltaMonths != 0 || theDeltaDays > 0))))
-		{
+		if (theDeltaYears < 12 || 
+				(theDeltaYears == 12 && 
+				(theDeltaMonths > 0 ||
+						(theDeltaMonths == 0 && 
+						(theDeltaDays > 0)))))
 			System.out.println("Zu jung");
-		}
-		
-		
 	}
 	
 	public void printDate(Calendar aCalendar)
