@@ -50,7 +50,8 @@ public class MMNetworkEvents implements NetworkEnvironmentListener
 		});
 	}
 
-
+	// MM-API (Instance):
+	
 	@Override
 	public void clientFound(Client aClient)
 	{
@@ -109,7 +110,7 @@ public class MMNetworkEvents implements NetworkEnvironmentListener
 		
 	}
 
-
+	// Accessors (Instance):
 	
 	/**
 	 * @return the networkEnvironment
@@ -119,8 +120,6 @@ public class MMNetworkEvents implements NetworkEnvironmentListener
 		return networkEnvironment;
 	}
 	
-
-
 	/**
 	 * @param networkEnvironment the networkEnvironment to set
 	 */

@@ -112,6 +112,9 @@ public class MMUser implements Serializable
 	 */
 	public static boolean containsUser(MMUser aUser)
 	{
+		if (aUser == null)
+			throw new NullPointerException("user to search is null");
+		
 		return MMUser.getUsers().containsKey(aUser.getId());
 	}
 	
@@ -131,7 +134,7 @@ public class MMUser implements Serializable
 	public static void addUser(MMUser aUser)
 	{
 		if (aUser == null)
-			throw new IllegalArgumentException("user to add is null");
+			throw new NullPointerException("user to add is null");
 		
 		if (MMUser.containsUser(aUser))
 			throw new IllegalArgumentException("user already exists");
@@ -146,7 +149,7 @@ public class MMUser implements Serializable
 	public static void removeUser(MMUser aUser)
 	{
 		if (aUser == null)
-			throw new IllegalArgumentException("user to remove is null");
+			throw new NullPointerException("user to remove is null");
 		
 		if (!MMUser.containsUser(aUser))
 			throw new IllegalArgumentException("user does not exist");

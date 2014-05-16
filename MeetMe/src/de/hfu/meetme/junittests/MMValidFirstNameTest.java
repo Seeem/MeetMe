@@ -97,7 +97,6 @@ public class MMValidFirstNameTest
 		} 
 		catch (Exception e)
 		{
-//			e.printStackTrace();
 			isExpected = !isExpected;
 		}
 		

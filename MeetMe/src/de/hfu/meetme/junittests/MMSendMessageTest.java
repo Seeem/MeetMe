@@ -5,13 +5,11 @@ package de.hfu.meetme.junittests;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 
 import org.junit.Test;
 
@@ -26,50 +24,70 @@ import de.hfu.meetme.model.message.MMUserMessage;
 public class MMSendMessageTest
 {
 
+	/** */
+	private ByteArrayOutputStream sendingStream;
+	
 	// TODO Implement a "real" sending test
 	
+	// Tests:
+	
 	@Test
-	public void testSaveAndReadAValidUser_ShouldPass()
+	public void testSendOnALocalByteStream_ShouldPass()
 	{
 		boolean isExpected = true;
 		
 		try
 		{
-			sendUser(MMTestSupport.createANewValidUser());		
-			receiveUser();    	    
+			sendUserOnLocalByteStream(MMTestSupport.createANewValidUser());		
+			receiveUserOnLocalByteStream();
 		} 
 		catch (Exception e)
 		{
-//			e.printStackTrace();
 			isExpected = !isExpected;
-		}
-		finally
-		{
-			new File("user.tmp").delete();
 		}
 		
 		assertTrue(isExpected);
 	}
 	
+	// Internals (Instance):
+	
 	/** */
-	private void sendUser(MMUser aUser) throws Exception
+	private void sendUserOnLocalByteStream(MMUser aUser) throws Exception
 	{
-		OutputStream theOutputStream = new FileOutputStream("user.tmp");		
+		setSendingStream(new ByteArrayOutputStream());
 		MMUserMessage theUserMessage = new MMUserMessage(aUser);		
-		ObjectOutputStream oos = new ObjectOutputStream(theOutputStream);
+		ObjectOutputStream oos = new ObjectOutputStream(getSendingStream());
 		oos.writeObject(theUserMessage);
 		oos.close();
 	}
 	
 	/** */
-	private MMUser receiveUser() throws Exception
+	private MMUser receiveUserOnLocalByteStream() throws Exception
 	{
-		InputStream theInputStream = new FileInputStream("user.tmp");
+		InputStream theInputStream = new ByteArrayInputStream(getSendingStream().toByteArray());
 	    ObjectInputStream ois = new ObjectInputStream(theInputStream);
 	    MMUserMessage theUserMessage = (MMUserMessage) ois.readObject();	
 	    ois.close();
 	    
 	    return theUserMessage.getUser();
+	}
+
+	// Accessors:
+	
+	/**
+	 * @return the sendingStream
+	 */
+	public ByteArrayOutputStream getSendingStream()
+	{
+		return sendingStream;
+	}
+
+	/**
+	 * @param sendingStream the sendingStream to set
+	 */
+	public void setSendingStream(ByteArrayOutputStream sendingStream)
+	{
+		this.sendingStream = sendingStream;
 	}
 	
 }

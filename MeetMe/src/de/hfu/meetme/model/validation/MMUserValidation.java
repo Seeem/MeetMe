@@ -25,22 +25,40 @@ public final class MMUserValidation
 	/** the maximum age of an user */
 	public static final int MAXIMUM_AGE_OF_AN_USER = 80;
 	
-	/** the username pattern */
-	public static final Pattern USERNAME_PATTERN = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{2,14}");
+	/** the username pattern: <br>
+	 * Content: any captial letter, lower case letter and number. <br>
+	 * Minimum string-lenght: 2. <br>
+	 * Maximum string-lenght: 20.
+	 */
+	public static final Pattern USERNAME_PATTERN = Pattern.compile("[a-zA-Z0-9]{3,19}");
 	
-	/** The first name pattern */
+	/** The first name pattern: <br>
+	 * Content: First Character have to be a capital letter, following letters have to be lower case letters. <br>
+	 * Minimum string-lenght: 2. <br>
+	 * Maximum string-lenght: 20.
+	 */
 	public static final Pattern FIRSTNAME_PATTERN = Pattern.compile("[A-Z][a-z]{1,19}");
 	
-	/** the last name pattern */
+	/** 
+	 * the last name pattern: <br>
+	 * Content: First Character have to be a capital letter, following letters have to be lower case letters. <br>
+	 * Minimum string-lenght: 2. <br>
+	 * Maximum string-lenght: 20.
+	 */
 	public static final Pattern LASTNAME_PATTERN = Pattern.compile("[A-Z][a-z]{1,19}");
 	
-	/** the description pattern */
+	/** 
+	 * the description pattern: <br>
+	 * Content: Can be any character. <br>
+	 * Minimum string-lenght: 0. <br>
+	 * Maximum string-lenght: 100.
+	 */
 	public static final Pattern DESCRIPTION_PATTERN = Pattern.compile(".{0,100}");
 	
 	// MM-API (Class):
 	
 	/**
-	 * Returns a valid {@link MMValidation} if the given gender is man or woman,
+	 * Returns a valid {@link MMValidation} if the given gender is male or female,
 	 * otherwise it returns a not valid {@link MMValidation}.
 	 * @param aGender the gender to valid
 	 * @return a {@link MMValidation} object
