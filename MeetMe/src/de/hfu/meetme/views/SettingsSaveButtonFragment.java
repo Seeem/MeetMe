@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 import de.hfu.meetme.R;
 
 /**
@@ -34,8 +33,6 @@ public class SettingsSaveButtonFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getActivity(), "Your user profile has been saved!",
-						Toast.LENGTH_SHORT).show();
 				getActivity().finish();
 			}
 

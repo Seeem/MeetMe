@@ -23,7 +23,6 @@ public class SettingsActivity extends Activity
 	public void finish() {
 		Intent intent = new Intent();
 			
-		//Some Code returning the USer and boolean
 		intent.putExtra(MainActivity.IS_USER_CREATED, true);
 		intent.putExtra(MainActivity.MMUSER_TAG, Supporting.getUserFromSharedPreferences(this));
 		

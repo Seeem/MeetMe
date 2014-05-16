@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import de.hfu.meetme.R;
 import de.hfu.meetme.Supporting;
 import de.hfu.meetme.model.MMUser;
@@ -19,13 +20,6 @@ public class MainActivity extends Activity {
 
 	/**The user profile */
 	private MMUser myself = null;
-	
-	/**A boolean which indicates if a {@link MMUser} object has been created yet or not. 
-	 * If the MeetMe App gets started, and this boolean is set false, the App will bring
-	 * the user to the SettingsActivity so he can create his user profile. After creating
-	 * it, isUserCreated will be set to true and next time the {@link MMUser} object will
-	 * be built from the data saved in the SharedPreferences */
-	protected static boolean isUserCreated;
 	
 	/**A final String to identify the key used to save the userCreated boolean in the
 	 * SharedPreferences */
@@ -57,49 +51,42 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * @return isUserCreated
+	 * @return A boolean which indicates if a {@link MMUser} object has been created yet or not. 
+	 * If the MeetMe App gets started, and this boolean is set to false, the App will bring
+	 * the user to the SettingsActivity so he can create his user profile. After creating
+	 * it, isUserCreated will be set to true and next time the {@link MMUser} object will
+	 * be built from the data saved in the SharedPreferences.
 	 */
-	public static boolean isUserCreated()
+	public boolean isUserCreated()
 	{
-		return isUserCreated;
+		SharedPreferences settings = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+		return settings.getBoolean(IS_USER_CREATED, false);
 	}
 
 	/**
 	 * @param isUserCreated the isUserCreated to set
 	 */
-	public static void setIsUserCreated(boolean isUserCreated)
+	public void setIsUserCreated(boolean isUserCreated)
 	{
-		MainActivity.isUserCreated = isUserCreated;
+		SharedPreferences prefs = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+		prefs.edit().putBoolean(IS_USER_CREATED, isUserCreated).commit();
 	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		SharedPreferences settings = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-		setIsUserCreated(settings.getBoolean(IS_USER_CREATED, false));
 
-	
-		if(!isUserCreated)
+		
+		if(!isUserCreated()) 
+		{
 			intentSettingsActivity();
+		}
 		else 
+		{
 			myself = Supporting.getUserFromSharedPreferences(this);
+		}
 			
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		SharedPreferences prefs = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-		prefs.edit().putBoolean(IS_USER_CREATED, isUserCreated);
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		SharedPreferences prefs = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-		isUserCreated = prefs.getBoolean(IS_USER_CREATED, false);
 	}
 	
 	@Override
@@ -110,7 +97,9 @@ public class MainActivity extends Activity {
 			Bundle bundle = intent.getExtras();
 			setIsUserCreated(bundle.getBoolean(IS_USER_CREATED));
 			setMyself((MMUser)bundle.getSerializable(MMUSER_TAG));
-					
+			
+			Toast.makeText(this, "Your profile has been saved", Toast.LENGTH_SHORT).show();
+			
 		       }
 		}
 
@@ -141,6 +130,5 @@ public class MainActivity extends Activity {
 		startActivityForResult(intent, REQUEST_CODE);
 	}
 
-	
 
 }
