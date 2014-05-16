@@ -18,7 +18,7 @@ import de.hfu.meetme.model.MMUser;
 public class MainActivity extends Activity {
 
 	/**The user profile */
-	protected static MMUser myself = null;
+	private MMUser myself = null;
 	
 	/**A boolean which indicates if a {@link MMUser} object has been created yet or not. 
 	 * If the MeetMe App gets started, and this boolean is set false, the App will bring
@@ -31,34 +31,88 @@ public class MainActivity extends Activity {
 	 * SharedPreferences */
 	protected final static String IS_USER_CREATED= "isUserCreated";
 	
+	/**A final String which names the SharedPreferences */
+	public final static String SHARED_PREFERENCES_NAME= "MeetMeAppPreferences";
+	
+	/**The tag used to put the {@link MMUser} object 'myself' as extra to an intent.  */
+	public final static String MMUSER_TAG = "Myself";
+	
+	/** */
+	private static final int REQUEST_CODE = 1;
+	
+	/**
+	 * @return myself
+	 */
+	public MMUser getMyself()
+	{
+		return myself;
+	}
+
+	/**
+	 * @param aMyself the myself to set
+	 */
+	public void setMyself(MMUser aMMuser)
+	{
+		myself = aMMuser;
+	}
+
+	/**
+	 * @return isUserCreated
+	 */
+	public static boolean isUserCreated()
+	{
+		return isUserCreated;
+	}
+
+	/**
+	 * @param isUserCreated the isUserCreated to set
+	 */
+	public static void setIsUserCreated(boolean isUserCreated)
+	{
+		MainActivity.isUserCreated = isUserCreated;
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		if (myself == null) {
-			if(!isUserCreated)
-				intentSettingsActivity();
-			else 
-				myself = Supporting.getUser(this);
-			
-		}
 		
+		SharedPreferences settings = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+		setIsUserCreated(settings.getBoolean(IS_USER_CREATED, false));
+
+	
+		if(!isUserCreated)
+			intentSettingsActivity();
+		else 
+			myself = Supporting.getUserFromSharedPreferences(this);
+			
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
-		SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+		SharedPreferences prefs = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
 		prefs.edit().putBoolean(IS_USER_CREATED, isUserCreated);
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+		SharedPreferences prefs = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
 		isUserCreated = prefs.getBoolean(IS_USER_CREATED, false);
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		if ((requestCode == REQUEST_CODE) && 
+		                     (resultCode == RESULT_OK)) {
+				
+			Bundle bundle = intent.getExtras();
+			setIsUserCreated(bundle.getBoolean(IS_USER_CREATED));
+			setMyself((MMUser)bundle.getSerializable(MMUSER_TAG));
+					
+		       }
+		}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,8 +137,10 @@ public class MainActivity extends Activity {
 
 	/** Intents the SettingsActivity */
 	private void intentSettingsActivity() {
-		Intent intent = new Intent(this, de.hfu.meetme.views.SettingsActivity.class);
-		startActivity(intent);
+		final Intent intent = new Intent(this, de.hfu.meetme.views.SettingsActivity.class);
+		startActivityForResult(intent, REQUEST_CODE);
 	}
+
+	
 
 }

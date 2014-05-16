@@ -5,9 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import de.hfu.meetme.model.MMGender;
 import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.views.MainActivity;
 
 /**
  * 
@@ -22,9 +24,10 @@ public class Supporting {
 	 * Reads the user profile data from the SharedPreferences, set in the
 	 * settings. Currently expects the input to be correct
 	 */
-	public static MMUser getUser(Activity activity) {
+	public static MMUser getUserFromSharedPreferences(Context context) {
 
-		final SharedPreferences settings = activity.getPreferences(0);
+		final SharedPreferences settings = 
+				context.getSharedPreferences(MainActivity.SHARED_PREFERENCES_NAME, Activity.MODE_PRIVATE);
 
 		// Get Data
 		final String id = "Test"; //TODO: Here should be the unique ID
