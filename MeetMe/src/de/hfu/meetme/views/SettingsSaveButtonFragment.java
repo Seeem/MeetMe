@@ -1,4 +1,3 @@
-
 package de.hfu.meetme.views;
 
 import android.app.Fragment;
@@ -13,26 +12,33 @@ import de.hfu.meetme.R;
 /**
  * 
  * @author Dominik Jung
- *
+ * 
  */
-public class SettingsSaveButtonFragment extends Fragment {
+public class SettingsSaveButtonFragment extends Fragment
+{
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState)
+	{
 
 		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_settings_button, container, false);
+		View view = inflater.inflate(R.layout.fragment_settings_button,
+				container, false);
 
 		// Add an onClickListener
-		Button saveButton = (Button) view.findViewById(R.id.settings_save_button);
+		Button saveButton = (Button) view
+				.findViewById(R.id.settings_save_button);
 		saveButton.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v)
+			{
 				getActivity().finish();
 			}
 
