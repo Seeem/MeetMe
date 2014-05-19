@@ -14,26 +14,32 @@ import de.hfu.meetme.model.MMUser;
 /**
  * 
  * @author Dominik Jung
- *
+ * 
  */
-public class MainActivity extends Activity {
+public class MainActivity extends Activity
+{
 
-	/**The user profile */
+	/** The user profile */
 	private MMUser myself = null;
-	
-	/**A final String to identify the key used to save the userCreated boolean in the
-	 * SharedPreferences */
-	protected final static String IS_USER_CREATED= "isUserCreated";
-	
-	/**A final String which names the SharedPreferences */
-	public final static String SHARED_PREFERENCES_NAME= "MeetMeAppPreferences";
-	
-	/**The tag used to put the {@link MMUser} object 'myself' as extra to an intent.  */
+
+	/**
+	 * A final String to identify the key used to save the userCreated boolean
+	 * in the SharedPreferences
+	 */
+	protected final static String IS_USER_CREATED = "isUserCreated";
+
+	/** A final String which names the SharedPreferences */
+	public final static String SHARED_PREFERENCES_NAME = "MeetMeAppPreferences";
+
+	/**
+	 * The tag used to put the {@link MMUser} object 'myself' as extra to an
+	 * intent.
+	 */
 	public final static String MMUSER_TAG = "Myself";
-	
+
 	/** */
 	private static final int REQUEST_CODE = 1;
-	
+
 	/**
 	 * @return myself
 	 */
@@ -43,7 +49,8 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * @param aMyself the myself to set
+	 * @param aMyself
+	 *            the myself to set
 	 */
 	public void setMyself(MMUser aMMuser)
 	{
@@ -51,60 +58,67 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * @return A boolean which indicates if a {@link MMUser} object has been created yet or not. 
-	 * If the MeetMe App gets started, and this boolean is set to false, the App will bring
-	 * the user to the SettingsActivity so he can create his user profile. After creating
-	 * it, isUserCreated will be set to true and next time the {@link MMUser} object will
-	 * be built from the data saved in the SharedPreferences.
+	 * @return A boolean which indicates if a {@link MMUser} object has been
+	 *         created yet or not. If the MeetMe App gets started, and this
+	 *         boolean is set to false, the App will bring the user to the
+	 *         SettingsActivity so he can create his user profile. After
+	 *         creating it, isUserCreated will be set to true and next time the
+	 *         {@link MMUser} object will be built from the data saved in the
+	 *         SharedPreferences.
 	 */
 	public boolean isUserCreated()
 	{
-		SharedPreferences settings = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+		SharedPreferences settings = getSharedPreferences(
+				SHARED_PREFERENCES_NAME, MODE_PRIVATE);
 		return settings.getBoolean(IS_USER_CREATED, false);
 	}
 
 	/**
-	 * @param isUserCreated the isUserCreated to set
+	 * @param isUserCreated
+	 *            the isUserCreated to set
 	 */
 	public void setIsUserCreated(boolean isUserCreated)
 	{
-		SharedPreferences prefs = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+		SharedPreferences prefs = getSharedPreferences(SHARED_PREFERENCES_NAME,
+				MODE_PRIVATE);
 		prefs.edit().putBoolean(IS_USER_CREATED, isUserCreated).commit();
 	}
-	
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		
-		if(!isUserCreated()) 
+		if (!isUserCreated())
 		{
 			intentSettingsActivity();
-		}
-		else 
+		} else
 		{
-			myself = Supporting.getUserFromSharedPreferences(this);
+			myself = Supporting.getUserFromSharedPreferences(this, false);
 		}
-			
 	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		if ((requestCode == REQUEST_CODE) && 
-		                     (resultCode == RESULT_OK)) {
-				
-			Bundle bundle = intent.getExtras();
-			setIsUserCreated(bundle.getBoolean(IS_USER_CREATED));
-			setMyself((MMUser)bundle.getSerializable(MMUSER_TAG));
-			
-			Toast.makeText(this, "Your profile has been saved", Toast.LENGTH_SHORT).show();
-			
-		       }
-		}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent)
+	{
+		if ((requestCode == REQUEST_CODE) && (resultCode == RESULT_OK))
+		{
+
+			Bundle bundle = intent.getExtras();
+			setIsUserCreated(bundle.getBoolean(IS_USER_CREATED));
+			setMyself((MMUser) bundle.getSerializable(MMUSER_TAG));
+
+			Toast.makeText(this, "Your profile has been saved",
+					Toast.LENGTH_SHORT).show();
+
+		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
@@ -112,12 +126,14 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.action_settings)
+		{
 			intentSettingsActivity();
 			return true;
 		}
@@ -125,10 +141,11 @@ public class MainActivity extends Activity {
 	}
 
 	/** Intents the SettingsActivity */
-	private void intentSettingsActivity() {
-		final Intent intent = new Intent(this, de.hfu.meetme.views.SettingsActivity.class);
+	private void intentSettingsActivity()
+	{
+		final Intent intent = new Intent(this,
+				de.hfu.meetme.views.SettingsActivity.class);
 		startActivityForResult(intent, REQUEST_CODE);
 	}
-
 
 }
