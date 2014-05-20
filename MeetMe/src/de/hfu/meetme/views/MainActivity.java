@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import de.hfu.meetme.R;
 import de.hfu.meetme.Supporting;
@@ -98,24 +99,7 @@ public class MainActivity extends Activity
 			myself = Supporting.getUserFromSharedPreferences(this, false);
 		}
 	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode,
-			Intent intent)
-	{
-		if ((requestCode == REQUEST_CODE) && (resultCode == RESULT_OK))
-		{
-
-			Bundle bundle = intent.getExtras();
-			setIsUserCreated(bundle.getBoolean(IS_USER_CREATED));
-			setMyself((MMUser) bundle.getSerializable(MMUSER_TAG));
-
-			Toast.makeText(this, "Your profile has been saved",
-					Toast.LENGTH_SHORT).show();
-
-		}
-	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -140,7 +124,30 @@ public class MainActivity extends Activity
 		return super.onOptionsItemSelected(item);
 	}
 
-	/** Intents the SettingsActivity */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent)
+	{
+		if ((requestCode == REQUEST_CODE) && (resultCode == RESULT_OK))
+		{
+
+			Bundle bundle = intent.getExtras();
+			setIsUserCreated(bundle.getBoolean(IS_USER_CREATED));
+			setMyself((MMUser) bundle.getSerializable(MMUSER_TAG));
+
+			Toast.makeText(this, "Your profile has been saved",
+					Toast.LENGTH_SHORT).show();
+
+		}
+	}
+
+	public void intentUserListActivity(View view) {
+		final Intent intent = new Intent(this,
+				de.hfu.meetme.views.UserListActivity.class);
+		startActivityForResult(intent, REQUEST_CODE);
+	}
+
+	/** Sends an intent to the SettingsActivity */
 	private void intentSettingsActivity()
 	{
 		final Intent intent = new Intent(this,

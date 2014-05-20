@@ -26,6 +26,14 @@
             android:name="de.hfu.meetme.views.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+        <activity
+            android:name="de.hfu.meetme.views.UserListActivity"
+            android:label="@string/title_activity_user_list"
+            android:parentActivityName="android.app.ListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.app.ListActivity" />
+        </activity>
     </application>
 
 </manifest>
