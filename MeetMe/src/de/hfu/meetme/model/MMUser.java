@@ -173,6 +173,12 @@ public class MMUser implements Serializable
 		}
 	}
 	
+	/** */
+	public static MMUser[] getAllUsersAsArray()
+	{
+		return (MMUser[]) MMUser.getUsers().values().toArray();
+	}
+	
 	// Accessors (Instance):
 	
 	/**
