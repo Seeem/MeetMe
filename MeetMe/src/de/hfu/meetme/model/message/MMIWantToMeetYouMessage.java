@@ -38,4 +38,10 @@ public class MMIWantToMeetYouMessage extends MMMessage
 		return (String) super.getMessage();
 	}
 
+	/** */
+	@Override public String toString()
+	{
+		return "ID: "+getId();
+	}
+	
 }

@@ -42,4 +42,10 @@ public class MMUserMessage extends MMMessage
 		return (MMUser) super.getMessage();
 	}
 
+	/** */
+	@Override public String toString()
+	{
+		return getUser().toString();
+	}
+	
 }
