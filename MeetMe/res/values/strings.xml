@@ -6,6 +6,9 @@
     <string name="hello_world">Hello User!</string>
     <string name="action_settings">Settings</string>
     
+    <!-- MainActivity -->
+    <string name="user_list_button">Push Me!</string>
+
     <!-- SettingsFragment -->
     <string name="pref_category_name">Your userprofile</string>
     <string name="pref_title_username">Username</string>
@@ -22,8 +25,11 @@
     <string name="pref_switchTextOff_gender">Female</string>
     <string name="pref_title_description">Description</string>
     <string name="pref_summary_description">Describe yourself</string>
-    
+
     <!-- SettingsSaveButtonFragment -->
-    <string name ="settings_save_button_text">Save your profile!</string>
+    <string name="settings_save_button_text">Save your profile!</string>
+    
+    <!-- UserListActivity -->
+    <string name="title_activity_user_list">Users</string>
 
 </resources>
