@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 public class UserListFragment extends ListFragment
 {
@@ -62,7 +61,7 @@ public class UserListFragment extends ListFragment
 		
 		users[2] = new MMUser("ID3", MMGender.FEMALE, "FrozenNipples", "Sexy",
 				"Lady", cal);
-		ArrayAdapter<MMUser> usersAdapter = new ArrayAdapter<MMUser>(
+		MMUserArrayAdapter usersAdapter = new MMUserArrayAdapter(
 				getActivity(), android.R.layout.simple_list_item_1, users);
 
 		setListAdapter(usersAdapter);
