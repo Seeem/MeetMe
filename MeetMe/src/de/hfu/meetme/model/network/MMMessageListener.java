@@ -3,9 +3,6 @@
  */
 package de.hfu.meetme.model.network;
 
-import java.net.DatagramPacket;
-
-import de.hfu.meetme.model.message.MMMessage;
 
 /**
  * @author Simeon Sembach
@@ -14,10 +11,6 @@ import de.hfu.meetme.model.message.MMMessage;
 public interface MMMessageListener
 {
 
-	public void UDPBroadcastMessageReceived(DatagramPacket aDatagramPacket);
-	
-	public void UDPSingleMessageReceived(DatagramPacket aDatagramPacket);
-	
-	public void TCPMessageReceived(MMMessage aMessage);
+	public void messageReceived(MMMessageEvent aMessageEvent);
 	
 }

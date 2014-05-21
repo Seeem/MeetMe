@@ -3,14 +3,8 @@
  */
 package de.hfu.meetme.model.network;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
-import de.hfu.meetme.model.message.MMMessage;
 
 /**
  * @author Simeon Sembach
@@ -19,40 +13,46 @@ import de.hfu.meetme.model.message.MMMessage;
 public final class MMNetworkUtil
 {
 
-	public static final int BROADCAST_PORT = 9000;
+	// Class-Members:
 	
-	public static final int SINGLE_PORT = 9001;
+	/** The UDP broadcast port. */
+	public static final int UDP_BROADCAST_PORT = 9000;
 	
+	/** The UDP port for single messages. */
+	public static final int UDP_PORT = 9001;
+	
+	/** The TCP port. */
 	public static final int TCP_PORT = 9002;
 	
-	public static final String NEW_IN_THE_NETWORK = "1";
+	/** The UDP ping message. */
+	public static final String UDP_MESSAGE_PING = "";
 	
-	public static final String ADD_ME = "2";
+	/** The UDP new in the network message */
+	public static final String UDP_MESSAGE_NEW_IN_THE_NETWORK = "1";
 	
+	/** The UDP add me message */
+	public static final String UDP_MESSAGE_ADD_ME = "2";
 	
+	// MM-API:
+	
+	/**
+	 * Returns the broadcast address as {@link InetAddress}.
+	 * @return the broadcast address
+	 * @throws UnknownHostException
+	 */
 	public static InetAddress getBroadcastAddress() throws UnknownHostException
 	{
 		return InetAddress.getByName("255.255.255.255");
 	}
 	
-	public static DatagramPacket messageToDatagramPacket(MMMessage aMessage, InetAddress aInetAddress, int aPort) throws IOException
+	/**
+	 * Returns the local host address as {@link InetAddress}.
+	 * @return the local host address
+	 * @throws UnknownHostException
+	 */
+	public static InetAddress getLocalhostAddress() throws UnknownHostException
 	{
-		byte[] theByteArray = messageToByteArray(aMessage);
-		
-		System.out.println(theByteArray.length);
-		
-		return new DatagramPacket(theByteArray, theByteArray.length, aInetAddress, aPort);
-	}
-	
-	private static byte[] messageToByteArray(MMMessage aMessage) throws IOException
-	{
-		ByteArrayOutputStream theOutputStream = new ByteArrayOutputStream();		
-		ObjectOutputStream theObjectOutputStream = new ObjectOutputStream(theOutputStream);
-		
-		theObjectOutputStream.writeObject(aMessage);
-		theObjectOutputStream.close();
-		
-		return theOutputStream.toByteArray();
+		return InetAddress.getByName("localhost");
 	}
 	
 }

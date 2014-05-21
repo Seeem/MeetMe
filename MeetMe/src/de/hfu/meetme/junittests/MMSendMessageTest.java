@@ -5,89 +5,113 @@ package de.hfu.meetme.junittests;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.IOException;
 
 import org.junit.Test;
 
 import de.hfu.meetme.junittests.support.MMTestSupport;
-import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.message.MMUserMessage;
+import de.hfu.meetme.model.network.MMMessageEvent;
+import de.hfu.meetme.model.network.MMMessageListener;
+import de.hfu.meetme.model.network.MMMessageProtocoll;
+import de.hfu.meetme.model.network.MMMessageReceiver;
+import de.hfu.meetme.model.network.MMMessageSender;
+import de.hfu.meetme.model.network.MMMessageType;
+import de.hfu.meetme.model.network.MMNetworkUtil;
 
 /**
  * @author Simeon Sembach
  *
  */
-public class MMSendMessageTest
+public class MMSendMessageTest implements MMMessageListener
 {
 
-	/** */
-	private ByteArrayOutputStream sendingStream;
+	// Instance-Members:
 	
-	// TODO Implement a "real" sending test
+	/** */
+	private boolean hasUDPBroadcastMessageReceived = false;
+	
+	/** */
+	private boolean hasUDPSingleMessageReceived = false;
+	
+	/** */
+	private boolean hasTCPMessageReceived = false;
 	
 	// Tests:
 	
 	@Test
-	public void testSendOnALocalByteStream_ShouldPass()
+	public void testSendAndReceiveAnUDPBroadcastMessage() throws IOException, InterruptedException
 	{
-		boolean isExpected = true;
+		MMMessageReceiver.addMessageListener(this);
+		MMMessageReceiver.startReceiver();
 		
-		try
+		MMMessageSender.startSender();	
+		MMMessageSender.sendUDPBroadcastMessage(MMNetworkUtil.UDP_MESSAGE_PING);
+		
+		Thread.sleep(100);
+		
+		MMMessageSender.stopSender();
+		MMMessageReceiver.stopReceiver();
+		MMMessageReceiver.removeMessageListener(this);
+		
+		assertTrue(hasUDPBroadcastMessageReceived);
+	}
+
+	@Test
+	public void testSendAndReceiveAnUDPSingleMessage() throws IOException, InterruptedException
+	{
+		MMMessageReceiver.addMessageListener(this);
+		MMMessageReceiver.startReceiver();
+		
+		MMMessageSender.startSender();	
+		MMMessageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), MMNetworkUtil.UDP_MESSAGE_PING);
+		
+		Thread.sleep(100);
+		
+		MMMessageSender.stopSender();
+		MMMessageReceiver.stopReceiver();
+		MMMessageReceiver.removeMessageListener(this);
+		
+		assertTrue(hasUDPSingleMessageReceived);
+	}
+	
+	@Test
+	public void testSendAndReceiveAnTCPMessage() throws IOException, InterruptedException
+	{
+		MMMessageReceiver.addMessageListener(this);
+		MMMessageReceiver.startReceiver();
+		
+		MMMessageSender.startSender();	
+		MMMessageSender.sendTCPMessage(MMNetworkUtil.getLocalhostAddress(), new MMUserMessage(MMTestSupport.createANewValidUser()));
+	
+		Thread.sleep(100);
+		
+		MMMessageSender.stopSender();
+		MMMessageReceiver.stopReceiver();
+		MMMessageReceiver.removeMessageListener(this);
+		
+		assertTrue(hasTCPMessageReceived);
+	}
+	
+	// Implementors:
+	
+	@Override public void messageReceived(MMMessageEvent aMessageEvent)
+	{
+		if (aMessageEvent.getMessageProtocoll() == MMMessageProtocoll.UDP)
 		{
-			sendUserOnLocalByteStream(MMTestSupport.createANewValidUser());		
-			receiveUserOnLocalByteStream();
-		} 
-		catch (Exception e)
-		{
-			isExpected = !isExpected;
+			if (aMessageEvent.getMessageType() == MMMessageType.BROADCAST)
+			{
+				hasUDPBroadcastMessageReceived = true;
+			}
+			else if (aMessageEvent.getMessageType() == MMMessageType.SINGLE)
+			{
+				hasUDPSingleMessageReceived = true;
+			}
 		}
-		
-		assertTrue(isExpected);
-	}
-	
-	// Internals (Instance):
-	
-	/** */
-	private void sendUserOnLocalByteStream(MMUser aUser) throws Exception
-	{
-		setSendingStream(new ByteArrayOutputStream());
-		MMUserMessage theUserMessage = new MMUserMessage(aUser);		
-		ObjectOutputStream oos = new ObjectOutputStream(getSendingStream());
-		oos.writeObject(theUserMessage);
-		oos.close();
-	}
-	
-	/** */
-	private MMUser receiveUserOnLocalByteStream() throws Exception
-	{
-		InputStream theInputStream = new ByteArrayInputStream(getSendingStream().toByteArray());
-	    ObjectInputStream ois = new ObjectInputStream(theInputStream);
-	    MMUserMessage theUserMessage = (MMUserMessage) ois.readObject();	
-	    ois.close();
-	    
-	    return theUserMessage.getUser();
-	}
-
-	// Accessors:
-	
-	/**
-	 * @return the sendingStream
-	 */
-	public ByteArrayOutputStream getSendingStream()
-	{
-		return sendingStream;
-	}
-
-	/**
-	 * @param sendingStream the sendingStream to set
-	 */
-	public void setSendingStream(ByteArrayOutputStream sendingStream)
-	{
-		this.sendingStream = sendingStream;
+		else if (aMessageEvent.getMessageProtocoll() == MMMessageProtocoll.TCP)
+		{
+			hasTCPMessageReceived = true;	
+		}
 	}
 	
 }

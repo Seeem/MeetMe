@@ -42,7 +42,7 @@ public class MMValidDateTest
 	{
 		Calendar theBirthday = Calendar.getInstance();
 		theBirthday.set(Calendar.YEAR, theBirthday.get(Calendar.YEAR)-MMUserValidation.MINIMUM_AGE_OF_AN_USER);
-		if (theBirthday.get(Calendar.MONTH)  != theBirthday.getActualMaximum(theBirthday.get(Calendar.MONTH)))	
+		if (theBirthday.get(Calendar.MONTH)  != theBirthday.getActualMaximum(Calendar.MONTH))	
 			theBirthday.set(Calendar.MONTH, theBirthday.get(Calendar.MONTH)+1);	
 		return theBirthday;
 	}
@@ -52,7 +52,7 @@ public class MMValidDateTest
 	{
 		Calendar theBirthday = Calendar.getInstance();
 		theBirthday.set(Calendar.YEAR, theBirthday.get(Calendar.YEAR)-MMUserValidation.MINIMUM_AGE_OF_AN_USER);
-		if (theBirthday.get(Calendar.DAY_OF_MONTH) != theBirthday.getActualMaximum(theBirthday.get(Calendar.DAY_OF_MONTH) ))
+		if (theBirthday.get(Calendar.DAY_OF_MONTH) != theBirthday.getActualMaximum(Calendar.DAY_OF_MONTH))
 			theBirthday.set(Calendar.DAY_OF_MONTH, theBirthday.get(Calendar.DAY_OF_MONTH)+1);
 		return theBirthday;
 	}
@@ -72,7 +72,7 @@ public class MMValidDateTest
 	{
 		Calendar theBirthday = Calendar.getInstance();
 		theBirthday.set(Calendar.YEAR, theBirthday.get(Calendar.YEAR)-MMUserValidation.MINIMUM_AGE_OF_AN_USER-1);
-		if (theBirthday.get(Calendar.DAY_OF_MONTH) != theBirthday.getActualMinimum(theBirthday.get(Calendar.DAY_OF_MONTH)))
+		if (theBirthday.get(Calendar.DAY_OF_MONTH) != theBirthday.getActualMinimum(Calendar.DAY_OF_MONTH))
 			theBirthday.set(Calendar.DAY_OF_MONTH, theBirthday.get(Calendar.DAY_OF_MONTH)-1);
 		return theBirthday;
 	}

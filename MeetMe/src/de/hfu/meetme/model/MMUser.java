@@ -173,7 +173,10 @@ public class MMUser implements Serializable
 		}
 	}
 	
-	/** */
+	/**
+	 * Returns all users as array.
+	 * @return the users as array
+	 */
 	public static MMUser[] getAllUsersAsArray()
 	{
 		return (MMUser[]) MMUser.getUsers().values().toArray();
