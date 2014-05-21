@@ -1,4 +1,4 @@
-package de.hfu.meetme.views;
+package de.hfu.meetme;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,28 +14,25 @@ import android.widget.TextView;
 
 public class MMUserArrayAdapter extends ArrayAdapter<MMUser>
 {
-	
+
 	private int mResource;
 	private LayoutInflater mInflater;
 	private int mFieldId;
-	private Context mContext;
-	private List<MMUser> mObjects;
-	private int mDropDownResource;
 
 	public MMUserArrayAdapter(Context aContext, int aResource, MMUser[] aObjects)
 	{
 		super(aContext, aResource, aObjects);
 		init(aContext, aResource, 0, Arrays.asList(aObjects));
 	}
-	
-	
-	private void init(Context context, int resource, int textViewResourceId, List<MMUser> objects) {
-		        mContext = context;
-		        mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		        mResource = mDropDownResource = resource;
-		        mObjects = objects;
-		        mFieldId = textViewResourceId;
-		    }
+
+	private void init(Context context, int resource, int textViewResourceId,
+			List<MMUser> objects)
+	{
+		mInflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mResource = resource;
+		mFieldId = textViewResourceId;
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
@@ -85,6 +82,5 @@ public class MMUserArrayAdapter extends ArrayAdapter<MMUser>
 		}
 		return view;
 	}
-	
 
 }

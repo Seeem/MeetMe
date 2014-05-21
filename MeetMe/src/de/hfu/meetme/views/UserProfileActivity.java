@@ -7,18 +7,42 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import de.hfu.meetme.R;
+import de.hfu.meetme.model.MMUser;
 
-public class UserListActivity extends Activity
+public class UserProfileActivity extends Activity
 {
+	/**
+	 * The user clicked in the {@link UserListActivity}
+	 */
+	private MMUser user;
 
-	private final static int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
-	public final static int REQUEST_CODE_USER_PROFILE_ACTIVITY = 2;
+	/**
+	 * @return the user
+	 */
+	public MMUser getUser()
+	{
+		return user;
+	}
+
+	/**
+	 * @param aUser
+	 *            the user to set
+	 */
+	public void setUser(MMUser aUser)
+	{
+		user = aUser;
+	}
+
+	private static final int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_user_list);
+		setContentView(R.layout.activity_user_profile);
+
+		Bundle extras = getIntent().getExtras();
+		setUser((MMUser) extras.getSerializable(UserListFragment.MMUSER_KEY));
 	}
 
 	@Override
@@ -26,7 +50,7 @@ public class UserListActivity extends Activity
 	{
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.user_list, menu);
+		getMenuInflater().inflate(R.menu.user_profile, menu);
 		return true;
 	}
 
@@ -43,21 +67,6 @@ public class UserListActivity extends Activity
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent intent)
-	{
-		if ((requestCode == UserListActivity.REQUEST_CODE_USER_PROFILE_ACTIVITY)
-				&& (resultCode == RESULT_OK))
-		{
-		}
-		if ((requestCode == UserListActivity.REQUEST_CODE_SETTINGS_ACTIVITY)
-				&& (resultCode == RESULT_OK))
-		{
-			Toast.makeText(this, "Your profile has been saved",
-					Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	@Override
 	public void finish()
 	{
 		Intent intent = new Intent();
@@ -71,5 +80,17 @@ public class UserListActivity extends Activity
 		final Intent intent = new Intent(this,
 				de.hfu.meetme.views.SettingsActivity.class);
 		startActivityForResult(intent, REQUEST_CODE_SETTINGS_ACTIVITY);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent)
+	{
+		if ((requestCode == REQUEST_CODE_SETTINGS_ACTIVITY)
+				&& (resultCode == RESULT_OK))
+		{
+			Toast.makeText(this, "Your profile has been saved",
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 }

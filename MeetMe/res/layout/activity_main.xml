@@ -17,16 +17,17 @@
 
         <TextView
             android:id="@+id/textView1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hello_world" />
-        
-        <Button 
+            android:text="@string/hello_world"
+            android:textSize="20sp" />
+
+        <Button
             android:id="@+id/userListButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/user_list_button"
-            android:onClick="intentUserListActivity"/>
+            android:onClick="intentUserListActivity"
+            android:text="@string/main_activity_user_list_button" />
     </LinearLayout>
 
 </ScrollView>

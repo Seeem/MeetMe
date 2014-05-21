@@ -5,9 +5,9 @@
     <string name="app_name">MeetMe</string>
     <string name="hello_world">Hello User!</string>
     <string name="action_settings">Settings</string>
-    
+
     <!-- MainActivity -->
-    <string name="user_list_button">Push Me!</string>
+    <string name="main_activity_user_list_button">Show user list</string>
 
     <!-- SettingsFragment -->
     <string name="pref_category_name">Your userprofile</string>
@@ -28,8 +28,20 @@
 
     <!-- SettingsSaveButtonFragment -->
     <string name="settings_save_button_text">Save your profile!</string>
-    
+
     <!-- UserListActivity -->
     <string name="title_activity_user_list">Users</string>
+    
+    <!-- UserProfileActivity -->
+    <string name="title_activity_user_profile">User Profile</string>
+    
+    <!-- UserProfileFragment -->
+	<string name="user_profile_fragment_user_name_key">Username:</string>
+	<string name="user_profile_fragment_first_name_key">First name:</string>
+	<string name="user_profile_fragment_last_name_key">Last name:</string>
+	<string name="user_profile_fragment_birthday_key">Birthday:</string>
+	<string name="user_profile_fragment_gender_key">Gender:</string>
+	<string name="user_profile_fragment_description_key">Description:</string>
+	<string name="user_profile_fragment_meet_me_button_text">Meet me!</string>
 
 </resources>

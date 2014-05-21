@@ -39,7 +39,8 @@ public class MainActivity extends Activity
 	public final static String MMUSER_TAG = "Myself";
 
 	/** */
-	private static final int REQUEST_CODE = 1;
+	private static final int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
+	private static final int REQUEST_CODE_USER_LIST_ACTIVITY = 2;
 
 	/**
 	 * @return myself
@@ -99,7 +100,7 @@ public class MainActivity extends Activity
 			myself = Supporting.getUserFromSharedPreferences(this, false);
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -112,9 +113,6 @@ public class MainActivity extends Activity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings)
 		{
@@ -128,7 +126,8 @@ public class MainActivity extends Activity
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent)
 	{
-		if ((requestCode == REQUEST_CODE) && (resultCode == RESULT_OK))
+		if ((requestCode == REQUEST_CODE_SETTINGS_ACTIVITY)
+				&& (resultCode == RESULT_OK))
 		{
 
 			Bundle bundle = intent.getExtras();
@@ -139,12 +138,18 @@ public class MainActivity extends Activity
 					Toast.LENGTH_SHORT).show();
 
 		}
+		if ((requestCode == REQUEST_CODE_USER_LIST_ACTIVITY)
+				&& (resultCode == RESULT_OK))
+		{
+		}
 	}
 
-	public void intentUserListActivity(View view) {
+	/** Sends an intent to the UserListActivity */
+	public void intentUserListActivity(View view)
+	{
 		final Intent intent = new Intent(this,
 				de.hfu.meetme.views.UserListActivity.class);
-		startActivityForResult(intent, REQUEST_CODE);
+		startActivityForResult(intent, REQUEST_CODE_USER_LIST_ACTIVITY);
 	}
 
 	/** Sends an intent to the SettingsActivity */
@@ -152,7 +157,7 @@ public class MainActivity extends Activity
 	{
 		final Intent intent = new Intent(this,
 				de.hfu.meetme.views.SettingsActivity.class);
-		startActivityForResult(intent, REQUEST_CODE);
+		startActivityForResult(intent, REQUEST_CODE_SETTINGS_ACTIVITY);
 	}
 
 }
