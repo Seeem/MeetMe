@@ -182,6 +182,15 @@ public class MMUser implements Serializable
 		return (MMUser[]) MMUser.getUsers().values().toArray();
 	}
 	
+	/**
+	 * Returns the birthday date as string.
+	 * @return the birthday as string
+	 */
+	public String getBirthdayAsString()
+	{		
+		return ((SimpleDateFormat) SimpleDateFormat.getDateInstance()).format(getBirthday().getTime());
+	}
+	
 	// Accessors (Instance):
 	
 	/**
@@ -338,8 +347,6 @@ public class MMUser implements Serializable
 	 */
 	@Override public String toString()
 	{
-		SimpleDateFormat theDateFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
-		
 		StringBuffer theStringBuffer = new StringBuffer();
 		
 		theStringBuffer.append("ID: ");
@@ -353,7 +360,7 @@ public class MMUser implements Serializable
 		theStringBuffer.append("; LastName: ");
 		theStringBuffer.append(getLastName());
 		theStringBuffer.append("; Birthday: ");
-		theStringBuffer.append(theDateFormat.format(getBirthday().getTime()));
+		theStringBuffer.append(getBirthdayAsString());
 		theStringBuffer.append("; Description: ");
 		theStringBuffer.append(getDescription());
 		
