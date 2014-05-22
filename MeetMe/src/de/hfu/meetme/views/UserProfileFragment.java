@@ -76,7 +76,7 @@ public class UserProfileFragment extends Fragment
 		TextView birthdayTextView = (TextView) getActivity().findViewById(
 				R.id.user_profile_fragment_birthday_value_tv);
 		birthdayTextView.setText(((UserProfileActivity) getActivity())
-				.getUser().getBirthday().toString());
+				.getUser().getBirthdayAsString());
 
 		String genderText;
 		MMGender gender = ((UserProfileActivity) getActivity()).getUser()
