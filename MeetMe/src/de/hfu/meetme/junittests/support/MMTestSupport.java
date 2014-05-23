@@ -7,6 +7,7 @@ import java.util.Calendar;
 
 import de.hfu.meetme.model.MMGender;
 import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.MMNetworkUtil;
 
 /**
  * @author Simeon Sembach
@@ -24,7 +25,7 @@ public final class MMTestSupport
 	
 	public static MMUser createANewValidUser()
 	{	
-		return new MMUser("", MMGender.MALE, "Sem", "Simeon", "Sembach", getValidBirthday(), "Hi I want to meet you!");
+		return new MMUser(MMNetworkUtil.getLanAddressAsString(), MMGender.MALE, "Sem", "Simeon", "Sembach", getValidBirthday(), "Hi I want to meet you!");
 	}
 	
 	public static MMUser createANewValidUser(String aId)
@@ -39,12 +40,12 @@ public final class MMTestSupport
 	
 	public static MMUser createANewValidMan()
 	{
-		return new MMUser("", MMGender.MALE, "Sem", "Simeon", "Sembach", getValidBirthday(), "Hi I want to meet you!");
+		return new MMUser(MMNetworkUtil.getLanAddressAsString(), MMGender.MALE, "Sem", "Simeon", "Sembach", getValidBirthday(), "Hi I want to meet you!");
 	}
 	
 	public static MMUser createANewValidWoman()
 	{
-		return new MMUser("", MMGender.FEMALE, "Quotenfrau", "Leona", "Musterfrau", getValidBirthday(), "Hi I want to meet you!");
+		return new MMUser(MMNetworkUtil.getLanAddressAsString(), MMGender.FEMALE, "Quotenfrau", "Leona", "Musterfrau", getValidBirthday(), "Hi I want to meet you!");
 	}
 	
 }

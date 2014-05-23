@@ -56,13 +56,20 @@ public final class MMNetworkUtil
 	}
 	
 	/**
-	 * Returns the LAN IP-Address as String
+	 * Returns the LAN IP-Address as String.
+	 * If there is an @link {@link UnknownHostException} it will return null.
 	 * @return the LAN address
-	 * @throws UnknownHostException
 	 */
-	public static String getLanAddressAsString() throws UnknownHostException
+	public static String getLanAddressAsString()
 	{
-		return InetAddress.getLocalHost().getHostAddress();
+		try
+		{
+			return InetAddress.getLocalHost().getHostAddress();
+		} 
+		catch (UnknownHostException e)
+		{
+			return null;
+		}
 	}
 	
 }

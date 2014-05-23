@@ -28,6 +28,12 @@ public class MMSendMessageTest implements MMMessageListener
 
 	// Instance-Members:
 	
+	/***/
+	private MMMessageSender messageSender = new MMMessageSender();
+
+	/***/
+	private MMMessageReceiver messageReceiver = new MMMessageReceiver();
+	
 	/** */
 	private boolean hasUDPBroadcastMessageReceived = false;
 	
@@ -40,55 +46,78 @@ public class MMSendMessageTest implements MMMessageListener
 	// Tests:
 	
 	@Test
-	public void testSendAndReceiveAnUDPBroadcastMessage() throws IOException, InterruptedException
+	public void testSendAndReceiveAnUDPBroadcastMessage() throws IOException
 	{
-		MMMessageReceiver.addMessageListener(this);
-		MMMessageReceiver.startReceiver();
-		
-		MMMessageSender.startSender();	
-		MMMessageSender.sendUDPBroadcastMessage(MMNetworkUtil.UDP_MESSAGE_PING);
-		
-		Thread.sleep(100);
-		
-		MMMessageSender.stopSender();
-		MMMessageReceiver.stopReceiver();
-		MMMessageReceiver.removeMessageListener(this);
-		
+		try
+		{
+			messageReceiver.addMessageListener(this);
+			messageReceiver.startReceiver();
+			
+			messageSender.startSender();	
+			messageSender.sendUDPBroadcastMessage(MMNetworkUtil.UDP_MESSAGE_PING);
+			
+			Thread.sleep(100);
+		} 
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			messageSender.stopSender();
+			messageReceiver.stopReceiver();
+			messageReceiver.removeMessageListener(this);
+		}
+	
 		assertTrue(hasUDPBroadcastMessageReceived);
 	}
 
 	@Test
-	public void testSendAndReceiveAnUDPSingleMessage() throws IOException, InterruptedException
+	public void testSendAndReceiveAnUDPSingleMessage() throws IOException
 	{
-		MMMessageReceiver.addMessageListener(this);
-		MMMessageReceiver.startReceiver();
-		
-		MMMessageSender.startSender();	
-		MMMessageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), MMNetworkUtil.UDP_MESSAGE_PING);
-		
-		Thread.sleep(100);
-		
-		MMMessageSender.stopSender();
-		MMMessageReceiver.stopReceiver();
-		MMMessageReceiver.removeMessageListener(this);
-		
+		try
+		{
+			messageReceiver.addMessageListener(this);
+			messageReceiver.startReceiver();
+			
+			messageSender.startSender();	
+			messageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), MMNetworkUtil.UDP_MESSAGE_PING);
+			
+			Thread.sleep(100);
+		}
+		catch (Exception aException)
+		{
+			
+		}
+		finally
+		{
+			messageSender.stopSender();
+			messageReceiver.stopReceiver();
+			messageReceiver.removeMessageListener(this);
+		}
+
 		assertTrue(hasUDPSingleMessageReceived);
 	}
 	
 	@Test
-	public void testSendAndReceiveAnTCPMessage() throws IOException, InterruptedException
+	public void testSendAndReceiveAnTCPMessage() throws IOException
 	{
-		MMMessageReceiver.addMessageListener(this);
-		MMMessageReceiver.startReceiver();
-		
-		MMMessageSender.startSender();	
-		MMMessageSender.sendTCPMessage(MMNetworkUtil.getLocalhostAddress(), new MMUserMessage(MMTestSupport.createANewValidUser()));
-	
-		Thread.sleep(100);
-		
-		MMMessageSender.stopSender();
-		MMMessageReceiver.stopReceiver();
-		MMMessageReceiver.removeMessageListener(this);
+		try
+		{
+			messageReceiver.addMessageListener(this);
+			messageReceiver.startReceiver();
+			
+			messageSender.startSender();	
+			messageSender.sendTCPMessage(MMNetworkUtil.getLocalhostAddress(), new MMUserMessage(MMTestSupport.createANewValidUser()));
+
+			Thread.sleep(100);
+		} catch (Exception e) {}
+		finally
+		{
+			messageSender.stopSender();
+			messageReceiver.stopReceiver();
+			messageReceiver.removeMessageListener(this);
+		}
 		
 		assertTrue(hasTCPMessageReceived);
 	}

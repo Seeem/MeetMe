@@ -55,10 +55,9 @@ public class MMMessageEvent
 	/** */
 	public String getMessageAsString()
 	{
-		if (getMessage() instanceof byte[])
+		if (getMessage() instanceof String)
 		{
-			byte[] theByteArray = (byte[]) getMessage();
-			return new String(theByteArray, 0, theByteArray.length);
+			return (String) getMessage();
 		}
 		return getMessage().toString();
 	}

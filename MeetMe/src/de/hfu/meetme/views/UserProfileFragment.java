@@ -11,9 +11,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import de.hfu.meetme.R;
+import de.hfu.meetme.junittests.support.MMTestSupport;
 import de.hfu.meetme.model.MMGender;
+import de.hfu.meetme.model.message.MMUserMessage;
 import de.hfu.meetme.model.network.MMMessageEvent;
 import de.hfu.meetme.model.network.MMMessageListener;
 import de.hfu.meetme.model.network.MMMessageReceiver;
@@ -34,32 +35,38 @@ public class UserProfileFragment extends Fragment
 		@Override
 		protected Void doInBackground(Void... aParams)
 		{
+			// TEST_START:
+			MMMessageSender theMessageSender = new MMMessageSender();
+			MMMessageReceiver theReceiver = new MMMessageReceiver();
+			
 			try
-			{
-				MMMessageReceiver.addMessageListener(new MMMessageListener() {
-
+			{			
+				theReceiver.addMessageListener(new MMMessageListener()
+				{				
 					@Override
 					public void messageReceived(MMMessageEvent aMessageEvent)
 					{
-						Toast.makeText(getActivity(), "Received",
-								Toast.LENGTH_SHORT).show();
-
+						System.out.println(aMessageEvent.getMessageAsString());
 					}
 				});
-				MMMessageReceiver.startReceiver();
-
-				MMMessageSender.startSender();
-				MMMessageSender
-						.sendUDPBroadcastMessage(MMNetworkUtil.UDP_MESSAGE_PING);
-				MMMessageSender.stopSender();
-
-				MMMessageReceiver.stopReceiver();
-
-			} catch (IOException e)
+				theReceiver.startReceiver();				
+				theMessageSender.startSender();
+				
+				theMessageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), "hello World");
+				theMessageSender.sendUDPBroadcastMessage("Broadcast");
+				theMessageSender.sendTCPMessage(MMNetworkUtil.getLocalhostAddress(), new MMUserMessage(MMTestSupport.createANewValidUser()));
+			} 
+			catch (IOException e)
 			{
 				e.printStackTrace();
 			}
-
+			finally
+			{
+				try{theMessageSender.stopSender();} catch (Exception e){}
+				try{theReceiver.stopReceiver();} catch (IOException e){}
+			}
+			// TEST_END
+			
 			return null;
 		}
 

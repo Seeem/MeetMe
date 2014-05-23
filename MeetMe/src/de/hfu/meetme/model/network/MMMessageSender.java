@@ -17,16 +17,16 @@ import de.hfu.meetme.model.message.MMMessage;
  * @author Simeon Sembach
  *
  */
-public final class MMMessageSender
+public class MMMessageSender
 {
 
 	// Instance-Members:
 	
 	/** The isSending boolean. */
-	private static boolean isStarted = false;
+	private boolean isStarted = false;
 	
 	/** The UDP Socket for sending UDP messages. */
-	private static DatagramSocket udpSocket; // TODO close()
+	private DatagramSocket udpSocket;
 	
 	// MM-API:
 	
@@ -34,7 +34,7 @@ public final class MMMessageSender
 	 * Starts the message sender.
 	 * If the message sender is already started nothing will happen.
 	 */
-	public static void startSender() throws SocketException
+	public void startSender() throws SocketException
 	{
 		if (isStarted()) return;
 		setUdpSocket(new DatagramSocket());
@@ -45,7 +45,7 @@ public final class MMMessageSender
 	 * Stops the message sender.
 	 * If the message sender is already stopped or was never started nothing will happen.
 	 */
-	public static void stopSender() throws SocketException
+	public void stopSender() throws SocketException
 	{
 		if (!isStarted()) return;
 		udpSocket.close();
@@ -56,8 +56,17 @@ public final class MMMessageSender
 	 * Sends a {@link MMMessage} as TCP message to a given Internet address.
 	 * It will just send the object, then immediately close the connection.
 	 */
-	public static void sendTCPMessage(InetAddress aInetAdress, MMMessage aMessage) throws IOException
+	public void sendTCPMessage(InetAddress aInetAdress, MMMessage aMessage) throws IOException
 	{
+		if(!isStarted())
+			throw new IllegalStateException("sender is not started.");
+		
+		if (aInetAdress == null)
+			throw new NullPointerException("inetAdress is null.");
+		
+		if(aMessage == null)
+			throw new NullPointerException("message is null.");
+		
 		Socket theSocket = new Socket(aInetAdress, MMNetworkUtil.TCP_PORT);
 		new ObjectOutputStream(theSocket.getOutputStream()).writeObject(aMessage);		
 		theSocket.close();
@@ -68,7 +77,7 @@ public final class MMMessageSender
 	 * @param aMessage the message to send
 	 * @throws IOException
 	 */
-	public static void sendUDPBroadcastMessage(String aMessage) throws IOException
+	public void sendUDPBroadcastMessage(String aMessage) throws IOException
 	{
 		sendUDPMessage(MMNetworkUtil.getBroadcastAddress(), MMNetworkUtil.UDP_BROADCAST_PORT, aMessage);
 	}
@@ -79,7 +88,7 @@ public final class MMMessageSender
 	 * @param aMessage the message to send
 	 * @throws IOException
 	 */
-	public static void sendUDPMessage(InetAddress aInetAdress, String aMessage) throws IOException
+	public void sendUDPMessage(InetAddress aInetAdress, String aMessage) throws IOException
 	{
 		sendUDPMessage(aInetAdress, MMNetworkUtil.UDP_PORT, aMessage);
 	}
@@ -93,8 +102,20 @@ public final class MMMessageSender
 	 * @param aMessage the message to send
 	 * @throws IOException
 	 */
-	private static void sendUDPMessage(InetAddress aInetAdress, int aPort, String aMessage) throws IOException
+	private void sendUDPMessage(InetAddress aInetAdress, int aPort, String aMessage) throws IOException
 	{
+		if(!isStarted())
+			throw new IllegalStateException("sender is not started.");
+		
+		if (aInetAdress == null)
+			throw new NullPointerException("inetAdress is null.");
+		
+		if(aMessage == null)
+			throw new NullPointerException("message is null.");
+		
+		if(aPort < 0)
+			throw new IllegalArgumentException("port is smaller than 0.");
+		
 		byte[] theByteArray = aMessage.getBytes();	
 		DatagramPacket theDatagramPacket = new DatagramPacket(theByteArray, theByteArray.length, aInetAdress, aPort);
 		getUdpSocket().send(theDatagramPacket);
@@ -106,7 +127,7 @@ public final class MMMessageSender
 	/**
 	 * @return the udpSocket
 	 */
-	private static DatagramSocket getUdpSocket()
+	private DatagramSocket getUdpSocket()
 	{
 		return udpSocket;
 	}
@@ -114,15 +135,15 @@ public final class MMMessageSender
 	/**
 	 * @param udpSocket the udpSocket to set
 	 */
-	private static void setUdpSocket(DatagramSocket udpSocket)
+	private void setUdpSocket(DatagramSocket udpSocket)
 	{
-		MMMessageSender.udpSocket = udpSocket;
+		this.udpSocket = udpSocket;
 	}
 
 	/**
 	 * @return the isStarted
 	 */
-	public static boolean isStarted()
+	public boolean isStarted()
 	{
 		return isStarted;
 	}
@@ -130,9 +151,9 @@ public final class MMMessageSender
 	/**
 	 * @param isStarted the isStarted to set
 	 */
-	private static void setStarted(boolean isStarted)
+	private void setStarted(boolean isStarted)
 	{
-		MMMessageSender.isStarted = isStarted;
+		this.isStarted = isStarted;
 	}
 
 }
