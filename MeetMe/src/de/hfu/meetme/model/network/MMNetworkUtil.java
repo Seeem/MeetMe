@@ -55,4 +55,14 @@ public final class MMNetworkUtil
 		return InetAddress.getByName("localhost");
 	}
 	
+	/**
+	 * Returns the LAN IP-Address as String
+	 * @return the LAN address
+	 * @throws UnknownHostException
+	 */
+	public static String getLanAddressAsString() throws UnknownHostException
+	{
+		return InetAddress.getLocalHost().getHostAddress();
+	}
+	
 }

@@ -62,7 +62,7 @@ public class MMUser implements Serializable
 	 */
 	public MMUser(String aId, MMGender aGender, String aUsername, String aFirstName, String aLastName, Calendar aBirthday, String aDescription)
 	{
-		setId(aId); // TODO
+		setId(aId);
 		setGender(aGender);
 		setUsername(aUsername);
 		setFirstName(aFirstName);
@@ -95,6 +95,15 @@ public class MMUser implements Serializable
 	public boolean isWoman()
 	{
 		return getGender() == MMGender.FEMALE;
+	}
+	
+	/**
+	 * Returns the birthday date as string.
+	 * @return the birthday as string
+	 */
+	public String getBirthdayAsString()
+	{		
+		return ((SimpleDateFormat) SimpleDateFormat.getDateInstance()).format(getBirthday().getTime());
 	}
 	
 	// MM-API (Class):
@@ -180,15 +189,6 @@ public class MMUser implements Serializable
 	public static MMUser[] getAllUsersAsArray()
 	{
 		return (MMUser[]) MMUser.getUsers().values().toArray();
-	}
-	
-	/**
-	 * Returns the birthday date as string.
-	 * @return the birthday as string
-	 */
-	public String getBirthdayAsString()
-	{		
-		return ((SimpleDateFormat) SimpleDateFormat.getDateInstance()).format(getBirthday().getTime());
 	}
 	
 	// Accessors (Instance):
