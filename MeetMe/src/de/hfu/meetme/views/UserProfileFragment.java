@@ -1,6 +1,9 @@
 package de.hfu.meetme.views;
 
+import java.io.IOException;
+
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +11,60 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMGender;
+import de.hfu.meetme.model.network.MMMessageEvent;
+import de.hfu.meetme.model.network.MMMessageListener;
+import de.hfu.meetme.model.network.MMMessageReceiver;
+import de.hfu.meetme.model.network.MMMessageSender;
+import de.hfu.meetme.model.network.MMNetworkUtil;
 
+/**
+ * 
+ * @author Dominik Jung
+ * 
+ */
 public class UserProfileFragment extends Fragment
 {
+
+	private class NetworkTask extends AsyncTask<Void, Void, Void>
+	{
+
+		@Override
+		protected Void doInBackground(Void... aParams)
+		{
+			try
+			{
+				MMMessageReceiver.addMessageListener(new MMMessageListener() {
+
+					@Override
+					public void messageReceived(MMMessageEvent aMessageEvent)
+					{
+						Toast.makeText(getActivity(), "Received",
+								Toast.LENGTH_SHORT).show();
+
+					}
+				});
+				MMMessageReceiver.startReceiver();
+
+				MMMessageSender.startSender();
+				MMMessageSender
+						.sendUDPBroadcastMessage(MMNetworkUtil.UDP_MESSAGE_PING);
+				MMMessageSender.stopSender();
+
+				MMMessageReceiver.stopReceiver();
+
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -37,6 +89,10 @@ public class UserProfileFragment extends Fragment
 			public void onClick(View v)
 			{
 				// TODO: Some send "Please Meet Me"-Message!
+				// Toast.makeText(getActivity(), "Message sent.",
+				// Toast.LENGTH_SHORT).show();
+				new NetworkTask().execute();
+
 			}
 
 		});
@@ -96,4 +152,5 @@ public class UserProfileFragment extends Fragment
 				+ ((UserProfileActivity) getActivity()).getUser()
 						.getDescription());
 	}
+
 }

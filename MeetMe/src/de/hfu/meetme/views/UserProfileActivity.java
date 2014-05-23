@@ -1,5 +1,6 @@
 package de.hfu.meetme.views;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,11 @@ import android.widget.Toast;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
 
+/**
+ * 
+ * @author Dominik Jung
+ * 
+ */
 public class UserProfileActivity extends Activity
 {
 	/**
@@ -40,6 +46,10 @@ public class UserProfileActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_profile);
+		
+		final ActionBar bar = getActionBar();
+		bar.setDisplayHomeAsUpEnabled(true);
+		
 
 		Bundle extras = getIntent().getExtras();
 		setUser((MMUser) extras.getSerializable(UserListFragment.MMUSER_KEY));
@@ -69,7 +79,7 @@ public class UserProfileActivity extends Activity
 	@Override
 	public void finish()
 	{
-		Intent intent = new Intent();
+		Intent intent = new Intent(this, UserListActivity.class);
 		setResult(RESULT_OK, intent);
 		super.finish();
 	}
