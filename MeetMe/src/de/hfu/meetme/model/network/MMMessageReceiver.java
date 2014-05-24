@@ -53,8 +53,15 @@ public final class MMMessageReceiver
 				try
 				{
 					receiveTCPMessage();
-				} 
-				catch (IOException | ClassNotFoundException e) {}
+				}
+				catch (IOException | ClassNotFoundException anIOExcpetionOrAClassNotFoundException) 
+				{
+					
+				}
+				catch (Exception anException)
+				{
+					anException.printStackTrace();
+				}
 			}
 		}
 	};
@@ -70,7 +77,14 @@ public final class MMMessageReceiver
 				{
 					receiveUDPBroadcastMessage();
 				} 
-				catch (IOException e) {}
+				catch (IOException anIOException)
+				{
+					
+				}
+				catch (Exception anException)
+				{
+					anException.printStackTrace();
+				}
 			}
 		}
 	};
@@ -86,7 +100,14 @@ public final class MMMessageReceiver
 				{
 					receiveUDPSingleMessage();
 				} 
-				catch (IOException e) {}
+				catch (IOException anIOException)
+				{
+					
+				}
+				catch (Exception anException)
+				{
+					anException.printStackTrace();
+				}
 			}
 		}
 	};
@@ -135,7 +156,7 @@ public final class MMMessageReceiver
 	 * If the message receiver is already started nothing will happen.
 	 * @throws IOException 
 	 */
-	public void startReceiver() throws IOException
+	public void startReceiver()
 	{
 		if (isStarted()) return;
 		executeReceivingThreads();
@@ -147,7 +168,7 @@ public final class MMMessageReceiver
 	 * If the message receiver is already stopped or was never started nothing will happen.
 	 * @throws IOException
 	 */
-	public void stopReceiver() throws IOException
+	public void stopReceiver()
 	{
 		if (!isStarted()) return;	
 		shutdownReceivingThreads();
@@ -160,11 +181,27 @@ public final class MMMessageReceiver
 	 * Initializes all relevant Sockets and starts all receiving-threads.
 	 * @throws IOException
 	 */
-	private void executeReceivingThreads() throws IOException
-	{
-		setUdpBroadcastSocket(new DatagramSocket(MMNetworkUtil.UDP_BROADCAST_PORT));
-		setUdpSocket(new DatagramSocket(MMNetworkUtil.UDP_PORT));
-		setTcpSocket(new ServerSocket(MMNetworkUtil.TCP_PORT));
+	private void executeReceivingThreads()
+	{	
+		try
+		{
+			setUdpBroadcastSocket(new DatagramSocket(MMNetworkUtil.UDP_BROADCAST_PORT));
+			setUdpSocket(new DatagramSocket(MMNetworkUtil.UDP_PORT));
+			setTcpSocket(new ServerSocket(MMNetworkUtil.TCP_PORT));
+		} 
+		catch (Exception anException)
+		{
+			if (getUdpBroadcastSocket() != null)
+				getUdpBroadcastSocket().close();
+			
+			if (getUdpSocket() != null)
+				getUdpSocket().close();
+			
+			if (getTcpSocket() != null)
+				try{getTcpSocket().close();} catch (IOException anIOException){anIOException.printStackTrace();}
+			
+			throw new RuntimeException(anException.getMessage());
+		}
 		
 		setExecutorService(Executors.newFixedThreadPool(3));	
 		getExecutorService().execute(RECEIVE_UDP_BROADCAST_MESSAGE_THREAD);
@@ -176,10 +213,19 @@ public final class MMMessageReceiver
 	 * Shutdown all receiving-threads and closes all relevant sockets.
 	 * @throws IOException 
 	 */
-	private void shutdownReceivingThreads() throws IOException
+	private void shutdownReceivingThreads()
 	{
 		getExecutorService().shutdownNow();
-		getTcpSocket().close();		
+		
+		try
+		{
+			getTcpSocket().close();
+		} 
+		catch (IOException anIOException)
+		{
+			throw new RuntimeException(anIOException.getMessage());
+		}
+			
 		getUdpBroadcastSocket().close();
 		getUdpSocket().close();
 	}
@@ -208,7 +254,7 @@ public final class MMMessageReceiver
 				theMessage, 
 				theClientSocket.getPort(), 
 				Calendar.getInstance(), 
-				MMMessageProtocoll.TCP, 
+				MMMessageProtocol.TCP, 
 				MMMessageType.SINGLE);
 		
 		triggerMessageEvent(theMessageEvent);
@@ -227,7 +273,7 @@ public final class MMMessageReceiver
 				new String(thePacket.getData(), 0, thePacket.getLength()), 
 				thePacket.getPort(), 
 				Calendar.getInstance(), 
-				MMMessageProtocoll.UDP, 
+				MMMessageProtocol.UDP, 
 				MMMessageType.BROADCAST);
 		
 		triggerMessageEvent(theMessageEvent);	
@@ -246,7 +292,7 @@ public final class MMMessageReceiver
 				new String(thePacket.getData(), 0, thePacket.getLength()), 
 				thePacket.getPort(), 
 				Calendar.getInstance(), 
-				MMMessageProtocoll.UDP, 
+				MMMessageProtocol.UDP, 
 				MMMessageType.SINGLE);
 		
 		triggerMessageEvent(theMessageEvent);
@@ -342,5 +388,4 @@ public final class MMMessageReceiver
 		this.isStarted = isStarted;
 	}
 
-	
 }

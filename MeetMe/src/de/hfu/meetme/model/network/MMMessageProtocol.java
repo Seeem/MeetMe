@@ -7,7 +7,7 @@ package de.hfu.meetme.model.network;
  * @author Simeon Sembach
  *
  */
-public enum MMMessageProtocoll
+public enum MMMessageProtocol
 {
 	TCP, UDP
 }

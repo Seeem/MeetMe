@@ -16,43 +16,51 @@ public class MMMessageEvent
 
 	// Instance-Members:
 	
-	/** */
+	/** The sender Internet Address. */
 	private InetAddress senderAddress;
 	
-	/** */
+	/** The send Message. */
 	private Object message;
 	
-	/** */
+	/** The port of the sender. */
 	private int senderPort;
 	
-	/** */
+	/** The time/moment the message was received. */
 	private Calendar timestamp;
 	
-	/** */
-	private MMMessageProtocoll messageProtocoll;
+	/** The used message protocol (UDP or TCP). */
+	private MMMessageProtocol messageProtocol;
 	
-	/** */
+	/** The message type (single- or broadcast message). */
 	private MMMessageType messageType;
 
 	// Constructor:
 	
 	/**
-	 * 
+	 * Creates a new MMMessageEvent instance.
+	 * @param aSenderAddress the sender address
+	 * @param aMessage the message
+	 * @param aSenderPort the sender port
+	 * @param aTimestamp the time stamp
+	 * @param aMessageProtocoll the message protocol
+	 * @param aMessageType the message type
 	 */
-	public MMMessageEvent(InetAddress aSenderAddress, Object aMessage, int aSenderPort, 
-			Calendar aTimestamp, MMMessageProtocoll aMessageProtocoll, MMMessageType aMessageType)
+	public MMMessageEvent(InetAddress aSenderAddress, Object aMessage, int aSenderPort, Calendar aTimestamp, MMMessageProtocol aMessageProtocoll, MMMessageType aMessageType)
 	{
 		setSenderAddress(aSenderAddress);
 		setMessage(aMessage);
 		setSenderPort(aSenderPort);
 		setTimestamp(aTimestamp);
-		setMessageProtocoll(aMessageProtocoll);
+		setMessageProtocol(aMessageProtocoll);
 		setMessageType(aMessageType);
 	}
 	
 	// MM-API:
 	
-	/** */
+	/**
+	 * Returns the received message as @link {@link String}.
+	 * @return the message as string
+	 */
 	public String getMessageAsString()
 	{
 		if (getMessage() instanceof String)
@@ -62,7 +70,10 @@ public class MMMessageEvent
 		return getMessage().toString();
 	}
 	
-	/** */
+	/**
+	 * Returns the time stamp of the received message as easy readable {@link String}.
+	 * @return the time stamp as string
+	 */
 	public String getTimestampAsString()
 	{		
 		return ((SimpleDateFormat) SimpleDateFormat.getDateInstance()).format(getTimestamp().getTime());
@@ -79,11 +90,11 @@ public class MMMessageEvent
 	}
 
 	/**
-	 * @param senderAddress the senderAddress to set
+	 * @param aSenderAddress the senderAddress to set
 	 */
-	private void setSenderAddress(InetAddress senderAddress)
+	private void setSenderAddress(InetAddress aSenderAddress)
 	{
-		this.senderAddress = senderAddress;
+		this.senderAddress = aSenderAddress;
 	}
 
 	/**
@@ -95,11 +106,11 @@ public class MMMessageEvent
 	}
 
 	/**
-	 * @param message the message to set
+	 * @param aMessage the message to set
 	 */
-	private void setMessage(Object message)
+	private void setMessage(Object aMessage)
 	{
-		this.message = message;
+		this.message = aMessage;
 	}
 
 	/**
@@ -111,15 +122,15 @@ public class MMMessageEvent
 	}
 
 	/**
-	 * @param senderPort the senderPort to set
+	 * @param aSenderPort the senderPort to set
 	 */
-	private void setSenderPort(int senderPort)
+	private void setSenderPort(int aSenderPort)
 	{
-		this.senderPort = senderPort;
+		this.senderPort = aSenderPort;
 	}
 
 	/**
-	 * @return the timestamp
+	 * @return the time stamp
 	 */
 	public Calendar getTimestamp()
 	{
@@ -127,27 +138,27 @@ public class MMMessageEvent
 	}
 
 	/**
-	 * @param timestamp the timestamp to set
+	 * @param aTimestamp the time stamp to set
 	 */
-	private void setTimestamp(Calendar timestamp)
+	private void setTimestamp(Calendar aTimestamp)
 	{
-		this.timestamp = timestamp;
+		this.timestamp = aTimestamp;
 	}
 
 	/**
-	 * @return the messageProtocoll
+	 * @return the messageProtocol
 	 */
-	public MMMessageProtocoll getMessageProtocoll()
+	public MMMessageProtocol getMessageProtocol()
 	{
-		return messageProtocoll;
+		return messageProtocol;
 	}
 
 	/**
-	 * @param messageProtocoll the messageProtocoll to set
+	 * @param messageProtocoll the messageProtocol to set
 	 */
-	private void setMessageProtocoll(MMMessageProtocoll messageProtocoll)
+	private void setMessageProtocol(MMMessageProtocol aMessageProtocol)
 	{
-		this.messageProtocoll = messageProtocoll;
+		this.messageProtocol = aMessageProtocol;
 	}
 
 	/**
@@ -159,11 +170,11 @@ public class MMMessageEvent
 	}
 
 	/**
-	 * @param messageType the messageType to set
+	 * @param aMessageType the messageType to set
 	 */
-	private void setMessageType(MMMessageType messageType)
+	private void setMessageType(MMMessageType aMessageType)
 	{
-		this.messageType = messageType;
+		this.messageType = aMessageType;
 	}
 	
 }

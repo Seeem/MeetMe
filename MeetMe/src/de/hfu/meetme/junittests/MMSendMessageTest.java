@@ -13,7 +13,7 @@ import de.hfu.meetme.junittests.support.MMTestSupport;
 import de.hfu.meetme.model.message.MMUserMessage;
 import de.hfu.meetme.model.network.MMMessageEvent;
 import de.hfu.meetme.model.network.MMMessageListener;
-import de.hfu.meetme.model.network.MMMessageProtocoll;
+import de.hfu.meetme.model.network.MMMessageProtocol;
 import de.hfu.meetme.model.network.MMMessageReceiver;
 import de.hfu.meetme.model.network.MMMessageSender;
 import de.hfu.meetme.model.network.MMMessageType;
@@ -28,10 +28,10 @@ public class MMSendMessageTest implements MMMessageListener
 
 	// Instance-Members:
 	
-	/***/
+	/** */
 	private MMMessageSender messageSender = new MMMessageSender();
 
-	/***/
+	/** */
 	private MMMessageReceiver messageReceiver = new MMMessageReceiver();
 	
 	/** */
@@ -51,20 +51,16 @@ public class MMSendMessageTest implements MMMessageListener
 		try
 		{
 			messageReceiver.addMessageListener(this);
-			messageReceiver.startReceiver();
-			
-			messageSender.startSender();	
-			messageSender.sendUDPBroadcastMessage(MMNetworkUtil.UDP_MESSAGE_PING);
-			
+			messageReceiver.startReceiver();		
+			messageSender.sendUDPBroadcastMessage(MMNetworkUtil.UDP_MESSAGE_PING);		
 			Thread.sleep(100);
 		} 
-		catch (Exception e)
+		catch (Exception anException)
 		{
-			e.printStackTrace();
+			anException.printStackTrace();
 		}
 		finally
 		{
-			messageSender.stopSender();
 			messageReceiver.stopReceiver();
 			messageReceiver.removeMessageListener(this);
 		}
@@ -78,20 +74,16 @@ public class MMSendMessageTest implements MMMessageListener
 		try
 		{
 			messageReceiver.addMessageListener(this);
-			messageReceiver.startReceiver();
-			
-			messageSender.startSender();	
+			messageReceiver.startReceiver();	
 			messageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), MMNetworkUtil.UDP_MESSAGE_PING);
-			
 			Thread.sleep(100);
 		}
-		catch (Exception aException)
+		catch (Exception anException)
 		{
-			
+			anException.printStackTrace();
 		}
 		finally
 		{
-			messageSender.stopSender();
 			messageReceiver.stopReceiver();
 			messageReceiver.removeMessageListener(this);
 		}
@@ -105,16 +97,16 @@ public class MMSendMessageTest implements MMMessageListener
 		try
 		{
 			messageReceiver.addMessageListener(this);
-			messageReceiver.startReceiver();
-			
-			messageSender.startSender();	
+			messageReceiver.startReceiver();				
 			messageSender.sendTCPMessage(MMNetworkUtil.getLocalhostAddress(), new MMUserMessage(MMTestSupport.createANewValidUser()));
-
 			Thread.sleep(100);
-		} catch (Exception e) {}
+		} 
+		catch (Exception anException)
+		{
+			anException.printStackTrace();
+		}
 		finally
 		{
-			messageSender.stopSender();
 			messageReceiver.stopReceiver();
 			messageReceiver.removeMessageListener(this);
 		}
@@ -126,7 +118,7 @@ public class MMSendMessageTest implements MMMessageListener
 	
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
 	{
-		if (aMessageEvent.getMessageProtocoll() == MMMessageProtocoll.UDP)
+		if (aMessageEvent.getMessageProtocol() == MMMessageProtocol.UDP)
 		{
 			if (aMessageEvent.getMessageType() == MMMessageType.BROADCAST)
 			{
@@ -137,7 +129,7 @@ public class MMSendMessageTest implements MMMessageListener
 				hasUDPSingleMessageReceived = true;
 			}
 		}
-		else if (aMessageEvent.getMessageProtocoll() == MMMessageProtocoll.TCP)
+		else if (aMessageEvent.getMessageProtocol() == MMMessageProtocol.TCP)
 		{
 			hasTCPMessageReceived = true;	
 		}

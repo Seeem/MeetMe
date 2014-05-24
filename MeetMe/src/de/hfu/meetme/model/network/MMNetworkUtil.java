@@ -37,27 +37,43 @@ public final class MMNetworkUtil
 	
 	/**
 	 * Returns the broadcast address as {@link InetAddress}.
+	 * If there is an {@link UnknownHostException} it will return null.
 	 * @return the broadcast address
 	 * @throws UnknownHostException
 	 */
-	public static InetAddress getBroadcastAddress() throws UnknownHostException
+	public static InetAddress getBroadcastAddress()
 	{
-		return InetAddress.getByName("255.255.255.255");
+		try
+		{
+			return InetAddress.getByName("255.255.255.255");
+		} 
+		catch (UnknownHostException e)
+		{
+			return null;
+		}
 	}
 	
 	/**
 	 * Returns the local host address as {@link InetAddress}.
+	 * If there is an {@link UnknownHostException} it will return null.
 	 * @return the local host address
 	 * @throws UnknownHostException
 	 */
-	public static InetAddress getLocalhostAddress() throws UnknownHostException
+	public static InetAddress getLocalhostAddress()
 	{
-		return InetAddress.getByName("localhost");
+		try
+		{
+			return InetAddress.getByName("localhost");
+		}
+		catch (UnknownHostException e)
+		{
+			return null;
+		}
 	}
 	
 	/**
 	 * Returns the LAN IP-Address as String.
-	 * If there is an @link {@link UnknownHostException} it will return null.
+	 * If there is an {@link UnknownHostException} it will return null.
 	 * @return the LAN address
 	 */
 	public static String getLanAddressAsString()

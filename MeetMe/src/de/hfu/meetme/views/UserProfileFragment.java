@@ -1,7 +1,5 @@
 package de.hfu.meetme.views;
 
-import java.io.IOException;
-
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,35 +34,27 @@ public class UserProfileFragment extends Fragment
 		protected Void doInBackground(Void... aParams)
 		{
 			// TEST_START:
+			
 			MMMessageSender theMessageSender = new MMMessageSender();
 			MMMessageReceiver theReceiver = new MMMessageReceiver();
-			
-			try
-			{			
-				theReceiver.addMessageListener(new MMMessageListener()
-				{				
-					@Override
-					public void messageReceived(MMMessageEvent aMessageEvent)
-					{
-						System.out.println(aMessageEvent.getMessageAsString());
-					}
-				});
-				theReceiver.startReceiver();				
-				theMessageSender.startSender();
 				
-				theMessageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), "hello World");
-				theMessageSender.sendUDPBroadcastMessage("Broadcast");
-				theMessageSender.sendTCPMessage(MMNetworkUtil.getLocalhostAddress(), new MMUserMessage(MMTestSupport.createANewValidUser()));
-			} 
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-			finally
-			{
-				try{theMessageSender.stopSender();} catch (Exception e){}
-				try{theReceiver.stopReceiver();} catch (IOException e){}
-			}
+			theReceiver.addMessageListener(new MMMessageListener()
+			{				
+				@Override
+				public void messageReceived(MMMessageEvent aMessageEvent)
+				{
+					System.out.println(aMessageEvent.getMessageAsString());
+				}
+			});
+			
+			theReceiver.startReceiver();				
+		
+			theMessageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), "hello World");
+			theMessageSender.sendUDPBroadcastMessage("Broadcast");
+			theMessageSender.sendTCPMessage(MMNetworkUtil.getLocalhostAddress(), new MMUserMessage(MMTestSupport.createANewValidUser()));
+
+			theReceiver.stopReceiver();
+			
 			// TEST_END
 			
 			return null;
