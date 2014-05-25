@@ -10,13 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import de.hfu.meetme.R;
-import de.hfu.meetme.junittests.support.MMTestSupport;
 import de.hfu.meetme.model.MMGender;
-import de.hfu.meetme.model.message.MMUserMessage;
-import de.hfu.meetme.model.network.MMMessageEvent;
-import de.hfu.meetme.model.network.MMMessageListener;
-import de.hfu.meetme.model.network.MMMessageReceiver;
-import de.hfu.meetme.model.network.MMMessageSender;
+import de.hfu.meetme.model.MMMessageManager;
+import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.MMNetworkUtil;
 
 /**
@@ -35,25 +31,14 @@ public class UserProfileFragment extends Fragment
 		{
 			// TEST_START:
 			
-			MMMessageSender theMessageSender = new MMMessageSender();
-			MMMessageReceiver theReceiver = new MMMessageReceiver();
-				
-			theReceiver.addMessageListener(new MMMessageListener()
-			{				
-				@Override
-				public void messageReceived(MMMessageEvent aMessageEvent)
-				{
-					System.out.println(aMessageEvent.getMessageAsString());
-				}
-			});
+			MMUser.getMyself().setId(MMNetworkUtil.getMyLanAddressAsString());
+			MMMessageManager theMessageManager = new MMMessageManager(1000);		
+			theMessageManager.startListening();		
+			theMessageManager.refreshUsers();			
+			theMessageManager.stopListening();			
+			theMessageManager = null;
 			
-			theReceiver.startReceiver();				
-		
-			theMessageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), "hello World");
-			theMessageSender.sendUDPBroadcastMessage("Broadcast");
-			theMessageSender.sendTCPMessage(MMNetworkUtil.getLocalhostAddress(), new MMUserMessage(MMTestSupport.createANewValidUser()));
-
-			theReceiver.stopReceiver();
+			MMUser.printUsers();
 			
 			// TEST_END
 			

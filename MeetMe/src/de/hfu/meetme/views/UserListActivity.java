@@ -72,4 +72,5 @@ public class UserListActivity extends Activity
 				de.hfu.meetme.views.SettingsActivity.class);
 		startActivityForResult(intent, REQUEST_CODE_SETTINGS_ACTIVITY);
 	}
+
 }

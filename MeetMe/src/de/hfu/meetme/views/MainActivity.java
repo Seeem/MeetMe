@@ -20,9 +20,6 @@ import de.hfu.meetme.model.MMUser;
 public class MainActivity extends Activity
 {
 
-	/** The user profile */
-	private MMUser myself = null;
-
 	/**
 	 * A final String to identify the key used to save the userCreated boolean
 	 * in the SharedPreferences
@@ -41,23 +38,6 @@ public class MainActivity extends Activity
 	/** */
 	private static final int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
 	private static final int REQUEST_CODE_USER_LIST_ACTIVITY = 2;
-
-	/**
-	 * @return myself
-	 */
-	public MMUser getMyself()
-	{
-		return myself;
-	}
-
-	/**
-	 * @param aMyself
-	 *            the myself to set
-	 */
-	public void setMyself(MMUser aMMuser)
-	{
-		myself = aMMuser;
-	}
 
 	/**
 	 * @return A boolean which indicates if a {@link MMUser} object has been
@@ -97,7 +77,7 @@ public class MainActivity extends Activity
 			intentSettingsActivity();
 		} else
 		{
-			myself = Supporting.getUserFromSharedPreferences(this, false);
+			MMUser.setMyself(Supporting.getUserFromSharedPreferences(this, false));
 		}
 	}
 
@@ -132,7 +112,7 @@ public class MainActivity extends Activity
 
 			Bundle bundle = intent.getExtras();
 			setIsUserCreated(bundle.getBoolean(IS_USER_CREATED));
-			setMyself((MMUser) bundle.getSerializable(MMUSER_TAG));
+			MMUser.setMyself((MMUser) bundle.getSerializable(MMUSER_TAG));
 
 			Toast.makeText(this, "Your profile has been saved",
 					Toast.LENGTH_SHORT).show();

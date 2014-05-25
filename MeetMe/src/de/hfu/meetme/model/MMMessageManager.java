@@ -72,7 +72,7 @@ public class MMMessageManager implements MMMessageListener
 	
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
 	{
-		if (MMNetworkUtil.isMyAddress(aMessageEvent.getSenderAddress())) return;
+//		if (MMNetworkUtil.isMyAddress(aMessageEvent.getSenderAddress())) return;
 	
 		if (aMessageEvent.getMessageProtocol() == MMMessageProtocol.UDP)
 		{
@@ -81,7 +81,9 @@ public class MMMessageManager implements MMMessageListener
 				if (aMessageEvent.getMessageAsString().equals(MMNetworkUtil.UDP_MESSAGE_PING))
 				{
 					if (MMUser.getMyself() != null)
-						getMessageSender().sendTCPMessage(aMessageEvent.getSenderAddress(), new MMUserMessage(MMUser.getMyself()));	
+					{
+						getMessageSender().sendTCPMessage(aMessageEvent.getSenderAddress(), new MMUserMessage(MMUser.getMyself()));
+					}						
 				}
 			}
 		}
