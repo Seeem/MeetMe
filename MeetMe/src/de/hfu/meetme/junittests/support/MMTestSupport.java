@@ -16,7 +16,7 @@ import de.hfu.meetme.model.network.MMNetworkUtil;
 public final class MMTestSupport
 {
 	
-	private static Calendar getValidBirthday()
+	public static Calendar getValidBirthday()
 	{
 		Calendar theBirthday = Calendar.getInstance();
 		theBirthday.set(Calendar.YEAR, theBirthday.get(Calendar.YEAR)-12);
@@ -25,7 +25,7 @@ public final class MMTestSupport
 	
 	public static MMUser createANewValidUser()
 	{	
-		return new MMUser(MMNetworkUtil.getLanAddressAsString(), MMGender.MALE, "Sem", "Simeon", "Sembach", getValidBirthday(), "Hi I want to meet you!");
+		return new MMUser(MMNetworkUtil.getMyLanAddressAsString(), MMGender.MALE, "Sem", "Simeon", "Sembach", getValidBirthday(), "Hi I want to meet you!");
 	}
 	
 	public static MMUser createANewValidUser(String aId)
@@ -40,12 +40,12 @@ public final class MMTestSupport
 	
 	public static MMUser createANewValidMan()
 	{
-		return new MMUser(MMNetworkUtil.getLanAddressAsString(), MMGender.MALE, "Sem", "Simeon", "Sembach", getValidBirthday(), "Hi I want to meet you!");
+		return new MMUser(MMNetworkUtil.getMyLanAddressAsString(), MMGender.MALE, "Sem", "Simeon", "Sembach", getValidBirthday(), "Hi I want to meet you!");
 	}
 	
 	public static MMUser createANewValidWoman()
 	{
-		return new MMUser(MMNetworkUtil.getLanAddressAsString(), MMGender.FEMALE, "Quotenfrau", "Leona", "Musterfrau", getValidBirthday(), "Hi I want to meet you!");
+		return new MMUser(MMNetworkUtil.getMyLanAddressAsString(), MMGender.FEMALE, "Quotenfrau", "Leona", "Musterfrau", getValidBirthday(), "Hi I want to meet you!");
 	}
 	
 }

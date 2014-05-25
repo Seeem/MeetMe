@@ -19,42 +19,46 @@ public class MMUser implements Serializable
 {
 
 	// Instance-Members:
-
-	/** The unique identification-key of an user */
+	
+	/** The unique identification-key of an user. */
 	private String id;
 	
-	/** The gender of an user */
+	/** The gender of an user. */
 	private MMGender gender;
 	
-	/** The username of an user */
+	/** The user name of an user. */
 	private String username;
 	
-	/** The first name of an user */
+	/** The first name of an user. */
 	private String firstName;
 	
-	/** The second name of an user */
+	/** The second name of an user. */
 	private String lastName;
 	
-	/** The birthday of an user */
+	/** The birthday of an user. */
 	private Calendar birthday;
 	
-	/** The additional description of an user */
+	/** The additional description of an user. */
 	private String description;
 	
 	// Class-Members:
 	
-	/** The serial version UID of an MMUser-object */
+	/** The serial version UID of an MMUser-object. */
 	private static final long serialVersionUID = 4091994199398642117L;
 	
-	/** The users-"list" as HashMap */
+	/** The users-"list" as HashMap. */
 	private static HashMap<String, MMUser> users = new HashMap<String,MMUser>();
+	
+	/** The user associated with this device. */
+	private static MMUser myself;
 	
 	// Constructor:
 	
 	/**
 	 * The MMUser Constructor.
+	 * @param aId the users Id
 	 * @param aGender the users gender to set
-	 * @param aUsername the username to set
+	 * @param aUsername the user name to set
 	 * @param aFirstName the first name to set
 	 * @param aLastName the last name to set
 	 * @param aBirthday the birthday to set
@@ -71,7 +75,15 @@ public class MMUser implements Serializable
 		setDescription(aDescription);
 	}
 	
-	/** Creates a MMUser with an empty description */
+	/**
+	 * Creates a MMUser with an empty description.
+	 * @param aId the users Id
+	 * @param aGender the users gender to set
+	 * @param aUsername the user name to set
+	 * @param aFirstName the first name to set
+	 * @param aLastName the last name to set
+	 * @param aBirthday the birthday to set
+	 */
 	public MMUser(String aId, MMGender aGender, String aUsername, String aFirstName, String aLastName, Calendar aBirthday)
 	{
 		this(aId, aGender, aUsername, aFirstName, aLastName, aBirthday, "");
@@ -98,7 +110,7 @@ public class MMUser implements Serializable
 	}
 	
 	/**
-	 * Returns the birthday date as string.
+	 * Returns the birthday date as easy readable {@link String}.
 	 * @return the birthday as string
 	 */
 	public String getBirthdayAsString()
@@ -108,7 +120,9 @@ public class MMUser implements Serializable
 	
 	// MM-API (Class):
 	
-	/** Initializes the user-map */
+	/**
+	 * Initializes the user-map.
+	 */
 	public static void initializeUsers()
 	{
 		setUsers(new HashMap<String, MMUser>());
@@ -125,6 +139,19 @@ public class MMUser implements Serializable
 			throw new NullPointerException("user to search is null");
 		
 		return MMUser.getUsers().containsKey(aUser.getId());
+	}
+	
+	/**
+	 * Returns whether the user-map contains the specified user id.
+	 * @param aUser the user id to search for
+	 * @return true if the user-map contains the specified user id, false otherwise
+	 */
+	public static boolean containsUser(String aUserId)
+	{
+		if (aUserId == null)
+			throw new NullPointerException("user ID to search is null");
+		
+		return MMUser.getUsers().containsKey(aUserId);
 	}
 	
 	/**
@@ -149,6 +176,19 @@ public class MMUser implements Serializable
 			throw new IllegalArgumentException("user already exists");
 		
 		MMUser.getUsers().put(aUser.getId(), aUser);
+	}
+	
+	/**
+	 * Adds an specified user to the user-map if it is not already added before.
+	 * @param aUser the user to add
+	 */
+	public static void addUserIfNotAlreadyAdded(MMUser aUser)
+	{
+		if (aUser == null)
+			throw new NullPointerException("user to add is null");
+		
+		if (!MMUser.containsUser(aUser));
+			MMUser.addUser(aUser);
 	}
 	
 	/**
@@ -186,9 +226,9 @@ public class MMUser implements Serializable
 	 * Returns all users as array.
 	 * @return the users as array
 	 */
-	public static MMUser[] getAllUsersAsArray()
+	public static MMUser[] getUsersAsArray()
 	{
-		return (MMUser[]) MMUser.getUsers().values().toArray();
+		return MMUser.getUsers().values().toArray(new MMUser[MMUser.size()]);
 	}
 	
 	// Accessors (Instance):
@@ -212,7 +252,7 @@ public class MMUser implements Serializable
 	}
 	
 	/**
-	 * @return the username
+	 * @return the user name
 	 */
 	public String getUsername()
 	{
@@ -220,7 +260,7 @@ public class MMUser implements Serializable
 	}
 
 	/**
-	 * @param aUsername the username to set
+	 * @param aUsername the user name to set
 	 */
 	public void setUsername(String aUsername)
 	{
@@ -340,10 +380,29 @@ public class MMUser implements Serializable
 		return users;
 	}
 	
-	// Print:
+	/**
+	 * @return the myself
+	 */
+	public static MMUser getMyself()
+	{
+		return myself;
+	}
 	
 	/**
-	 * @return user-relevant facts like Gender, username, first name, last name, birthday and description
+	 * @param anUser the myself to set
+	 */
+	public static void setMyself(MMUser anUser)
+	{
+		if (anUser == null)
+			throw new IllegalArgumentException("user is null.");
+		
+		MMUser.myself = anUser;
+	}
+	
+	// Printers:
+	
+	/**
+	 * @return user-relevant facts like Gender, user name, first name, last name, birthday and description
 	 */
 	@Override public String toString()
 	{
@@ -365,6 +424,23 @@ public class MMUser implements Serializable
 		theStringBuffer.append(getDescription());
 		
 		return theStringBuffer.toString();
+	}
+	
+	/**
+	 * Prints this user.
+	 */
+	public void print()
+	{
+		System.out.println(this);
+	}
+	
+	/**
+	 * Prints all added users.
+	 */
+ 	public static void printUsers()
+	{
+		for (MMUser anUser : MMUser.getUsersAsArray())
+			anUser.print();
 	}
 	
 }

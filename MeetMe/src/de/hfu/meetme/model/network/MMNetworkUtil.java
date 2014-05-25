@@ -72,11 +72,28 @@ public final class MMNetworkUtil
 	}
 	
 	/**
+	 * Returns the LAN IP-Address.
+	 * If there is an {@link UnknownHostException} it will return null.
+	 * @return the LAN address
+	 */
+	public static InetAddress getMyLanAddress()
+	{
+		try
+		{
+			return InetAddress.getByName(InetAddress.getLocalHost().getHostAddress());
+		} 
+		catch (UnknownHostException e)
+		{
+			return null;
+		}
+	}
+
+	/**
 	 * Returns the LAN IP-Address as String.
 	 * If there is an {@link UnknownHostException} it will return null.
 	 * @return the LAN address
 	 */
-	public static String getLanAddressAsString()
+	public static String getMyLanAddressAsString()
 	{
 		try
 		{
@@ -86,6 +103,16 @@ public final class MMNetworkUtil
 		{
 			return null;
 		}
+	}
+	
+	/**
+	 * Returns whether the given Internet Address is the Internet Address of the device who calls this method.
+	 * @param anInetAddress the Internet Address to check
+	 * @return true if the Internet Address is the Internet Address of the device who calls this method, false otherwise
+	 */
+	public static boolean isMyAddress(InetAddress anInetAddress)
+	{
+		return anInetAddress.getHostAddress().equals(getMyLanAddressAsString());
 	}
 	
 }
