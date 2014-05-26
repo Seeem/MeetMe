@@ -27,6 +27,7 @@ public class UserListFragment extends ListFragment
 
 		@Override protected Void doInBackground(Integer... aParams)
 		{
+			
 			switch(aParams[0])
 			{
 				case 0:
@@ -61,6 +62,7 @@ public class UserListFragment extends ListFragment
 
 	// Internals:
 	
+	/** */
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -69,12 +71,14 @@ public class UserListFragment extends ListFragment
 		new NetworkTask().execute(0);
 	}
 	
+	/** */
 	@Override public void onDestroy()
 	{
 		super.onDestroy();
 		new NetworkTask().execute(1);
 	}
 	
+	/** */
 	@Override public void onResume()
 	{
 		super.onResume();
@@ -82,12 +86,14 @@ public class UserListFragment extends ListFragment
 		updateView();
 	}
 	
+	/** */
 	@Override public void onPause()
 	{
 		super.onPause();
 		new NetworkTask().execute(1);
 	}
 	
+	/** */
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		// Inflate the layout for this fragment
@@ -118,12 +124,14 @@ public class UserListFragment extends ListFragment
 		return view;
 	}
 
+	/** */
 	@Override public void onListItemClick(ListView listView, View view, int position, long id)
 	{
 		MMUser user = (MMUser) getListView().getItemAtPosition(position);
 		intentUserProfileActivity(user);
 	}
 
+	/** */
 	private void intentUserProfileActivity(MMUser user)
 	{
 		final Intent intent = new Intent(getActivity(),
@@ -133,6 +141,7 @@ public class UserListFragment extends ListFragment
 				UserListActivity.REQUEST_CODE_USER_PROFILE_ACTIVITY);
 	}
 
+	/** */
 	public void updateView()
 	{
 		this.getActivity().runOnUiThread(new Runnable() {

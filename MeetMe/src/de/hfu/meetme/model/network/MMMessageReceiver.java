@@ -4,17 +4,12 @@
 package de.hfu.meetme.model.network;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.Calendar;
 import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import de.hfu.meetme.model.message.MMMessage;
 
 /**
  * @author Simeon Sembach
@@ -25,47 +20,22 @@ public final class MMMessageReceiver
 	
 	// Instance-Members:
 	
-	/** The isStarted boolean */
+	/** The isStarted boolean. */
 	private boolean isStarted = false;
 	
-	/** The messageListener-list */
+	/** The messageListener-list. */
 	private Vector<MMMessageListener> messageListener = new Vector<MMMessageListener>();
 	
-	/** The TCP Socket for receiving {@link MMMessage} */
-	private ServerSocket tcpSocket;
-	
-	/** The UDP Socket for receiving broadcast messages */
+	/** The UDP Socket for receiving broadcast messages. */
 	private DatagramSocket udpBroadcastSocket;
 		
-	/** The UDP Socket for receiving single messages */
+	/** The UDP Socket for receiving single messages. */
 	private DatagramSocket udpSocket;
 
-	/** The executor service which handles the message receiving threads*/
+	/** The executor service which handles the message receiving threads. */
 	private ExecutorService executorService;
 
-	/** The thread which is responsible for receiving TCP messages */
-	private final Runnable RECEIVE_TCP_MESSAGE_THREAD = new Runnable()
-	{		
-		@Override public void run()
-		{
-			while(!Thread.interrupted())
-			{
-				try
-				{
-					receiveTCPMessage();
-				}
-				catch (IOException anException_1) 
-				{
-				}
-				catch (Exception anException_2)
-				{
-					anException_2.printStackTrace();
-				}
-			}
-		}
-	};
-	
-	/** The thread which is responsible for receiving UDP broadcast messages */
+	/** The thread which is responsible for receiving UDP broadcast messages. */
 	private final Runnable RECEIVE_UDP_BROADCAST_MESSAGE_THREAD = new Runnable()
 	{		
 		@Override public void run()
@@ -88,7 +58,7 @@ public final class MMMessageReceiver
 		}
 	};
 	
-	/** The thread which is responsible for receiving single UDP messages */
+	/** The thread which is responsible for receiving single UDP messages. */
 	private final Runnable RECEIVE_UDP_SINGLE_MESSAGE_THREAD = new Runnable()
 	{		
 		@Override public void run()
@@ -113,7 +83,7 @@ public final class MMMessageReceiver
 	
 	// Class-Members:
 	
-	/** The maximum number of bytes a UDP receiver can receive in one UDP message */
+	/** The maximum number of bytes a UDP receiver can receive in one UDP message. */
 	private static final int MAXIMUM_UDP_SIZE_IN_BYTES = 1024;
 	
 	// MM-API:
@@ -186,7 +156,6 @@ public final class MMMessageReceiver
 		{
 			setUdpBroadcastSocket(new DatagramSocket(MMNetworkUtil.UDP_BROADCAST_PORT));
 			setUdpSocket(new DatagramSocket(MMNetworkUtil.UDP_PORT));
-			setTcpSocket(new ServerSocket(MMNetworkUtil.TCP_PORT));
 		} 
 		catch (Exception anException)
 		{
@@ -196,16 +165,12 @@ public final class MMMessageReceiver
 			if (getUdpSocket() != null)
 				getUdpSocket().close();
 			
-			if (getTcpSocket() != null)
-				try{getTcpSocket().close();} catch (IOException anIOException){anIOException.printStackTrace();}
-			
 			throw new RuntimeException(anException.getMessage());
 		}
 		
-		setExecutorService(Executors.newFixedThreadPool(3));	
+		setExecutorService(Executors.newFixedThreadPool(2));
 		getExecutorService().execute(RECEIVE_UDP_BROADCAST_MESSAGE_THREAD);
 		getExecutorService().execute(RECEIVE_UDP_SINGLE_MESSAGE_THREAD);
-		getExecutorService().execute(RECEIVE_TCP_MESSAGE_THREAD);
 	}
 
 	/** 
@@ -214,17 +179,7 @@ public final class MMMessageReceiver
 	 */
 	private void shutdownReceivingThreads()
 	{
-		getExecutorService().shutdownNow();
-		
-		try
-		{
-			getTcpSocket().close();
-		} 
-		catch (IOException anIOException)
-		{
-			throw new RuntimeException(anIOException.getMessage());
-		}
-			
+		getExecutorService().shutdownNow();	
 		getUdpBroadcastSocket().close();
 		getUdpSocket().close();
 	}
@@ -240,45 +195,13 @@ public final class MMMessageReceiver
 	}
 	
 	/** 
-	 * Waits for a TCP connection from which a {@link MMMessage} may be received. 
-	 */
-	private void receiveTCPMessage() throws IOException, ClassNotFoundException
-	{
-		Socket theClientSocket = getTcpSocket().accept();
-		MMMessage theMessage = (MMMessage) new ObjectInputStream(theClientSocket.getInputStream()).readObject();
-		theClientSocket.close();
-		
-		MMMessageEvent theMessageEvent = new MMMessageEvent(
-				theClientSocket.getInetAddress(), 
-				theMessage, 
-				theClientSocket.getPort(), 
-				Calendar.getInstance(), 
-				MMMessageProtocol.TCP, 
-				MMMessageTargetType.SINGLE,
-				null);
-		
-		triggerMessageEvent(theMessageEvent);
-	}
-	
-	/** 
 	 * Waits for a UDP broadcast message.
 	 */
 	private void receiveUDPBroadcastMessage() throws IOException
 	{
 		DatagramPacket thePacket = new DatagramPacket(new byte[MAXIMUM_UDP_SIZE_IN_BYTES], MAXIMUM_UDP_SIZE_IN_BYTES);
 		getUdpBroadcastSocket().receive(thePacket);		
-		String theMessageAsString = new String(thePacket.getData(), 0, thePacket.getLength());
-		
-		MMMessageEvent theMessageEvent = new MMMessageEvent(
-				thePacket.getAddress(), 
-				theMessageAsString.split(":")[1], 
-				thePacket.getPort(), 
-				Calendar.getInstance(), 
-				MMMessageProtocol.UDP, 
-				MMMessageTargetType.BROADCAST,
-				MMMessageType.valueOf(theMessageAsString.split(":")[0]));
-		
-		triggerMessageEvent(theMessageEvent);	
+		pushUDPMessage(thePacket, MMMessageTargetType.BROADCAST);	
 	}
 	
 	/** 
@@ -288,20 +211,30 @@ public final class MMMessageReceiver
 	{
 		DatagramPacket thePacket = new DatagramPacket(new byte[MAXIMUM_UDP_SIZE_IN_BYTES], MAXIMUM_UDP_SIZE_IN_BYTES);
 		getUdpSocket().receive(thePacket);		
-		String theMessageAsString = new String(thePacket.getData(), 0, thePacket.getLength());
+		pushUDPMessage(thePacket, MMMessageTargetType.SINGLE);
+	}
+
+	/**
+	 * TODO
+	 * @param aDatagramPacket
+	 * @param aMessageTargetType
+	 */
+	private void pushUDPMessage(DatagramPacket aDatagramPacket, MMMessageTargetType aMessageTargetType)
+	{
+		String theMessageAsString = new String(aDatagramPacket.getData(), 0, aDatagramPacket.getLength());
 		
 		MMMessageEvent theMessageEvent = new MMMessageEvent(
-				thePacket.getAddress(), 
+				aDatagramPacket.getAddress(), 
 				theMessageAsString.split(":")[1], 
-				thePacket.getPort(), 
+				aDatagramPacket.getPort(), 
 				Calendar.getInstance(), 
 				MMMessageProtocol.UDP, 
-				MMMessageTargetType.SINGLE,
+				aMessageTargetType,
 				MMMessageType.valueOf(theMessageAsString.split(":")[0]));
 		
 		triggerMessageEvent(theMessageEvent);	
 	}
-
+	
 	// Accessors:
 	
 	/**
@@ -310,22 +243,6 @@ public final class MMMessageReceiver
 	private Vector<MMMessageListener> getMessageListener()
 	{
 		return messageListener;
-	}
-
-	/**
-	 * @return the tcpSocket
-	 */
-	private ServerSocket getTcpSocket()
-	{
-		return tcpSocket;
-	}
-
-	/**
-	 * @param aTcpSocket the tcpSocket to set
-	 */
-	private void setTcpSocket(ServerSocket aTcpSocket)
-	{
-		this.tcpSocket = aTcpSocket;
 	}
 
 	/**

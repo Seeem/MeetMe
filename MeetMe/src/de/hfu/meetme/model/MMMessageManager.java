@@ -20,7 +20,7 @@ import de.hfu.meetme.views.UserListFragment;
 public class MMMessageManager implements MMMessageListener
 {
 	
-	// Inctane-Members:
+	// Instance-Members:
 	
 	/** */
 	private MMMessageSender messageSender;

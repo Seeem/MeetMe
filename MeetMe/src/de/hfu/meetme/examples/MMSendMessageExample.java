@@ -6,7 +6,6 @@ package de.hfu.meetme.examples;
 import org.junit.Test;
 
 import de.hfu.meetme.junittests.support.MMTestSupport;
-import de.hfu.meetme.model.message.MMUserMessage;
 import de.hfu.meetme.model.network.MMMessageEvent;
 import de.hfu.meetme.model.network.MMMessageListener;
 import de.hfu.meetme.model.network.MMMessageProtocol;
@@ -45,8 +44,6 @@ public class MMSendMessageExample implements MMMessageListener
 			messageSender.sendUDPBroadcastMessage(MMMessageType.CONNECT, MMTestSupport.createANewValidUser());
 			Thread.sleep(100);
 			messageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), "Hallo Welt!");
-			Thread.sleep(100);
-			messageSender.sendTCPMessage(MMNetworkUtil.getLocalhostAddress(), new MMUserMessage(MMTestSupport.createANewValidUser()));		
 			Thread.sleep(100);
 		} 
 		catch (Exception anException)

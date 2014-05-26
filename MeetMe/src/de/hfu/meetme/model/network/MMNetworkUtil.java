@@ -5,7 +5,6 @@ package de.hfu.meetme.model.network;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -76,9 +75,22 @@ public final class MMNetworkUtil
 	}
 	
 	/**
-	 * Returns the LAN IP-Address.
-	 * If there is an {@link UnknownHostException} it will return null.
-	 * @return the LAN address
+	 * Returns the LAN Internet address of this device as a {@link String} if possible,
+	 * otherwise it will return null. The Form of the {@link String} will be like: 192.168.0.1.
+	 * @return the LAN Internet address as String if possible, null otherwise
+	 */
+	public static String getMyLanAddressAsString()
+	{
+		InetAddress theInetAddress = getMyLanAddress();		
+		if (theInetAddress != null)
+			return theInetAddress.getHostAddress();
+		return null;
+	}
+	
+	/**
+	 * Returns the LAN Internet address of this device if possible,
+	 * otherwise it will return null.
+	 * @return the LAN Internet address if possible, null otherwise
 	 */
 	public static InetAddress getMyLanAddress()
 	{
@@ -91,39 +103,25 @@ public final class MMNetworkUtil
 				NetworkInterface theNetworkInterface = theEnumaration.nextElement();
 				
 				for (InetAddress anInetAddress : Collections.list(theNetworkInterface.getInetAddresses()))
-				{
-					
-
-					if (anInetAddress.isAnyLocalAddress())
-						return anInetAddress;
+				{			
+					// Filter (remove) loopback-addresses:
+					if (!anInetAddress.isLoopbackAddress())
+					{
+						// Filter (remove) IPv6-addresses:
+						if (anInetAddress.getHostAddress().matches("[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}"))
+						{
+							// Return the first found Internet Address:
+							return anInetAddress;
+						}					
+					}
 				}
 			}
 		} 
-		catch (SocketException e)
-		{
-			e.printStackTrace();	
-		}
+		catch (Exception anException) {}
 		
 		return null;
 	}
 
-	/**
-	 * Returns the LAN IP-Address as String.
-	 * If there is an {@link UnknownHostException} it will return null.
-	 * @return the LAN address
-	 */
-	public static String getMyLanAddressAsString()
-	{
-		try
-		{
-			return getMyLanAddress().getHostAddress();
-		}
-		catch (NullPointerException anNullPointerException)
-		{
-			return null;
-		}
-	}
-	
 	/**
 	 * Returns whether the given Internet Address is the Internet Address of the device who calls this method.
 	 * @param anInetAddress the Internet Address to check

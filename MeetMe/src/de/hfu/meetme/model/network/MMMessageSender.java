@@ -3,15 +3,10 @@
  */
 package de.hfu.meetme.model.network;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Socket;
-
 import de.hfu.meetme.model.MMUser;
-import de.hfu.meetme.model.message.MMMessage;
 
 /**
  * @author Simeon Sembach
@@ -21,43 +16,6 @@ public class MMMessageSender
 {
 	
 	// MM-API:
-	
-	/** 
-	 * Sends a {@link MMMessage} as TCP message to a given Internet address.
-	 * It will just send the object, then immediately close the connection.
-	 * @throws RuntimeException
-	 */
-	public void sendTCPMessage(InetAddress aInetAdress, MMMessage aMessage)
-	{
-		if (aInetAdress == null)
-			throw new NullPointerException("inetAdress is null.");
-		
-		if(aMessage == null)
-			throw new NullPointerException("message is null.");
-		
-		Socket theSocket = null;
-		ObjectOutputStream theObjectOutputStream = null;
-		
-		try
-		{
-			theSocket = new Socket(aInetAdress, MMNetworkUtil.TCP_PORT);
-			theObjectOutputStream = new ObjectOutputStream(theSocket.getOutputStream());
-			theObjectOutputStream.writeObject(aMessage);
-			theObjectOutputStream.flush();			
-		} 
-		catch (Exception anException)
-		{
-			throw new RuntimeException(anException.getMessage());
-		}
-		finally
-		{
-			if (theObjectOutputStream != null)
-				try{theObjectOutputStream.close();} catch (IOException anIOException){anIOException.printStackTrace();}
-			
-			if (theSocket != null)
-				try{theSocket.close();} catch (IOException anIOException){anIOException.printStackTrace();}
-		}
-	}
 	
 	/** 
 	 * Sends a String as UDP broadcast message.
