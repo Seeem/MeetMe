@@ -130,15 +130,15 @@ public class MMUser implements Serializable
 	
 	/**
 	 * Returns whether the user-map contains the specified user.
-	 * @param aUser the user to search for
+	 * @param anUser the user to search for
 	 * @return true if the user-map contains the specified user, false otherwise
 	 */
-	public static boolean containsUser(MMUser aUser)
+	public static boolean containsUser(MMUser anUser)
 	{
-		if (aUser == null)
+		if (anUser == null)
 			throw new NullPointerException("user to search is null");
 		
-		return MMUser.getUsers().containsKey(aUser.getId());
+		return MMUser.getUsers().containsKey(anUser.getId());
 	}
 	
 	/**
@@ -146,12 +146,12 @@ public class MMUser implements Serializable
 	 * @param aUser the user id to search for
 	 * @return true if the user-map contains the specified user id, false otherwise
 	 */
-	public static boolean containsUser(String aUserId)
+	public static boolean containsUser(String anUserId)
 	{
-		if (aUserId == null)
+		if (anUserId == null)
 			throw new NullPointerException("user ID to search is null");
 		
-		return MMUser.getUsers().containsKey(aUserId);
+		return MMUser.getUsers().containsKey(anUserId);
 	}
 	
 	/**
@@ -165,30 +165,30 @@ public class MMUser implements Serializable
 	
 	/**
 	 * Adds an specified user to the user-map.
-	 * @param aUser the user to add
+	 * @param anUser the user to add
 	 */
-	public static void addUser(MMUser aUser)
+	public static void addUser(MMUser anUser)
 	{
-		if (aUser == null)
+		if (anUser == null)
 			throw new NullPointerException("user to add is null");
 		
-		if (MMUser.containsUser(aUser))
-			throw new IllegalArgumentException("user already exists");
+		if (MMUser.containsUser(anUser))
+			throw new IllegalArgumentException("user already added");
 		
-		MMUser.getUsers().put(aUser.getId(), aUser);
+		MMUser.getUsers().put(anUser.getId(), anUser);
 	}
 	
 	/**
 	 * Adds an specified user to the user-map if it is not already added before.
-	 * @param aUser the user to add
+	 * @param anUser the user to add
 	 */
-	public static void addUserIfNotAlreadyAdded(MMUser aUser)
+	public static void addUserIfNotAlreadyAdded(MMUser anUser)
 	{
-		if (aUser == null)
+		if (anUser == null)
 			throw new NullPointerException("user to add is null");
 		
-		if (!MMUser.containsUser(aUser));
-			MMUser.addUser(aUser);
+		if (!MMUser.containsUser(anUser))
+			MMUser.addUser(anUser);
 	}
 	
 	/**
@@ -397,6 +397,43 @@ public class MMUser implements Serializable
 			throw new IllegalArgumentException("user is null.");
 		
 		MMUser.myself = anUser;
+	}
+	
+	// Conversion:
+	
+	/** */
+	public String toUdpMessage()
+	{	
+		return new StringBuffer().
+				append(getId()).append(";").
+				append(getGender()).append(";").
+				append(getUsername()).append(";").
+				append(getFirstName()).append(";").
+				append(getLastName()).append(";").
+				append(getBirthdayAsString()).append(";").
+				append(getDescription()).append(";").
+				toString();
+	}
+	
+	/** */
+	public static MMUser valueOf(String anUDPMessageAsString)
+	{		
+		try
+		{
+			String theStrings[] = anUDPMessageAsString.split(";");
+			Calendar theBirthday = Calendar.getInstance();
+			SimpleDateFormat theSimpleDateFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance(); //new SimpleDateFormat("dd.MM.yy");
+			theBirthday.setTime(theSimpleDateFormat.parse(theStrings[5]));	
+			MMGender theGender = theStrings[1].equals(MMGender.MALE.toString()) ? MMGender.MALE : MMGender.FEMALE;
+			if (theStrings.length == 7)
+				return new MMUser(theStrings[0], theGender, theStrings[2], theStrings[3], theStrings[4], theBirthday, theStrings[6]);
+			else
+				return new MMUser(theStrings[0], theGender, theStrings[2], theStrings[3], theStrings[4], theBirthday);
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
 	}
 	
 	// Printers:

@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 import de.hfu.meetme.model.MMGender;
 import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.MMNetworkUtil;
 import de.hfu.meetme.model.validation.MMUserValidation;
 
 /**
@@ -44,7 +45,7 @@ public class Supporting
 				.getDefaultSharedPreferences(context);
 
 		// Get Data
-		final String id = "Test"; // TODO: Here should be the unique ID
+		final String id = "HALLO"; // MMNetworkUtil.getMyLanAddressAsString();
 		final String username = settings.getString("username", "Unknown");
 		final String firstName = settings.getString("first_name", "John");
 		final String lastName = settings.getString("last_name", "Doe");

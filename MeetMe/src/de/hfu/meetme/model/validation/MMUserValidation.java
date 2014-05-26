@@ -55,6 +55,8 @@ public final class MMUserValidation
 	 */
 	public static final Pattern DESCRIPTION_PATTERN = Pattern.compile(".{0,100}");
 	
+	// TODO no >> ; << allowed
+	
 	// MM-API (Class):
 	
 	/**

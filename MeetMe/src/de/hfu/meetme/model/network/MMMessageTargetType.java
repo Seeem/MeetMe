@@ -7,7 +7,7 @@ package de.hfu.meetme.model.network;
  * @author Simeon Sembach
  *
  */
-public enum MMMessageType 
+public enum MMMessageTargetType
 {
-	CONNECT, DISCONNECT, UPDATE, MESSAGE
+	BROADCAST, SINGLE
 }

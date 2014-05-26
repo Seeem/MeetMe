@@ -97,6 +97,28 @@ public class MMAddAndRemoveUsersTest
 	}
 
 	@Test
+	public void testAddUserIfNotAlreadyAdded_ShouldPass()
+	{	
+		MMUser.initializeUsers();
+		
+		boolean theHasErrorBoolean = false;
+		
+		try
+		{
+			MMUser theUser = MMTestSupport.createANewValidUser();
+			MMUser.addUserIfNotAlreadyAdded(theUser);
+			MMUser.addUserIfNotAlreadyAdded(theUser);
+		}
+		catch (Exception anException)
+		{
+			anException.printStackTrace();
+			theHasErrorBoolean = true;
+		}
+
+		assertTrue(MMUser.size() == 1 && !theHasErrorBoolean);
+	}
+	
+	@Test
 	public void testRemoveAUser_ShouldPass()
 	{
 		MMUser.initializeUsers();

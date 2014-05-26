@@ -12,6 +12,7 @@ import de.hfu.meetme.model.network.MMMessageListener;
 import de.hfu.meetme.model.network.MMMessageProtocol;
 import de.hfu.meetme.model.network.MMMessageReceiver;
 import de.hfu.meetme.model.network.MMMessageSender;
+import de.hfu.meetme.model.network.MMMessageTargetType;
 import de.hfu.meetme.model.network.MMMessageType;
 import de.hfu.meetme.model.network.MMNetworkUtil;
 
@@ -41,6 +42,8 @@ public class MMSendMessageExample implements MMMessageListener
 			Thread.sleep(100);
 			messageSender.sendUDPBroadcastMessage("Hallo Welt!");
 			Thread.sleep(100);
+			messageSender.sendUDPBroadcastMessage(MMMessageType.CONNECT, MMTestSupport.createANewValidUser());
+			Thread.sleep(100);
 			messageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), "Hallo Welt!");
 			Thread.sleep(100);
 			messageSender.sendTCPMessage(MMNetworkUtil.getLocalhostAddress(), new MMUserMessage(MMTestSupport.createANewValidUser()));		
@@ -63,11 +66,11 @@ public class MMSendMessageExample implements MMMessageListener
 	{
 		if (aMessageEvent.getMessageProtocol() == MMMessageProtocol.UDP)
 		{
-			if (aMessageEvent.getMessageType() == MMMessageType.BROADCAST)
+			if (aMessageEvent.getMessageTargetType() == MMMessageTargetType.BROADCAST)
 			{
 				System.out.print("UDP broadcast message received: ");
 			}
-			else if (aMessageEvent.getMessageType() == MMMessageType.SINGLE)
+			else if (aMessageEvent.getMessageTargetType() == MMMessageTargetType.SINGLE)
 			{
 				System.out.print("UDP single message received: ");
 			}

@@ -10,6 +10,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.message.MMMessage;
 
 /**
@@ -42,6 +43,7 @@ public class MMMessageSender
 			theSocket = new Socket(aInetAdress, MMNetworkUtil.TCP_PORT);
 			theObjectOutputStream = new ObjectOutputStream(theSocket.getOutputStream());
 			theObjectOutputStream.writeObject(aMessage);
+			theObjectOutputStream.flush();			
 		} 
 		catch (Exception anException)
 		{
@@ -64,18 +66,38 @@ public class MMMessageSender
 	 */
 	public void sendUDPBroadcastMessage(String aMessage)
 	{
-		sendUDPMessage(MMNetworkUtil.getBroadcastAddress(), MMNetworkUtil.UDP_BROADCAST_PORT, aMessage);
+		sendUDPMessage(MMNetworkUtil.getBroadcastAddress(), MMNetworkUtil.UDP_BROADCAST_PORT, aMessage, MMMessageType.MESSAGE);
+	}
+	
+	/**
+	 * 
+	 * @param aMessageType
+	 * @param anUser
+	 */
+	public void sendUDPBroadcastMessage(MMMessageType aMessageType, MMUser anUser)
+	{
+		sendUDPMessage(MMNetworkUtil.getBroadcastAddress(), MMNetworkUtil.UDP_BROADCAST_PORT, anUser.toUdpMessage(), aMessageType);
 	}
 	
 	/**
 	 * Sends a String as single UDP Message to a given Internet address.
-	 * @param aInetAdress the receiver Internet address
+	 * @param anInetAdress the receiver Internet address
 	 * @param aMessage the message to send
 	 * @throws RuntimeException
 	 */
-	public void sendUDPMessage(InetAddress aInetAdress, String aMessage)
+	public void sendUDPMessage(InetAddress anInetAdress, String aMessage)
 	{
-		sendUDPMessage(aInetAdress, MMNetworkUtil.UDP_PORT, aMessage);
+		sendUDPMessage(anInetAdress, MMNetworkUtil.UDP_PORT, aMessage, MMMessageType.MESSAGE);
+	}
+	
+	/**
+	 * 
+	 * @param aMessageType
+	 * @param anUser
+	 */
+	public void sendUDPMessage(InetAddress anInetAddress, MMMessageType aMessageType, MMUser anUser)
+	{
+		sendUDPMessage(anInetAddress, MMNetworkUtil.UDP_PORT, anUser.toUdpMessage(), aMessageType);
 	}
 	
 	// Internals:
@@ -87,7 +109,7 @@ public class MMMessageSender
 	 * @param aMessage the message to send
 	 * @throws RuntimeException
 	 */
-	private void sendUDPMessage(InetAddress aInetAdress, int aPort, String aMessage)
+	private void sendUDPMessage(InetAddress aInetAdress, int aPort, String aMessage, MMMessageType aMessageType)
 	{
 		if (aInetAdress == null)
 			throw new NullPointerException("inetAdress is null.");
@@ -102,8 +124,9 @@ public class MMMessageSender
 		
 		try
 		{
+			String theMessage = aMessageType.toString()+":"+aMessage;
 			udpSocket = new DatagramSocket();	
-			byte[] theByteArray = aMessage.getBytes();	
+			byte[] theByteArray = theMessage.getBytes();	
 			DatagramPacket theDatagramPacket = new DatagramPacket(theByteArray, theByteArray.length, aInetAdress, aPort);			
 			udpSocket.send(theDatagramPacket);
 		}

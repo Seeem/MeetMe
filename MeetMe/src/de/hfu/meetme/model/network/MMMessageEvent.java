@@ -31,9 +31,12 @@ public class MMMessageEvent
 	/** The used message protocol (UDP or TCP). */
 	private MMMessageProtocol messageProtocol;
 	
-	/** The message type (single- or broadcast message). */
-	private MMMessageType messageType;
+	/** The message target type (single- or broadcast message). */
+	private MMMessageTargetType messageTargetType;
 
+	/** */
+	private MMMessageType messageType;
+	
 	// Constructor:
 	
 	/**
@@ -45,14 +48,15 @@ public class MMMessageEvent
 	 * @param aMessageProtocoll the message protocol
 	 * @param aMessageType the message type
 	 */
-	public MMMessageEvent(InetAddress aSenderAddress, Object aMessage, int aSenderPort, Calendar aTimestamp, MMMessageProtocol aMessageProtocoll, MMMessageType aMessageType)
+	public MMMessageEvent(InetAddress aSenderAddress, Object aMessage, int aSenderPort, Calendar aTimestamp, MMMessageProtocol aMessageProtocoll, MMMessageTargetType aMessageType, MMMessageType aMeesageType)
 	{
 		setSenderAddress(aSenderAddress);
 		setMessage(aMessage);
 		setSenderPort(aSenderPort);
 		setTimestamp(aTimestamp);
 		setMessageProtocol(aMessageProtocoll);
-		setMessageType(aMessageType);
+		setMessageTargetType(aMessageType);
+		setMessageType(aMeesageType);
 	}
 	
 	// MM-API:
@@ -164,17 +168,35 @@ public class MMMessageEvent
 	/**
 	 * @return the messageType
 	 */
-	public MMMessageType getMessageType()
+	public MMMessageTargetType getMessageTargetType()
 	{
-		return messageType;
+		return messageTargetType;
 	}
 
 	/**
 	 * @param aMessageType the messageType to set
 	 */
-	private void setMessageType(MMMessageType aMessageType)
+	private void setMessageTargetType(MMMessageTargetType aMessageType)
 	{
-		this.messageType = aMessageType;
+		this.messageTargetType = aMessageType;
+	}
+
+	
+	/**
+	 * @return the messageType
+	 */
+	public MMMessageType getMessageType()
+	{
+		return messageType;
+	}
+	
+
+	/**
+	 * @param messageType the messageType to set
+	 */
+	public void setMessageType(MMMessageType messageType)
+	{
+		this.messageType = messageType;
 	}
 	
 }

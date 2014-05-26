@@ -54,13 +54,12 @@ public final class MMMessageReceiver
 				{
 					receiveTCPMessage();
 				}
-				catch (IOException | ClassNotFoundException anIOExcpetionOrAClassNotFoundException) 
+				catch (IOException anException_1) 
 				{
-					
 				}
-				catch (Exception anException)
+				catch (Exception anException_2)
 				{
-					anException.printStackTrace();
+					anException_2.printStackTrace();
 				}
 			}
 		}
@@ -115,7 +114,7 @@ public final class MMMessageReceiver
 	// Class-Members:
 	
 	/** The maximum number of bytes a UDP receiver can receive in one UDP message */
-	private static final int MAXIMUM_UDP_SIZE_IN_BYTES = 32;
+	private static final int MAXIMUM_UDP_SIZE_IN_BYTES = 1024;
 	
 	// MM-API:
 	
@@ -255,7 +254,8 @@ public final class MMMessageReceiver
 				theClientSocket.getPort(), 
 				Calendar.getInstance(), 
 				MMMessageProtocol.TCP, 
-				MMMessageType.SINGLE);
+				MMMessageTargetType.SINGLE,
+				null);
 		
 		triggerMessageEvent(theMessageEvent);
 	}
@@ -266,15 +266,17 @@ public final class MMMessageReceiver
 	private void receiveUDPBroadcastMessage() throws IOException
 	{
 		DatagramPacket thePacket = new DatagramPacket(new byte[MAXIMUM_UDP_SIZE_IN_BYTES], MAXIMUM_UDP_SIZE_IN_BYTES);
-		getUdpBroadcastSocket().receive(thePacket);
+		getUdpBroadcastSocket().receive(thePacket);		
+		String theMessageAsString = new String(thePacket.getData(), 0, thePacket.getLength());
 		
 		MMMessageEvent theMessageEvent = new MMMessageEvent(
 				thePacket.getAddress(), 
-				new String(thePacket.getData(), 0, thePacket.getLength()), 
+				theMessageAsString.split(":")[1], 
 				thePacket.getPort(), 
 				Calendar.getInstance(), 
 				MMMessageProtocol.UDP, 
-				MMMessageType.BROADCAST);
+				MMMessageTargetType.BROADCAST,
+				MMMessageType.valueOf(theMessageAsString.split(":")[0]));
 		
 		triggerMessageEvent(theMessageEvent);	
 	}
@@ -285,17 +287,19 @@ public final class MMMessageReceiver
 	private void receiveUDPSingleMessage() throws IOException
 	{
 		DatagramPacket thePacket = new DatagramPacket(new byte[MAXIMUM_UDP_SIZE_IN_BYTES], MAXIMUM_UDP_SIZE_IN_BYTES);
-		getUdpSocket().receive(thePacket);
+		getUdpSocket().receive(thePacket);		
+		String theMessageAsString = new String(thePacket.getData(), 0, thePacket.getLength());
 		
 		MMMessageEvent theMessageEvent = new MMMessageEvent(
 				thePacket.getAddress(), 
-				new String(thePacket.getData(), 0, thePacket.getLength()), 
+				theMessageAsString.split(":")[1], 
 				thePacket.getPort(), 
 				Calendar.getInstance(), 
 				MMMessageProtocol.UDP, 
-				MMMessageType.SINGLE);
+				MMMessageTargetType.SINGLE,
+				MMMessageType.valueOf(theMessageAsString.split(":")[0]));
 		
-		triggerMessageEvent(theMessageEvent);
+		triggerMessageEvent(theMessageEvent);	
 	}
 
 	// Accessors:

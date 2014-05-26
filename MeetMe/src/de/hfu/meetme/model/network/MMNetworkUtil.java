@@ -4,7 +4,11 @@
 package de.hfu.meetme.model.network;
 
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Collections;
+import java.util.Enumeration;
 
 /**
  * @author Simeon Sembach
@@ -25,7 +29,7 @@ public final class MMNetworkUtil
 	public static final int TCP_PORT = 9002;
 	
 	/** The UDP ping message. */
-	public static final String UDP_MESSAGE_PING = "";
+	public static final String UDP_MESSAGE_PING = "0";
 	
 	/** The UDP new in the network message */
 	public static final String UDP_MESSAGE_NEW_IN_THE_NETWORK = "1";
@@ -80,12 +84,27 @@ public final class MMNetworkUtil
 	{
 		try
 		{
-			return InetAddress.getByName(InetAddress.getLocalHost().getHostAddress());
+			Enumeration<NetworkInterface> theEnumaration = NetworkInterface.getNetworkInterfaces();
+			
+			while (theEnumaration.hasMoreElements())
+			{
+				NetworkInterface theNetworkInterface = theEnumaration.nextElement();
+				
+				for (InetAddress anInetAddress : Collections.list(theNetworkInterface.getInetAddresses()))
+				{
+					
+
+					if (anInetAddress.isAnyLocalAddress())
+						return anInetAddress;
+				}
+			}
 		} 
-		catch (UnknownHostException e)
+		catch (SocketException e)
 		{
-			return null;
+			e.printStackTrace();	
 		}
+		
+		return null;
 	}
 
 	/**
@@ -97,9 +116,9 @@ public final class MMNetworkUtil
 	{
 		try
 		{
-			return InetAddress.getLocalHost().getHostAddress();
-		} 
-		catch (UnknownHostException e)
+			return getMyLanAddress().getHostAddress();
+		}
+		catch (NullPointerException anNullPointerException)
 		{
 			return null;
 		}
@@ -110,7 +129,7 @@ public final class MMNetworkUtil
 	 * @param anInetAddress the Internet Address to check
 	 * @return true if the Internet Address is the Internet Address of the device who calls this method, false otherwise
 	 */
-	public static boolean isMyAddress(InetAddress anInetAddress)
+	public static boolean isMyLanAddress(InetAddress anInetAddress)
 	{
 		return anInetAddress.getHostAddress().equals(getMyLanAddressAsString());
 	}

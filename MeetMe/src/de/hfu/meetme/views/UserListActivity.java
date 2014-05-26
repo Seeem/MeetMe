@@ -10,10 +10,17 @@ import de.hfu.meetme.R;
 
 public class UserListActivity extends Activity
 {
-
+	
+	// Class-Members:
+	
+	/** */
 	private final static int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
+	
+	/** */
 	public final static int REQUEST_CODE_USER_PROFILE_ACTIVITY = 2;
 
+	// Internals:
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -65,6 +72,8 @@ public class UserListActivity extends Activity
 		super.finish();
 	}
 
+	// MM-API:
+	
 	/** Sends an intent to the SettingsActivity */
 	private void intentSettingsActivity()
 	{
@@ -73,4 +82,5 @@ public class UserListActivity extends Activity
 		startActivityForResult(intent, REQUEST_CODE_SETTINGS_ACTIVITY);
 	}
 
+		
 }

@@ -3,14 +3,15 @@
  */
 package de.hfu.meetme.model;
 
-import de.hfu.meetme.model.message.MMUserMessage;
 import de.hfu.meetme.model.network.MMMessageEvent;
 import de.hfu.meetme.model.network.MMMessageListener;
 import de.hfu.meetme.model.network.MMMessageProtocol;
 import de.hfu.meetme.model.network.MMMessageReceiver;
 import de.hfu.meetme.model.network.MMMessageSender;
+import de.hfu.meetme.model.network.MMMessageTargetType;
 import de.hfu.meetme.model.network.MMMessageType;
 import de.hfu.meetme.model.network.MMNetworkUtil;
+import de.hfu.meetme.views.UserListFragment;
 
 /**
  * @author Simeon Sembach
@@ -19,6 +20,8 @@ import de.hfu.meetme.model.network.MMNetworkUtil;
 public class MMMessageManager implements MMMessageListener
 {
 	
+	// Inctane-Members:
+	
 	/** */
 	private MMMessageSender messageSender;
 	
@@ -26,22 +29,25 @@ public class MMMessageManager implements MMMessageListener
 	private MMMessageReceiver messageReceiver;
 	
 	/** */
-	private long refreshingTime;
+	private boolean isStarted = false;
+	
+	/** */
+	private UserListFragment userListFragment;
 	
 	// Constructor:
 	
 	/** */
 	public MMMessageManager()
 	{
-		this(5000);
+		this(null);
 	}
 	
 	/** */
-	public MMMessageManager(long aRefreshingTime)
+	public MMMessageManager(UserListFragment anUserListFragment)
 	{
 		setMessageSender(new MMMessageSender());
 		setMessageReceiver(new MMMessageReceiver());
-		setRefreshingTime(aRefreshingTime);
+		setUserListFragment(anUserListFragment);
 	}
 	
 	// MM-API:
@@ -50,47 +56,66 @@ public class MMMessageManager implements MMMessageListener
 	public void refreshUsers()
 	{
 		MMUser.removeAllUsers();
-		getMessageSender().sendUDPBroadcastMessage(MMNetworkUtil.UDP_MESSAGE_PING);	
-		try {Thread.sleep(getRefreshingTime());} catch (InterruptedException e){e.printStackTrace();}
+		if (MMUser.getMyself() != null)
+			getMessageSender().sendUDPBroadcastMessage(MMMessageType.CONNECT, MMUser.getMyself());	
 	}
 	
 	/** */
 	public void startListening()
 	{
+		if (isStarted()) return;
 		getMessageReceiver().addMessageListener(this);
 		getMessageReceiver().startReceiver();
+		setStarted(true);
 	}
 	
 	/** */
 	public void stopListening()
 	{
+		if (!isStarted()) return;
 		getMessageReceiver().removeMessageListener(this);
 		getMessageReceiver().stopReceiver();
+		setStarted(false);
 	}
 	
 	// Implementors:
 	
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
-	{
-//		if (MMNetworkUtil.isMyAddress(aMessageEvent.getSenderAddress())) return;
-	
+	{	
+		if (MMNetworkUtil.isMyLanAddress(aMessageEvent.getSenderAddress())) return;
+				
 		if (aMessageEvent.getMessageProtocol() == MMMessageProtocol.UDP)
 		{
-			if (aMessageEvent.getMessageType() == MMMessageType.BROADCAST)
+			if (aMessageEvent.getMessageTargetType() == MMMessageTargetType.BROADCAST)
 			{
-				if (aMessageEvent.getMessageAsString().equals(MMNetworkUtil.UDP_MESSAGE_PING))
+				if (aMessageEvent.getMessageType() == MMMessageType.CONNECT)
 				{
 					if (MMUser.getMyself() != null)
-					{
-						getMessageSender().sendTCPMessage(aMessageEvent.getSenderAddress(), new MMUserMessage(MMUser.getMyself()));
+					{			
+						MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));			
+						getMessageSender().sendUDPMessage(aMessageEvent.getSenderAddress(), MMMessageType.CONNECT, MMUser.getMyself());
+
+						if (getUserListFragment() != null)
+						{
+							getUserListFragment().updateView();
+						}								
 					}						
 				}
 			}
-		}
-		else if (aMessageEvent.getMessageProtocol() == MMMessageProtocol.TCP)
-		{
-			if (aMessageEvent.getMessage() instanceof MMUserMessage)						
-				MMUser.addUserIfNotAlreadyAdded(((MMUserMessage) aMessageEvent.getMessage()).getUser());		
+			else if (aMessageEvent.getMessageTargetType() == MMMessageTargetType.SINGLE)
+			{
+				System.out.println("ashjdaskdaskdahdkjhs");
+				
+				if (aMessageEvent.getMessageType() == MMMessageType.CONNECT)
+				{
+					MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));
+					
+					if (getUserListFragment() != null)
+					{
+						getUserListFragment().updateView();
+					}				
+				}
+			}
 		}
 	}
 
@@ -134,22 +159,36 @@ public class MMMessageManager implements MMMessageListener
 		this.messageReceiver = aMessageReceiver;
 	}
 
-	
 	/**
-	 * @return the refreshingTime
+	 * @return the isStarted
 	 */
-	public long getRefreshingTime()
+	public boolean isStarted()
 	{
-		return refreshingTime;
+		return isStarted;
 	}
-
 	
 	/**
-	 * @param refreshingTime the refreshingTime to set
+	 * @param isStarted the isStarted to set
 	 */
-	public void setRefreshingTime(long refreshingTime)
+	private void setStarted(boolean isStarted)
 	{
-		this.refreshingTime = refreshingTime;
+		this.isStarted = isStarted;
+	}
+	
+	/**
+	 * @return the userListFragment
+	 */
+	private UserListFragment getUserListFragment()
+	{
+		return userListFragment;
+	}
+	
+	/**
+	 * @param userListFragment the userListFragment to set
+	 */
+	private void setUserListFragment(UserListFragment userListFragment)
+	{
+		this.userListFragment = userListFragment;
 	}
 
 }

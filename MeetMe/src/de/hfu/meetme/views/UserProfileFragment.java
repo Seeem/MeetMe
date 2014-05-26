@@ -11,9 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMGender;
-import de.hfu.meetme.model.MMMessageManager;
-import de.hfu.meetme.model.MMUser;
-import de.hfu.meetme.model.network.MMNetworkUtil;
 
 /**
  * 
@@ -22,31 +19,17 @@ import de.hfu.meetme.model.network.MMNetworkUtil;
  */
 public class UserProfileFragment extends Fragment
 {
-
 	private class NetworkTask extends AsyncTask<Void, Void, Void>
 	{
 
-		@Override
-		protected Void doInBackground(Void... aParams)
+		@Override protected Void doInBackground(Void... aParams)
 		{
-			// TEST_START:
-			
-			MMUser.getMyself().setId(MMNetworkUtil.getMyLanAddressAsString());
-			MMMessageManager theMessageManager = new MMMessageManager(1000);		
-			theMessageManager.startListening();		
-			theMessageManager.refreshUsers();			
-			theMessageManager.stopListening();			
-			theMessageManager = null;
-			
-			MMUser.printUsers();
-			
-			// TEST_END
 			
 			return null;
 		}
 
 	}
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{

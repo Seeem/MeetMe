@@ -1,58 +1,120 @@
 package de.hfu.meetme.views;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import de.hfu.meetme.MMUserArrayAdapter;
-import de.hfu.meetme.R;
-import de.hfu.meetme.model.MMGender;
-import de.hfu.meetme.model.MMUser;
 import android.app.ListFragment;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import de.hfu.meetme.MMUserArrayAdapter;
+import de.hfu.meetme.R;
+import de.hfu.meetme.model.MMMessageManager;
+import de.hfu.meetme.model.MMUser;
 
 public class UserListFragment extends ListFragment
 {
 
+	// Instance-Members:
+	
+	/** */
+	private MMMessageManager messageManager;
+	
+	/** */
+	private class NetworkTask extends AsyncTask<Integer, Void, Void>
+	{
+
+		@Override protected Void doInBackground(Integer... aParams)
+		{
+			switch(aParams[0])
+			{
+				case 0:
+				{
+					System.out.println("Listener started");
+					getMessageManager().startListening();
+					break;
+				}
+				case 1:
+				{
+					System.out.println("Listener stopped");
+					getMessageManager().stopListening();
+					break;
+				}
+				case 2:
+				{
+					System.out.println("Refreshing");
+					getMessageManager().refreshUsers();
+					break;
+				}			
+			}
+			
+			return null;
+		}
+
+	}
+	
+	// Class-Members:
+	
+	/** */
 	protected final static String MMUSER_KEY = "MMUserKey";
 
+	// Internals:
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		setMessageManager(new MMMessageManager(this));
+		new NetworkTask().execute(0);
 	}
-
+	
+	@Override public void onDestroy()
+	{
+		super.onDestroy();
+		new NetworkTask().execute(1);
+	}
+	
+	@Override public void onResume()
+	{
+		super.onResume();
+		new NetworkTask().execute(0);
+		updateView();
+	}
+	
+	@Override public void onPause()
+	{
+		super.onPause();
+		new NetworkTask().execute(1);
+	}
+	
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_user_list, container,false);
 
+		//
+		
+		new NetworkTask().execute(2);
+		
 		// Some test code to test the ListView
 
-		try
-		{
-			Calendar cal = Calendar.getInstance();
-			SimpleDateFormat theDateFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
+//		try
+//		{
+//			Calendar cal = Calendar.getInstance();
+//			SimpleDateFormat theDateFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
+//			
+//			cal.setTime(theDateFormat.parse("16.02.1993"));
+//			MMUser.addUserIfNotAlreadyAdded(new MMUser("192.168.0.1", MMGender.MALE, "FrozenAngel", "Simeon","Sembach", cal));
+//			
+//			cal.setTime(theDateFormat.parse("25.06.1994"));
+//			MMUser.addUserIfNotAlreadyAdded(new MMUser("192.168.0.2", MMGender.MALE, "DaGanstaYoda", "Dominik","Jung", cal));
+//		} 
+//		catch (ParseException e)
+//		{
+//			e.printStackTrace();
+//		}
 			
-			cal.setTime(theDateFormat.parse("16.02.1993"));
-			MMUser.addUserIfNotAlreadyAdded(new MMUser("192.168.0.1", MMGender.MALE, "FrozenAngel", "Simeon","Sembach", cal));
-			
-			cal.setTime(theDateFormat.parse("25.06.1994"));
-			MMUser.addUserIfNotAlreadyAdded(new MMUser("192.168.0.2", MMGender.MALE, "DaGanstaYoda", "Dominik","Jung", cal));
-		} 
-		catch (ParseException e)
-		{
-			e.printStackTrace();
-		}
-		
-		MMUserArrayAdapter usersAdapter = new MMUserArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, MMUser.getUsersAsArray());
-		setListAdapter(usersAdapter);
-		
 		return view;
 	}
 
@@ -71,4 +133,34 @@ public class UserListFragment extends ListFragment
 				UserListActivity.REQUEST_CODE_USER_PROFILE_ACTIVITY);
 	}
 
+	public void updateView()
+	{
+		this.getActivity().runOnUiThread(new Runnable() {
+			
+			@Override public void run()
+			{
+				setListAdapter(new MMUserArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, MMUser.getUsersAsArray()));
+			}
+			
+		});
+	}
+	
+	// Accessors:
+	
+	/**
+	 * @return the messageManager
+	 */
+	public MMMessageManager getMessageManager()
+	{
+		return messageManager;
+	}
+	
+	/**
+	 * @param messageManager the messageManager to set
+	 */
+	public void setMessageManager(MMMessageManager messageManager)
+	{
+		this.messageManager = messageManager;
+	}
+	
 }
