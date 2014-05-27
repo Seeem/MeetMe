@@ -1,5 +1,8 @@
 package de.hfu.meetme.views;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +14,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMGender;
+import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.MMMessageSender;
+import de.hfu.meetme.model.network.MMMessageType;
 
 /**
  * 
@@ -25,7 +31,17 @@ public class UserProfileFragment extends Fragment
 		@Override
 		protected Void doInBackground(Void... someParams)
 		{
-
+			try
+			{
+				InetAddress theInetAddress = InetAddress.getByName(((UserProfileActivity) getActivity()).getUser().getId());
+				new MMMessageSender().sendUDPMessage(theInetAddress, MMMessageType.MEETME, MMUser.getMyself());
+				
+			} catch (UnknownHostException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+						
 			return null;
 		}
 

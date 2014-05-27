@@ -9,5 +9,5 @@ package de.hfu.meetme.model.network;
  */
 public enum MMMessageType 
 {
-	CONNECT, DISCONNECT, UPDATE, MESSAGE
+	CONNECT, DISCONNECT, UPDATE, MESSAGE, MEETME
 }

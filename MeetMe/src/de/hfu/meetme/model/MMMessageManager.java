@@ -106,9 +106,19 @@ public class MMMessageManager implements MMMessageListener
 			}
 		}
 		// Single Messages:
-		else if (aMessageEvent.isUdpProtocol() && aMessageEvent.isBroadcastMessage() && aMessageEvent.isConnectMessage())
+		else if (aMessageEvent.isUdpProtocol() && aMessageEvent.isBroadcastMessage())
 		{
-			MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));									
+			// User connects:
+			if (aMessageEvent.isConnectMessage())
+			{
+				MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));
+			}
+			// User wants a meeting:
+			if (aMessageEvent.isMeetMeMessage())
+			{
+				if (getUserListFragment() != null) 
+					getUserListFragment().addNotification(MMUser.valueOf(aMessageEvent.getMessageAsString()));
+			}						
 		}
 		
 		// Update user-list:
