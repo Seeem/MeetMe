@@ -46,6 +46,11 @@ public class UserListActivity extends Activity
 			intentSettingsActivity();
 			return true;
 		}
+		if (theId == R.id.action_refresh)
+		{
+			//TODO:Some Refreshing operations
+			return true;
+		}
 		return super.onOptionsItemSelected(anItem);
 	}
 

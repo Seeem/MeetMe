@@ -33,6 +33,7 @@ public final class R {
     public static final class id {
         public static final int MainActicityScrollView=0x7f0a0000;
         public static final int SettingsActivityScrollView=0x7f0a0003;
+        public static final int action_refresh=0x7f0a001a;
         public static final int action_settings=0x7f0a0019;
         public static final int container=0x7f0a0007;
         public static final int container_settings=0x7f0a0004;
@@ -74,6 +75,9 @@ public final class R {
         public static final int user_profile=0x7f090002;
     }
     public static final class string {
+        /**  UserListActivityMenu 
+         */
+        public static final int action_refresh=0x7f060015;
         public static final int action_settings=0x7f060002;
         /**  Auto Generated 
          */
@@ -85,19 +89,19 @@ public final class R {
         /**  SettingsFragment 
          */
         public static final int pref_category_name=0x7f060004;
-        public static final int pref_default_display_name=0x7f060023;
-        public static final int pref_description_social_recommendations=0x7f060021;
+        public static final int pref_default_display_name=0x7f060024;
+        public static final int pref_description_social_recommendations=0x7f060022;
         /**  Example settings for Data & Sync 
          */
-        public static final int pref_header_data_sync=0x7f060025;
+        public static final int pref_header_data_sync=0x7f060026;
         /**  Strings related to Settings 
  Example General settings 
          */
-        public static final int pref_header_general=0x7f06001f;
+        public static final int pref_header_general=0x7f060020;
         /**  Example settings for Notifications 
          */
-        public static final int pref_header_notifications=0x7f060028;
-        public static final int pref_ringtone_silent=0x7f06002b;
+        public static final int pref_header_notifications=0x7f060029;
+        public static final int pref_ringtone_silent=0x7f06002c;
         public static final int pref_summary_date_of_birth=0x7f06000c;
         public static final int pref_summary_description=0x7f060012;
         public static final int pref_summary_firstname=0x7f060008;
@@ -106,42 +110,42 @@ public final class R {
         public static final int pref_summary_username=0x7f060006;
         public static final int pref_switchTextOff_gender=0x7f060010;
         public static final int pref_switchTextOn_gender=0x7f06000f;
-        public static final int pref_title_add_friends_to_messages=0x7f060024;
+        public static final int pref_title_add_friends_to_messages=0x7f060025;
         public static final int pref_title_date_of_birth=0x7f06000b;
         public static final int pref_title_description=0x7f060011;
-        public static final int pref_title_display_name=0x7f060022;
+        public static final int pref_title_display_name=0x7f060023;
         public static final int pref_title_firstname=0x7f060007;
         public static final int pref_title_gender=0x7f06000d;
         public static final int pref_title_lastname=0x7f060009;
-        public static final int pref_title_new_message_notifications=0x7f060029;
-        public static final int pref_title_ringtone=0x7f06002a;
-        public static final int pref_title_social_recommendations=0x7f060020;
-        public static final int pref_title_sync_frequency=0x7f060026;
-        public static final int pref_title_system_sync_settings=0x7f060027;
+        public static final int pref_title_new_message_notifications=0x7f06002a;
+        public static final int pref_title_ringtone=0x7f06002b;
+        public static final int pref_title_social_recommendations=0x7f060021;
+        public static final int pref_title_sync_frequency=0x7f060027;
+        public static final int pref_title_system_sync_settings=0x7f060028;
         public static final int pref_title_username=0x7f060005;
-        public static final int pref_title_vibrate=0x7f06002c;
+        public static final int pref_title_vibrate=0x7f06002d;
         /**  SettingsSaveButtonFragment 
          */
         public static final int settings_save_button_text=0x7f060013;
-        public static final int title_activity_settings=0x7f06001e;
+        public static final int title_activity_settings=0x7f06001f;
         /**  UserListActivity 
          */
         public static final int title_activity_user_list=0x7f060014;
         /**  UserProfileActivity 
          */
-        public static final int title_activity_user_profile=0x7f060016;
+        public static final int title_activity_user_profile=0x7f060017;
         /**  MMUserListButtonFragment 
          */
-        public static final int user_list_refresh_button=0x7f060015;
-        public static final int user_profile_fragment_birthday_key=0x7f06001a;
-        public static final int user_profile_fragment_description_key=0x7f06001c;
-        public static final int user_profile_fragment_first_name_key=0x7f060018;
-        public static final int user_profile_fragment_gender_key=0x7f06001b;
-        public static final int user_profile_fragment_last_name_key=0x7f060019;
-        public static final int user_profile_fragment_meet_me_button_text=0x7f06001d;
+        public static final int user_list_refresh_button=0x7f060016;
+        public static final int user_profile_fragment_birthday_key=0x7f06001b;
+        public static final int user_profile_fragment_description_key=0x7f06001d;
+        public static final int user_profile_fragment_first_name_key=0x7f060019;
+        public static final int user_profile_fragment_gender_key=0x7f06001c;
+        public static final int user_profile_fragment_last_name_key=0x7f06001a;
+        public static final int user_profile_fragment_meet_me_button_text=0x7f06001e;
         /**  UserProfileFragment 
          */
-        public static final int user_profile_fragment_user_name_key=0x7f060017;
+        public static final int user_profile_fragment_user_name_key=0x7f060018;
     }
     public static final class style {
         /** 

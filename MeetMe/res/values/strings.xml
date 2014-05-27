@@ -15,7 +15,7 @@
     <string name="pref_summary_username">Set your username</string>
     <string name="pref_title_firstname">First name</string>
     <string name="pref_summary_firstname">Set your first name</string>
-    <string name="pref_title_lastname">Lastname</string>
+    <string name="pref_title_lastname">Last name</string>
     <string name="pref_summary_lastname">Set your last name</string>
     <string name="pref_title_date_of_birth">Date of birth</string>
     <string name="pref_summary_date_of_birth">Set your date of birth</string>
@@ -31,6 +31,9 @@
 
     <!-- UserListActivity -->
     <string name="title_activity_user_list">Users</string>
+    
+    <!-- UserListActivityMenu -->
+    <string name="action_refresh">Refresh</string>
     
     <!-- MMUserListButtonFragment -->
     <string name="user_list_refresh_button">Refresh</string>
