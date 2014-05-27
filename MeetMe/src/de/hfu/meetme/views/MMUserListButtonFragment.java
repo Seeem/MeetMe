@@ -1,20 +1,20 @@
 package de.hfu.meetme.views;
 
+import de.hfu.meetme.R;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.Button;
-import de.hfu.meetme.R;
 
 /**
  * 
  * @author Dominik Jung
  * 
  */
-public class SettingsSaveButtonFragment extends Fragment
+public class MMUserListButtonFragment extends Fragment
 {
 	@Override
 	public void onCreate(Bundle aSavedInstanceState)
@@ -28,18 +28,18 @@ public class SettingsSaveButtonFragment extends Fragment
 	{
 
 		// Inflate the layout for this fragment
-		View theView = anInflater.inflate(R.layout.fragment_settings_button,
+		View theView = anInflater.inflate(R.layout.fragment_user_list_button,
 				aContainer, false);
 
 		// Add an onClickListener
-		Button theSaveButton = (Button) theView
-				.findViewById(R.id.settings_save_button);
-		theSaveButton.setOnClickListener(new OnClickListener() {
+		Button theRefreshButton = (Button) theView
+				.findViewById(R.id.user_list_refresh_button);
+		theRefreshButton.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v)
+			public void onClick(View aView)
 			{
-				getActivity().finish();
+				//Some Refreshing Operations
 			}
 
 		});

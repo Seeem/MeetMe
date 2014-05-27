@@ -32,6 +32,9 @@
     <!-- UserListActivity -->
     <string name="title_activity_user_list">Users</string>
     
+    <!-- MMUserListButtonFragment -->
+    <string name="user_list_refresh_button">Refresh</string>
+    
     <!-- UserProfileActivity -->
     <string name="title_activity_user_profile">User Profile</string>
     

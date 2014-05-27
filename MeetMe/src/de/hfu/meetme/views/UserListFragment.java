@@ -93,7 +93,8 @@ public class UserListFragment extends ListFragment
 			Bundle aSavedInstanceState)
 	{
 		// Inflate the layout for this fragment
-		View theView = anInflater.inflate(R.layout.fragment_user_list, aContainer, false);
+		View theView = anInflater.inflate(R.layout.fragment_user_list,
+				aContainer, false);
 
 		new NetworkTask().execute(MMNetworkTaskType.REFRESH_USERLIST);
 		return theView;
