@@ -28,13 +28,13 @@ public class SettingsSaveButtonFragment extends Fragment
 	{
 
 		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_settings_button,
+		View theView = inflater.inflate(R.layout.fragment_settings_button,
 				container, false);
 
 		// Add an onClickListener
-		Button saveButton = (Button) view
+		Button theSaveButton = (Button) theView
 				.findViewById(R.id.settings_save_button);
-		saveButton.setOnClickListener(new OnClickListener() {
+		theSaveButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v)
@@ -44,6 +44,6 @@ public class SettingsSaveButtonFragment extends Fragment
 
 		});
 
-		return view;
+		return theView;
 	}
 }

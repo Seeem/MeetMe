@@ -22,53 +22,50 @@ public class UserProfileFragment extends Fragment
 	private class NetworkTask extends AsyncTask<Void, Void, Void>
 	{
 
-		@Override protected Void doInBackground(Void... aParams)
+		@Override
+		protected Void doInBackground(Void... someParams)
 		{
-			
+
 			return null;
 		}
 
 	}
-	
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	public void onCreate(Bundle aSavedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
+		super.onCreate(aSavedInstanceState);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState)
+	public View onCreateView(LayoutInflater anInflater, ViewGroup aContainer,
+			Bundle aSavedInstanceState)
 	{
 
 		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_user_profile, container,
-				false);
+		View theView = anInflater.inflate(R.layout.fragment_user_profile,
+				aContainer, false);
 
 		// Add an onClickListener
-		Button meetMeButton = (Button) view
+		Button theMeetMeButton = (Button) theView
 				.findViewById(R.id.user_profile_fragment_meet_me_button);
-		meetMeButton.setOnClickListener(new OnClickListener() {
+		theMeetMeButton.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v)
+			public void onClick(View aView)
 			{
-				// TODO: Some send "Please Meet Me"-Message!
-				// Toast.makeText(getActivity(), "Message sent.",
-				// Toast.LENGTH_SHORT).show();
 				new NetworkTask().execute();
-
 			}
 
 		});
 
-		return view;
+		return theView;
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
+	public void onActivityCreated(Bundle aSavedInstanceState)
 	{
-		super.onActivityCreated(savedInstanceState);
+		super.onActivityCreated(aSavedInstanceState);
 		fillTableWithUserData();
 	}
 
@@ -79,41 +76,41 @@ public class UserProfileFragment extends Fragment
 	 */
 	private void fillTableWithUserData()
 	{
-		TextView userNameTextView = (TextView) getActivity().findViewById(
+		TextView theUserNameTextView = (TextView) getActivity().findViewById(
 				R.id.user_profile_fragment_user_name_value_tv);
-		userNameTextView.setText(((UserProfileActivity) getActivity())
+		theUserNameTextView.setText(((UserProfileActivity) getActivity())
 				.getUser().getUsername());
 
-		TextView firstNameTextView = (TextView) getActivity().findViewById(
+		TextView theFirstNameTextView = (TextView) getActivity().findViewById(
 				R.id.user_profile_fragment_first_name_value_tv);
-		firstNameTextView.setText(((UserProfileActivity) getActivity())
+		theFirstNameTextView.setText(((UserProfileActivity) getActivity())
 				.getUser().getFirstName());
 
-		TextView lastNameTextView = (TextView) getActivity().findViewById(
+		TextView theLastNameTextView = (TextView) getActivity().findViewById(
 				R.id.user_profile_fragment_last_name_value_tv);
-		lastNameTextView.setText(((UserProfileActivity) getActivity())
+		theLastNameTextView.setText(((UserProfileActivity) getActivity())
 				.getUser().getLastName());
 
-		TextView birthdayTextView = (TextView) getActivity().findViewById(
+		TextView theBirthdayTextView = (TextView) getActivity().findViewById(
 				R.id.user_profile_fragment_birthday_value_tv);
-		birthdayTextView.setText(((UserProfileActivity) getActivity())
+		theBirthdayTextView.setText(((UserProfileActivity) getActivity())
 				.getUser().getBirthdayAsString());
 
-		String genderText;
-		MMGender gender = ((UserProfileActivity) getActivity()).getUser()
+		String theGenderText;
+		MMGender theGender = ((UserProfileActivity) getActivity()).getUser()
 				.getGender();
-		if (gender == MMGender.MALE)
-			genderText = "Male";
+		if (theGender == MMGender.MALE)
+			theGenderText = "Male";
 		else
-			genderText = "Female";
+			theGenderText = "Female";
 
-		TextView genderTextView = (TextView) getActivity().findViewById(
+		TextView theGenderTextView = (TextView) getActivity().findViewById(
 				R.id.user_profile_fragment_gender_value_tv);
-		genderTextView.setText(genderText);
+		theGenderTextView.setText(theGenderText);
 
-		TextView descriptionTextView = (TextView) getActivity().findViewById(
-				R.id.user_profile_fragment_description_tv);
-		descriptionTextView.setText("Description: \n"
+		TextView theDescriptionTextView = (TextView) getActivity()
+				.findViewById(R.id.user_profile_fragment_description_tv);
+		theDescriptionTextView.setText("Description: \n"
 				+ ((UserProfileActivity) getActivity()).getUser()
 						.getDescription());
 	}

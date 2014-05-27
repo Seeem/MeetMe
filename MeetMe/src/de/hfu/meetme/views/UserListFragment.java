@@ -17,18 +17,19 @@ public class UserListFragment extends ListFragment
 {
 
 	// Instance-Members:
-	
+
 	/** */
 	private MMMessageManager messageManager;
-	
+
 	/** */
 	private class NetworkTask extends AsyncTask<Integer, Void, Void>
 	{
 
-		@Override protected Void doInBackground(Integer... aParams)
+		@Override
+		protected Void doInBackground(Integer... someParams)
 		{
-			
-			switch(aParams[0])
+
+			switch (someParams[0])
 			{
 				case 0:
 				{
@@ -47,97 +48,84 @@ public class UserListFragment extends ListFragment
 					System.out.println("Refreshing");
 					getMessageManager().refreshUsers();
 					break;
-				}			
+				}
 			}
-			
+
 			return null;
 		}
 
 	}
-	
+
 	// Class-Members:
-	
+
 	/** */
 	protected final static String MMUSER_KEY = "MMUserKey";
 
 	// Internals:
-	
+
 	/** */
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	public void onCreate(Bundle aSavedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
+		super.onCreate(aSavedInstanceState);
 		setMessageManager(new MMMessageManager(this));
 		new NetworkTask().execute(0);
 	}
-	
+
 	/** */
-	@Override public void onDestroy()
+	@Override
+	public void onDestroy()
 	{
 		super.onDestroy();
 		new NetworkTask().execute(1);
 	}
-	
+
 	/** */
-	@Override public void onResume()
+	@Override
+	public void onResume()
 	{
 		super.onResume();
 		new NetworkTask().execute(0);
 		updateView();
 	}
-	
+
 	/** */
-	@Override public void onPause()
+	@Override
+	public void onPause()
 	{
 		super.onPause();
 		new NetworkTask().execute(1);
 	}
-	
+
 	/** */
-	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	@Override
+	public View onCreateView(LayoutInflater anInflater, ViewGroup aContainer,
+			Bundle aSavedInstanceState)
 	{
 		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_user_list, container,false);
+		View theView = anInflater.inflate(R.layout.fragment_user_list, aContainer,
+				false);
 
-		//
-		
 		new NetworkTask().execute(2);
-		
-		// Some test code to test the ListView
-
-//		try
-//		{
-//			Calendar cal = Calendar.getInstance();
-//			SimpleDateFormat theDateFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
-//			
-//			cal.setTime(theDateFormat.parse("16.02.1993"));
-//			MMUser.addUserIfNotAlreadyAdded(new MMUser("192.168.0.1", MMGender.MALE, "FrozenAngel", "Simeon","Sembach", cal));
-//			
-//			cal.setTime(theDateFormat.parse("25.06.1994"));
-//			MMUser.addUserIfNotAlreadyAdded(new MMUser("192.168.0.2", MMGender.MALE, "DaGanstaYoda", "Dominik","Jung", cal));
-//		} 
-//		catch (ParseException e)
-//		{
-//			e.printStackTrace();
-//		}
-			
-		return view;
+		return theView;
 	}
 
 	/** */
-	@Override public void onListItemClick(ListView listView, View view, int position, long id)
+	@Override
+	public void onListItemClick(ListView aListView, View aView, int aPosition,
+			long anId)
 	{
-		MMUser user = (MMUser) getListView().getItemAtPosition(position);
-		intentUserProfileActivity(user);
+		MMUser theUser = (MMUser) getListView().getItemAtPosition(aPosition);
+		intentUserProfileActivity(theUser);
 	}
 
 	/** */
-	private void intentUserProfileActivity(MMUser user)
+	private void intentUserProfileActivity(MMUser anUser)
 	{
-		final Intent intent = new Intent(getActivity(),
+		final Intent theIntent = new Intent(getActivity(),
 				de.hfu.meetme.views.UserProfileActivity.class);
-		intent.putExtra(MMUSER_KEY, user);
-		startActivityForResult(intent,
+		theIntent.putExtra(MMUSER_KEY, anUser);
+		startActivityForResult(theIntent,
 				UserListActivity.REQUEST_CODE_USER_PROFILE_ACTIVITY);
 	}
 
@@ -145,17 +133,20 @@ public class UserListFragment extends ListFragment
 	public void updateView()
 	{
 		this.getActivity().runOnUiThread(new Runnable() {
-			
-			@Override public void run()
+
+			@Override
+			public void run()
 			{
-				setListAdapter(new MMUserArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, MMUser.getUsersAsArray()));
+				setListAdapter(new MMUserArrayAdapter(getActivity(),
+						android.R.layout.simple_list_item_1, MMUser
+								.getUsersAsArray()));
 			}
-			
+
 		});
 	}
-	
+
 	// Accessors:
-	
+
 	/**
 	 * @return the messageManager
 	 */
@@ -163,13 +154,14 @@ public class UserListFragment extends ListFragment
 	{
 		return messageManager;
 	}
-	
+
 	/**
-	 * @param messageManager the messageManager to set
+	 * @param aMessageManager
+	 *            the messageManager to set
 	 */
-	public void setMessageManager(MMMessageManager messageManager)
+	public void setMessageManager(MMMessageManager aMessageManager)
 	{
-		this.messageManager = messageManager;
+		this.messageManager = aMessageManager;
 	}
-	
+
 }

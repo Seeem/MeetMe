@@ -10,7 +10,6 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 import de.hfu.meetme.model.MMGender;
 import de.hfu.meetme.model.MMUser;
-import de.hfu.meetme.model.network.MMNetworkUtil;
 import de.hfu.meetme.model.validation.MMUserValidation;
 
 /**
@@ -27,7 +26,7 @@ public class Supporting
 	 * Reads the user profile data from the SharedPreferences, set in the
 	 * settings.
 	 * 
-	 * @param context
+	 * @param aContext
 	 *            The context of any activity in the same package as the
 	 *            SettingsActivity
 	 * @param isValid
@@ -37,28 +36,28 @@ public class Supporting
 	 * 
 	 * @return A MMUser object, if the input is correct, null otherwise.
 	 */
-	public static MMUser getUserFromSharedPreferences(Context context,
+	public static MMUser getUserFromSharedPreferences(Context aContext,
 			boolean isValid)
 	{
 
-		final SharedPreferences settings = PreferenceManager
-				.getDefaultSharedPreferences(context);
+		final SharedPreferences theSettings = PreferenceManager
+				.getDefaultSharedPreferences(aContext);
 
 		// Get Data
-		final String id = "HALLO"; // MMNetworkUtil.getMyLanAddressAsString();
-		final String username = settings.getString("username", "Unknown");
-		final String firstName = settings.getString("first_name", "John");
-		final String lastName = settings.getString("last_name", "Doe");
-		final boolean isGenderMale = settings.getBoolean("gender", true);
-		final String description = settings.getString("description", "");
+		final String theId = "HALLO"; // MMNetworkUtil.getMyLanAddressAsString();
+		final String theUsername = theSettings.getString("username", "Unknown");
+		final String theFirstName = theSettings.getString("first_name", "John");
+		final String theLastName = theSettings.getString("last_name", "Doe");
+		final boolean isGenderMale = theSettings.getBoolean("gender", true);
+		final String theDescription = theSettings.getString("description", "");
 
-		Calendar cal = Calendar.getInstance();
+		Calendar theCal = Calendar.getInstance();
 		SimpleDateFormat theDateFormat = (SimpleDateFormat) SimpleDateFormat
 				.getDateInstance();
 
 		try
 		{
-			cal.setTime(theDateFormat.parse(settings.getString("date_of_birth",
+			theCal.setTime(theDateFormat.parse(theSettings.getString("date_of_birth",
 					"01.01.2001")));
 		} catch (ParseException e)
 		{
@@ -75,53 +74,53 @@ public class Supporting
 		if (!isValid)
 		{
 			isValid = true;
-			if (!MMUserValidation.isValidUsername(username).isValid())
+			if (!MMUserValidation.isValidUsername(theUsername).isValid())
 			{
 				isValid = false;
 				Toast.makeText(
-						context,
-						MMUserValidation.isValidUsername(username).getMessage(),
+						aContext,
+						MMUserValidation.isValidUsername(theUsername).getMessage(),
 						Toast.LENGTH_SHORT).show();
-			} else if (!MMUserValidation.isValidFirstName(firstName).isValid())
+			} else if (!MMUserValidation.isValidFirstName(theFirstName).isValid())
 			{
 				isValid = false;
 				Toast.makeText(
-						context,
-						MMUserValidation.isValidFirstName(firstName)
+						aContext,
+						MMUserValidation.isValidFirstName(theFirstName)
 								.getMessage(), Toast.LENGTH_SHORT).show();
-			} else if (!MMUserValidation.isValidLastName(lastName).isValid())
+			} else if (!MMUserValidation.isValidLastName(theLastName).isValid())
 			{
 				isValid = false;
 				Toast.makeText(
-						context,
-						MMUserValidation.isValidLastName(lastName).getMessage(),
+						aContext,
+						MMUserValidation.isValidLastName(theLastName).getMessage(),
 						Toast.LENGTH_SHORT).show();
-			} else if (!MMUserValidation.isValidBirthday(cal).isValid())
+			} else if (!MMUserValidation.isValidBirthday(theCal).isValid())
 			{
 				isValid = false;
-				Toast.makeText(context,
-						MMUserValidation.isValidBirthday(cal).getMessage(),
+				Toast.makeText(aContext,
+						MMUserValidation.isValidBirthday(theCal).getMessage(),
 						Toast.LENGTH_SHORT).show();
 			} else if (!MMUserValidation.isValidGender(gender).isValid())
 			{
 				isValid = false;
-				Toast.makeText(context,
+				Toast.makeText(aContext,
 						MMUserValidation.isValidGender(gender).getMessage(),
 						Toast.LENGTH_SHORT).show();
-			} else if (!MMUserValidation.isValidDescription(description)
+			} else if (!MMUserValidation.isValidDescription(theDescription)
 					.isValid())
 			{
 				isValid = false;
 				Toast.makeText(
-						context,
-						MMUserValidation.isValidDescription(description)
+						aContext,
+						MMUserValidation.isValidDescription(theDescription)
 								.getMessage(), Toast.LENGTH_SHORT).show();
 			}
 		}
 
 		if (isValid)
-			return new MMUser(id, gender, username, firstName, lastName, cal,
-					description);
+			return new MMUser(theId, gender, theUsername, theFirstName, theLastName, theCal,
+					theDescription);
 		return null;
 	}
 

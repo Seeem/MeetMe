@@ -50,9 +50,9 @@ public class MainActivity extends Activity
 	 */
 	public boolean isUserCreated()
 	{
-		SharedPreferences settings = getSharedPreferences(
+		SharedPreferences theSettings = getSharedPreferences(
 				SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-		return settings.getBoolean(IS_USER_CREATED, false);
+		return theSettings.getBoolean(IS_USER_CREATED, false);
 	}
 
 	/**
@@ -61,15 +61,15 @@ public class MainActivity extends Activity
 	 */
 	public void setIsUserCreated(boolean isUserCreated)
 	{
-		SharedPreferences prefs = getSharedPreferences(SHARED_PREFERENCES_NAME,
+		SharedPreferences thePrefs = getSharedPreferences(SHARED_PREFERENCES_NAME,
 				MODE_PRIVATE);
-		prefs.edit().putBoolean(IS_USER_CREATED, isUserCreated).commit();
+		thePrefs.edit().putBoolean(IS_USER_CREATED, isUserCreated).commit();
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void onCreate(Bundle aSavedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
+		super.onCreate(aSavedInstanceState);
 		setContentView(R.layout.activity_main);
 
 		if (!isUserCreated())
@@ -82,62 +82,62 @@ public class MainActivity extends Activity
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
+	public boolean onCreateOptionsMenu(Menu aMenu)
 	{
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.main, aMenu);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
+	public boolean onOptionsItemSelected(MenuItem anItem)
 	{
-		int id = item.getItemId();
-		if (id == R.id.action_settings)
+		int theId = anItem.getItemId();
+		if (theId == R.id.action_settings)
 		{
 			intentSettingsActivity();
 			return true;
 		}
-		return super.onOptionsItemSelected(item);
+		return super.onOptionsItemSelected(anItem);
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode,
-			Intent intent)
+	protected void onActivityResult(int aRequestCode, int aResultCode,
+			Intent anIntent)
 	{
-		if ((requestCode == REQUEST_CODE_SETTINGS_ACTIVITY)
-				&& (resultCode == RESULT_OK))
+		if ((aRequestCode == REQUEST_CODE_SETTINGS_ACTIVITY)
+				&& (aResultCode == RESULT_OK))
 		{
 
-			Bundle bundle = intent.getExtras();
-			setIsUserCreated(bundle.getBoolean(IS_USER_CREATED));
-			MMUser.setMyself((MMUser) bundle.getSerializable(MMUSER_TAG));
+			Bundle theBundle = anIntent.getExtras();
+			setIsUserCreated(theBundle.getBoolean(IS_USER_CREATED));
+			MMUser.setMyself((MMUser) theBundle.getSerializable(MMUSER_TAG));
 
 			Toast.makeText(this, "Your profile has been saved",
 					Toast.LENGTH_SHORT).show();
 
 		}
-		if ((requestCode == REQUEST_CODE_USER_LIST_ACTIVITY)
-				&& (resultCode == RESULT_OK))
+		if ((aRequestCode == REQUEST_CODE_USER_LIST_ACTIVITY)
+				&& (aResultCode == RESULT_OK))
 		{
 		}
 	}
 
 	/** Sends an intent to the UserListActivity */
-	public void intentUserListActivity(View view)
+	public void intentUserListActivity(View aView)
 	{
-		final Intent intent = new Intent(this,
+		final Intent theIntent = new Intent(this,
 				de.hfu.meetme.views.UserListActivity.class);
-		startActivityForResult(intent, REQUEST_CODE_USER_LIST_ACTIVITY);
+		startActivityForResult(theIntent, REQUEST_CODE_USER_LIST_ACTIVITY);
 	}
 
 	/** Sends an intent to the SettingsActivity */
 	private void intentSettingsActivity()
 	{
-		final Intent intent = new Intent(this,
+		final Intent theIntent = new Intent(this,
 				de.hfu.meetme.views.SettingsActivity.class);
-		startActivityForResult(intent, REQUEST_CODE_SETTINGS_ACTIVITY);
+		startActivityForResult(theIntent, REQUEST_CODE_SETTINGS_ACTIVITY);
 	}
 
 }
