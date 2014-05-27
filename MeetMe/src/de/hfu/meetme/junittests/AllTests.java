@@ -16,7 +16,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		MMNetworkTest.class, MMSendMessageTest.class, MMValidDateTest.class,
 		MMValidDescriptionTest.class, MMValidFirstNameTest.class,
 		MMValidLastNameTest.class, MMValidUsernameTest.class,
-		MMValidUserTest.class })
+		MMUserTest.class, MMMessageManagerTest.class })
 public class AllTests
 {
 

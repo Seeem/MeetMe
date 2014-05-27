@@ -56,6 +56,8 @@ public class MMMessageManager implements MMMessageListener
 	public void refreshUsers()
 	{
 		MMUser.removeAllUsers();
+		if (getUserListFragment() != null)
+			getUserListFragment().updateView();
 		if (MMUser.getMyself() != null)
 			getMessageSender().sendUDPBroadcastMessage(MMMessageType.CONNECT, MMUser.getMyself());	
 	}
@@ -80,45 +82,32 @@ public class MMMessageManager implements MMMessageListener
 	
 	// Implementors:
 	
+	/** */
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
 	{	
 		if (MMNetworkUtil.isMyLanAddress(aMessageEvent.getSenderAddress())) return;
-				
-		if (aMessageEvent.getMessageProtocol() == MMMessageProtocol.UDP)
+	
+		if (aMessageEvent.getMessageProtocol() == MMMessageProtocol.UDP &&
+			aMessageEvent.getMessageTargetType() == MMMessageTargetType.BROADCAST &&
+			aMessageEvent.getMessageType() == MMMessageType.CONNECT &&
+			MMUser.getMyself() != null)
 		{
-			if (aMessageEvent.getMessageTargetType() == MMMessageTargetType.BROADCAST)
-			{
-				if (aMessageEvent.getMessageType() == MMMessageType.CONNECT)
-				{
-					if (MMUser.getMyself() != null)
-					{			
-						MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));			
-						getMessageSender().sendUDPMessage(aMessageEvent.getSenderAddress(), MMMessageType.CONNECT, MMUser.getMyself());
+			MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));			
+			getMessageSender().sendUDPMessage(aMessageEvent.getSenderAddress(), MMMessageType.CONNECT, MMUser.getMyself());
 
-						if (getUserListFragment() != null)
-						{
-							getUserListFragment().updateView();
-						}								
-					}						
-				}
-			}
-			else if (aMessageEvent.getMessageTargetType() == MMMessageTargetType.SINGLE)
-			{
-				System.out.println("ashjdaskdaskdahdkjhs");
-				
-				if (aMessageEvent.getMessageType() == MMMessageType.CONNECT)
-				{
-					MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));
-					
-					if (getUserListFragment() != null)
-					{
-						getUserListFragment().updateView();
-					}				
-				}
-			}
+			if (getUserListFragment() != null)
+				getUserListFragment().updateView();			
+		}
+		else if (aMessageEvent.getMessageTargetType() == MMMessageTargetType.SINGLE && 
+				aMessageEvent.getMessageType() == MMMessageType.CONNECT)
+		{
+			MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));
+			
+			if (getUserListFragment() != null)
+				getUserListFragment().updateView();								
 		}
 	}
-
+	 
 	// Accessors:
 	
 	/**

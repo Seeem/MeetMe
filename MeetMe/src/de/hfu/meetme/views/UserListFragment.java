@@ -12,6 +12,7 @@ import de.hfu.meetme.MMUserArrayAdapter;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMMessageManager;
 import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.MMNetworkTaskType;
 
 public class UserListFragment extends ListFragment
 {
@@ -22,35 +23,25 @@ public class UserListFragment extends ListFragment
 	private MMMessageManager messageManager;
 
 	/** */
-	private class NetworkTask extends AsyncTask<Integer, Void, Void>
+	private class NetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	{
 
 		@Override
-		protected Void doInBackground(Integer... someParams)
+		protected Void doInBackground(MMNetworkTaskType... someParams)
 		{
-
-			switch (someParams[0])
+			if (someParams[0] == MMNetworkTaskType.START_LISTENING)
 			{
-				case 0:
-				{
-					System.out.println("Listener started");
-					getMessageManager().startListening();
-					break;
-				}
-				case 1:
-				{
-					System.out.println("Listener stopped");
-					getMessageManager().stopListening();
-					break;
-				}
-				case 2:
-				{
-					System.out.println("Refreshing");
-					getMessageManager().refreshUsers();
-					break;
-				}
+				getMessageManager().startListening();
 			}
-
+			else if (someParams[0] == MMNetworkTaskType.STOP_LISTENING)
+			{
+				getMessageManager().stopListening();
+			}
+			else if (someParams[0] == MMNetworkTaskType.REFRESH_USERLIST)
+			{
+				getMessageManager().refreshUsers();
+			}
+			
 			return null;
 		}
 
@@ -69,15 +60,6 @@ public class UserListFragment extends ListFragment
 	{
 		super.onCreate(aSavedInstanceState);
 		setMessageManager(new MMMessageManager(this));
-		new NetworkTask().execute(0);
-	}
-
-	/** */
-	@Override
-	public void onDestroy()
-	{
-		super.onDestroy();
-		new NetworkTask().execute(1);
 	}
 
 	/** */
@@ -85,8 +67,8 @@ public class UserListFragment extends ListFragment
 	public void onResume()
 	{
 		super.onResume();
-		new NetworkTask().execute(0);
-		updateView();
+		new NetworkTask().execute(MMNetworkTaskType.START_LISTENING);
+		new NetworkTask().execute(MMNetworkTaskType.REFRESH_USERLIST);
 	}
 
 	/** */
@@ -94,7 +76,7 @@ public class UserListFragment extends ListFragment
 	public void onPause()
 	{
 		super.onPause();
-		new NetworkTask().execute(1);
+		new NetworkTask().execute(MMNetworkTaskType.STOP_LISTENING);
 	}
 
 	/** */
@@ -106,7 +88,7 @@ public class UserListFragment extends ListFragment
 		View theView = anInflater.inflate(R.layout.fragment_user_list,
 				aContainer, false);
 
-		new NetworkTask().execute(2);
+		new NetworkTask().execute(MMNetworkTaskType.REFRESH_USERLIST);
 		return theView;
 	}
 

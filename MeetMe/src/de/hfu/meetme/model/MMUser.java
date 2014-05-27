@@ -231,6 +231,25 @@ public class MMUser implements Serializable
 		return MMUser.getUsers().values().toArray(new MMUser[MMUser.size()]);
 	}
 	
+	// Internals:
+	
+	/**
+	 * Compares this user with the given user and returns true if they are equals.
+	 * @param anUser the user to compare
+	 * @return true if the compared users are equals, false otherwise
+	 */
+	public boolean equals(MMUser anUser)
+	{
+		return 
+				this.getId().equals(anUser.getId()) &&
+				this.getUsername().equals(anUser.getUsername()) &&
+				this.getFirstName().equals(anUser.getFirstName()) &&
+				this.getLastName().equals(anUser.getLastName()) &&
+				this.getGender() == anUser.getGender() &&
+				this.getDescription().equals(anUser.getDescription()) &&
+				this.getBirthdayAsString().equals(anUser.getBirthdayAsString());
+	}
+	
 	// Accessors (Instance):
 	
 	/**
