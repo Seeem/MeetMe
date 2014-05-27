@@ -56,6 +56,8 @@ public class MMMessageManager implements MMMessageListener
 	public void refreshUsers()
 	{
 		MMUser.removeAllUsers();
+		if (getUserListFragment() != null)
+			getUserListFragment().updateView();
 		if (MMUser.getMyself() != null)
 			getMessageSender().sendUDPBroadcastMessage(MMMessageType.CONNECT, MMUser.getMyself());	
 	}
@@ -80,6 +82,7 @@ public class MMMessageManager implements MMMessageListener
 	
 	// Implementors:
 	
+	/** */
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
 	{	
 		if (MMNetworkUtil.isMyLanAddress(aMessageEvent.getSenderAddress())) return;
