@@ -86,7 +86,7 @@ public class MMMessageManager implements MMMessageListener
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
 	{	
 		if (MMNetworkUtil.isMyLanAddress(aMessageEvent.getSenderAddress())) return;
-	
+		
 		if (aMessageEvent.getMessageProtocol() == MMMessageProtocol.UDP &&
 			aMessageEvent.getMessageTargetType() == MMMessageTargetType.BROADCAST &&
 			aMessageEvent.getMessageType() == MMMessageType.CONNECT &&
