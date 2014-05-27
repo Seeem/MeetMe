@@ -83,6 +83,38 @@ public class MMMessageEvent
 		return ((SimpleDateFormat) SimpleDateFormat.getDateInstance()).format(getTimestamp().getTime());
 	}
 	
+	// Is-Methods:
+	
+	/** */
+	public boolean isUdpProtocol()
+	{
+		return getMessageProtocol() == MMMessageProtocol.UDP;
+	}
+	
+	/** */
+	public boolean isSingleMessage()
+	{
+		return getMessageTargetType() == MMMessageTargetType.SINGLE;
+	}
+	
+	/** */
+	public boolean isBroadcastMessage()
+	{
+		return getMessageTargetType() == MMMessageTargetType.BROADCAST;
+	}
+	
+	/** */
+	public boolean isConnectMessage()
+	{
+		return getMessageType() == MMMessageType.CONNECT;
+	}
+	
+	/** */
+	public boolean isDisconnectMessage()
+	{
+		return getMessageType() == MMMessageType.DISCONNECT;
+	}
+	
 	// Accessors:
 	
 	/**
@@ -180,7 +212,6 @@ public class MMMessageEvent
 	{
 		this.messageTargetType = aMessageType;
 	}
-
 	
 	/**
 	 * @return the messageType
@@ -190,7 +221,6 @@ public class MMMessageEvent
 		return messageType;
 	}
 	
-
 	/**
 	 * @param messageType the messageType to set
 	 */
