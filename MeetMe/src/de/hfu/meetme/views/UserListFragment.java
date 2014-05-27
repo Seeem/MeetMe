@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 import de.hfu.meetme.MMUserArrayAdapter;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMMessageManager;
@@ -127,6 +128,21 @@ public class UserListFragment extends ListFragment
 		});
 	}
 
+	/** */
+	public void addNotification(final MMUser anUser)
+	{
+		this.getActivity().runOnUiThread(new Runnable() {
+
+			@Override
+			public void run()
+			{
+				// TODO
+				Toast.makeText(getActivity(), anUser.getUsername() + " wants to meet you!", Toast.LENGTH_LONG).show();
+			}
+
+		});
+	}
+		
 	// MM-API:
 	
 	/** */

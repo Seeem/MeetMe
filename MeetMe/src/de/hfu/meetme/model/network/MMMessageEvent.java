@@ -115,6 +115,12 @@ public class MMMessageEvent
 		return getMessageType() == MMMessageType.DISCONNECT;
 	}
 	
+	/** */
+	public boolean isMeetMeMessage()
+	{
+		return getMessageType() == MMMessageType.MEETME;
+	}
+	
 	// Accessors:
 	
 	/**
