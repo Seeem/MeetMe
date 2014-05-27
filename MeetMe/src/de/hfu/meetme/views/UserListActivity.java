@@ -22,42 +22,42 @@ public class UserListActivity extends Activity
 	// Internals:
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void onCreate(Bundle aSavedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
+		super.onCreate(aSavedInstanceState);
 		setContentView(R.layout.activity_user_list);
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
+	public boolean onCreateOptionsMenu(Menu aMenu)
 	{
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.user_list, menu);
+		getMenuInflater().inflate(R.menu.user_list, aMenu);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
+	public boolean onOptionsItemSelected(MenuItem anItem)
 	{
-		int id = item.getItemId();
-		if (id == R.id.action_settings)
+		int theId = anItem.getItemId();
+		if (theId == R.id.action_settings)
 		{
 			intentSettingsActivity();
 			return true;
 		}
-		return super.onOptionsItemSelected(item);
+		return super.onOptionsItemSelected(anItem);
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent intent)
+	public void onActivityResult(int aRequestCode, int aResultCode, Intent anIntent)
 	{
-		if ((requestCode == UserListActivity.REQUEST_CODE_USER_PROFILE_ACTIVITY)
-				&& (resultCode == RESULT_OK))
+		if ((aRequestCode == UserListActivity.REQUEST_CODE_USER_PROFILE_ACTIVITY)
+				&& (aResultCode == RESULT_OK))
 		{
 		}
-		if ((requestCode == UserListActivity.REQUEST_CODE_SETTINGS_ACTIVITY)
-				&& (resultCode == RESULT_OK))
+		if ((aRequestCode == UserListActivity.REQUEST_CODE_SETTINGS_ACTIVITY)
+				&& (aResultCode == RESULT_OK))
 		{
 			Toast.makeText(this, "Your profile has been saved",
 					Toast.LENGTH_SHORT).show();
@@ -67,8 +67,8 @@ public class UserListActivity extends Activity
 	@Override
 	public void finish()
 	{
-		Intent intent = new Intent();
-		setResult(RESULT_OK, intent);
+		Intent theIntent = new Intent();
+		setResult(RESULT_OK, theIntent);
 		super.finish();
 	}
 
@@ -77,9 +77,9 @@ public class UserListActivity extends Activity
 	/** Sends an intent to the SettingsActivity */
 	private void intentSettingsActivity()
 	{
-		final Intent intent = new Intent(this,
+		final Intent theIntent = new Intent(this,
 				de.hfu.meetme.views.SettingsActivity.class);
-		startActivityForResult(intent, REQUEST_CODE_SETTINGS_ACTIVITY);
+		startActivityForResult(theIntent, REQUEST_CODE_SETTINGS_ACTIVITY);
 	}
 
 		

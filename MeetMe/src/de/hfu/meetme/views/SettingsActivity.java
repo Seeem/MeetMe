@@ -27,10 +27,10 @@ public class SettingsActivity extends Activity
 		MMUser user = Supporting.getUserFromSharedPreferences(this, false);
 		if (user != null)
 		{
-			Intent intent = new Intent();
-			intent.putExtra(MainActivity.IS_USER_CREATED, true);
-			intent.putExtra(MainActivity.MMUSER_TAG, user);
-			setResult(RESULT_OK, intent);
+			final Intent theIntent = new Intent();
+			theIntent.putExtra(MainActivity.IS_USER_CREATED, true);
+			theIntent.putExtra(MainActivity.MMUSER_TAG, user);
+			setResult(RESULT_OK, theIntent);
 			super.finish();
 		}
 

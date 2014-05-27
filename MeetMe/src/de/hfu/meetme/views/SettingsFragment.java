@@ -12,9 +12,9 @@ import android.preference.PreferenceFragment;
 public class SettingsFragment extends PreferenceFragment
 {
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	public void onCreate(Bundle aSavedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
+		super.onCreate(aSavedInstanceState);
 
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.preferences);
