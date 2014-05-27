@@ -39,7 +39,7 @@ public class MMUserListButtonFragment extends Fragment
 			@Override
 			public void onClick(View aView)
 			{
-				//Some Refreshing Operations
+				((UserListFragment) getFragmentManager().findFragmentById(R.id.user_list_fragment)).refreshUserList();
 			}
 
 		});

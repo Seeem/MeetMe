@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 import de.hfu.meetme.model.MMGender;
 import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.MMNetworkUtil;
 import de.hfu.meetme.model.validation.MMUserValidation;
 
 /**
@@ -19,9 +20,9 @@ import de.hfu.meetme.model.validation.MMUserValidation;
  *         Supporting class with methods which do not fit in any other class
  *         because they're used in multiple different classes.
  */
-public class Supporting
+public class MMSupporting
 {
-
+	
 	/**
 	 * Reads the user profile data from the SharedPreferences, set in the
 	 * settings.
@@ -44,7 +45,7 @@ public class Supporting
 				.getDefaultSharedPreferences(aContext);
 
 		// Get Data
-		final String theId = "HALLO"; // MMNetworkUtil.getMyLanAddressAsString();
+		final String theId = MMNetworkUtil.getMyLanAddressAsString();
 		final String theUsername = theSettings.getString("username", "Unknown");
 		final String theFirstName = theSettings.getString("first_name", "John");
 		final String theLastName = theSettings.getString("last_name", "Doe");

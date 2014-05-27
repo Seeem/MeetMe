@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import de.hfu.meetme.R;
-import de.hfu.meetme.Supporting;
+import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.model.MMUser;
 
 /**
@@ -41,7 +41,7 @@ public class SettingsActivity extends Activity
 	@Override
 	public void finish()
 	{
-		MMUser user = Supporting.getUserFromSharedPreferences(this, false);
+		MMUser user = MMSupporting.getUserFromSharedPreferences(this, false);
 		if (user != null)
 		{
 			final Intent theIntent = new Intent();

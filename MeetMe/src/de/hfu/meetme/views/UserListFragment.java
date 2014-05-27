@@ -67,8 +67,8 @@ public class UserListFragment extends ListFragment
 	public void onResume()
 	{
 		super.onResume();
-		new NetworkTask().execute(MMNetworkTaskType.START_LISTENING);
-		new NetworkTask().execute(MMNetworkTaskType.REFRESH_USERLIST);
+		startListening();
+		refreshUserList();
 	}
 
 	/** */
@@ -76,7 +76,7 @@ public class UserListFragment extends ListFragment
 	public void onPause()
 	{
 		super.onPause();
-		new NetworkTask().execute(MMNetworkTaskType.STOP_LISTENING);
+		stopListening();
 	}
 
 	/** */
@@ -88,7 +88,7 @@ public class UserListFragment extends ListFragment
 		View theView = anInflater.inflate(R.layout.fragment_user_list,
 				aContainer, false);
 
-		new NetworkTask().execute(MMNetworkTaskType.REFRESH_USERLIST);
+		refreshUserList();
 		return theView;
 	}
 
@@ -127,8 +127,28 @@ public class UserListFragment extends ListFragment
 		});
 	}
 
+	// MM-API:
+	
+	/** */
+	public void startListening()
+	{
+		new NetworkTask().execute(MMNetworkTaskType.START_LISTENING);
+	}
+	
+	/** */
+	public void stopListening()
+	{
+		new NetworkTask().execute(MMNetworkTaskType.STOP_LISTENING);
+	}
+	
+	/** */
+	public void refreshUserList()
+	{
+		new NetworkTask().execute(MMNetworkTaskType.REFRESH_USERLIST);
+	}
+	
 	// Accessors:
-
+	
 	/**
 	 * @return the messageManager
 	 */

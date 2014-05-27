@@ -48,7 +48,7 @@ public class UserListActivity extends Activity
 		}
 		if (theId == R.id.action_refresh)
 		{
-			//TODO:Some Refreshing operations
+			((UserListFragment) getFragmentManager().findFragmentById(R.id.user_list_fragment)).refreshUserList();
 			return true;
 		}
 		return super.onOptionsItemSelected(anItem);

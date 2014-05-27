@@ -29,6 +29,7 @@ public class MMOnlineUserSimulation
 		MMUser.setMyself(new MMUser(MMNetworkUtil.getMyLanAddressAsString(), MMGender.FEMALE, "SimulatedUser", "Geile", "Sau", MMTestSupport.getValidBirthday()));		
 		MMMessageManager theMessageManager = new MMMessageManager();
 		theMessageManager.startListening();
+		theMessageManager.refreshUsers();
 		pseudoWait();	
 		theMessageManager.stopListening();	
 	}
