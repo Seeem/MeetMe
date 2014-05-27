@@ -4,22 +4,22 @@
 
     <PreferenceCategory 
         android:title="@string/pref_category_name" >
-        <EditTextPreference
+        <de.hfu.meetme.views.MMEditTextPreference
             android:inputType="text"
             android:key="username"
             android:summary="@string/pref_summary_username"
             android:title="@string/pref_title_username" />
-        <EditTextPreference
+        <de.hfu.meetme.views.MMEditTextPreference
             android:inputType="text"
             android:key="first_name"
             android:summary="@string/pref_summary_firstname"
             android:title="@string/pref_title_firstname" />
-        <EditTextPreference
+        <de.hfu.meetme.views.MMEditTextPreference
             android:inputType="text"
             android:key="last_name"
             android:summary="@string/pref_summary_lastname"
             android:title="@string/pref_title_lastname" />
-        <EditTextPreference
+        <de.hfu.meetme.views.MMEditTextPreference
             android:inputType="date"
             android:key="date_of_birth"
             android:summary="@string/pref_summary_date_of_birth"
@@ -32,7 +32,7 @@
             android:switchTextOn="@string/pref_switchTextOn_gender"
             android:title="@string/pref_title_gender" />
 
-        <EditTextPreference
+        <de.hfu.meetme.views.MMEditTextPreference
             android:inputType="textMultiLine"
             android:key="description"
             android:summary="@string/pref_summary_description"

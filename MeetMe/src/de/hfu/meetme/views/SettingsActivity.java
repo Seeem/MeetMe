@@ -25,7 +25,6 @@ public class SettingsActivity extends Activity
 		theActionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem anItem)
 	{
