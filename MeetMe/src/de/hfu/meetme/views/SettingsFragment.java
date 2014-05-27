@@ -12,11 +12,14 @@ import android.preference.PreferenceFragment;
  */
 public class SettingsFragment extends PreferenceFragment
 {
+	
 	/**
-	 * the number of preferences in the SettingsFragment
+	 * the keys of the preferences in the SettingsFragment
 	 */
-	final int numberOfKeys = 6;
+	private final String[] keys = { "username", "first_name", "last_name",
+			"date_of_birth", "gender", "description" };
 
+	
 	@Override
 	public void onCreate(Bundle aSavedInstanceState)
 	{
@@ -33,12 +36,13 @@ public class SettingsFragment extends PreferenceFragment
 		changeSummaries();
 	}
 
+	/**
+	 * changes the summaries of the MMEditTextPreferences to their current value
+	 */
 	public void changeSummaries()
 	{
-		String[] theKeys = { "username", "first_name", "last_name",
-				"date_of_birth", "gender", "description" };
-		// Reading: for each String theKey in theKeys
-		for (String theKey : theKeys)
+		// Reading: for each String theKey in keys
+		for (String theKey : keys)
 		{
 			Preference thePreference = findPreference(theKey);
 
