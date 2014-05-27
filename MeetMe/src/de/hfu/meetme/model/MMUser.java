@@ -195,16 +195,29 @@ public class MMUser implements Serializable
 	 * Removes an single user based on the associated user-id.
 	 * @param aUser the user to remove
 	 */
-	public static void removeUser(MMUser aUser)
+	public static void removeUser(MMUser anUser)
 	{
-		if (aUser == null)
+		if (anUser == null)
 			throw new NullPointerException("user to remove is null");
 		
-		if (!MMUser.containsUser(aUser))
+		if (!MMUser.containsUser(anUser))
 			throw new IllegalArgumentException("user does not exist");
 		
-		MMUser.getUsers().remove(aUser.getId());
+		MMUser.getUsers().remove(anUser.getId());
 	}
+	
+	/**
+	 * 
+	 * @param aUser the user to remove
+	 */
+	public static void removeUserIfAlreadyAdded(MMUser anUser)
+	{
+		if (anUser == null)
+			throw new NullPointerException("user to remove is null");
+		
+		if (MMUser.containsUser(anUser))	
+			MMUser.removeUser(anUser);
+	}	
 	
 	/**
 	 * Removes all users from the user-map, the result will be an empty user-map.
@@ -441,8 +454,7 @@ public class MMUser implements Serializable
 		{
 			String theStrings[] = anUDPMessageAsString.split(";");
 			Calendar theBirthday = Calendar.getInstance();
-			SimpleDateFormat theSimpleDateFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance(); //new SimpleDateFormat("dd.MM.yy");
-			theBirthday.setTime(theSimpleDateFormat.parse(theStrings[5]));	
+			theBirthday.setTime(((SimpleDateFormat) SimpleDateFormat.getDateInstance()).parse(theStrings[5]));	
 			MMGender theGender = theStrings[1].equals(MMGender.MALE.toString()) ? MMGender.MALE : MMGender.FEMALE;
 			if (theStrings.length == 7)
 				return new MMUser(theStrings[0], theGender, theStrings[2], theStrings[3], theStrings[4], theBirthday, theStrings[6]);

@@ -5,10 +5,8 @@ package de.hfu.meetme.model;
 
 import de.hfu.meetme.model.network.MMMessageEvent;
 import de.hfu.meetme.model.network.MMMessageListener;
-import de.hfu.meetme.model.network.MMMessageProtocol;
 import de.hfu.meetme.model.network.MMMessageReceiver;
 import de.hfu.meetme.model.network.MMMessageSender;
-import de.hfu.meetme.model.network.MMMessageTargetType;
 import de.hfu.meetme.model.network.MMMessageType;
 import de.hfu.meetme.model.network.MMNetworkUtil;
 import de.hfu.meetme.views.UserListFragment;
@@ -75,8 +73,9 @@ public class MMMessageManager implements MMMessageListener
 	public void stopListening()
 	{
 		if (!isStarted()) return;
+		getMessageSender().sendUDPBroadcastMessage(MMMessageType.DISCONNECT, MMUser.getMyself());
 		getMessageReceiver().removeMessageListener(this);
-		getMessageReceiver().stopReceiver();
+		getMessageReceiver().stopReceiver();	
 		setStarted(false);
 	}
 	
@@ -85,27 +84,35 @@ public class MMMessageManager implements MMMessageListener
 	/** */
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
 	{	
+		// Filter Messages from this device:
 		if (MMNetworkUtil.isMyLanAddress(aMessageEvent.getSenderAddress())) return;
 		
-		if (aMessageEvent.getMessageProtocol() == MMMessageProtocol.UDP &&
-			aMessageEvent.getMessageTargetType() == MMMessageTargetType.BROADCAST &&
-			aMessageEvent.getMessageType() == MMMessageType.CONNECT &&
-			MMUser.getMyself() != null)
+		// Broadcast Messages:
+		if (aMessageEvent.isUdpProtocol() && aMessageEvent.isBroadcastMessage())
 		{
-			MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));			
-			getMessageSender().sendUDPMessage(aMessageEvent.getSenderAddress(), MMMessageType.CONNECT, MMUser.getMyself());
-
-			if (getUserListFragment() != null)
-				getUserListFragment().updateView();			
+			// User connects:
+			if (aMessageEvent.isConnectMessage())
+			{
+				if (MMUser.getMyself() != null)
+				{
+					MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));			
+					getMessageSender().sendUDPMessage(aMessageEvent.getSenderAddress(), MMMessageType.CONNECT, MMUser.getMyself());
+				}
+			}
+			// User disconnects:
+			else if (aMessageEvent.isDisconnectMessage())
+			{
+				MMUser.removeUserIfAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));
+			}
 		}
-		else if (aMessageEvent.getMessageTargetType() == MMMessageTargetType.SINGLE && 
-				aMessageEvent.getMessageType() == MMMessageType.CONNECT)
+		// Single Messages:
+		else if (aMessageEvent.isUdpProtocol() && aMessageEvent.isBroadcastMessage() && aMessageEvent.isConnectMessage())
 		{
-			MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));
-			
-			if (getUserListFragment() != null)
-				getUserListFragment().updateView();								
+			MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));									
 		}
+		
+		// Update user-list:
+		if (getUserListFragment() != null) getUserListFragment().updateView();
 	}
 	 
 	// Accessors:

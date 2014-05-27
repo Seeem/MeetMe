@@ -28,6 +28,16 @@ public class MMMessageSender
 	}
 	
 	/**
+	 * Sends a String with a specific {@link MMMessageType} as UDP broadcast message.
+	 * @param aMessageType the message type
+	 * @param aMessage the message to send
+	 */
+	public void sendUDPBroadcastMessage(MMMessageType aMessageType, String aMessage)
+	{
+		sendUDPMessage(MMNetworkUtil.getBroadcastAddress(), MMNetworkUtil.UDP_BROADCAST_PORT, aMessage, aMessageType);
+	}
+		
+	/**
 	 * 
 	 * @param aMessageType
 	 * @param anUser
