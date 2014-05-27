@@ -137,7 +137,7 @@ public class UserListFragment extends ListFragment
 			public void run()
 			{
 				// TODO
-				Toast.makeText(getActivity(), anUser.getUsername() + " wants to meet you!", Toast.LENGTH_LONG);
+				Toast.makeText(getActivity(), anUser.getUsername() + " wants to meet you!", Toast.LENGTH_LONG).show();
 			}
 
 		});
