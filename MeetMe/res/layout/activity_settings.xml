@@ -1,32 +1,26 @@
-<ScrollView 
+<LinearLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/SettingsActivityScrollView"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fillViewport="true"
-    android:stackFromBottom="true"
-    android:transcriptMode="alwaysScroll" >
+    android:id="@+id/container_settings"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="de.hfu.meetme.views.SettingsActivity"
+    tools:ignore="MergeRootFrame" >
 
-    <LinearLayout
-        android:id="@+id/container_settings"
+    <fragment
+        android:id="@+id/preference_fragment"
+        android:name="de.hfu.meetme.views.SettingsFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp" 
+        android:layout_weight="9" />
+    
+
+    <fragment
+        android:id="@+id/preference_save_button_fragment"
+        android:name="de.hfu.meetme.views.SettingsSaveButtonFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context="de.hfu.meetme.views.SettingsActivity"
-        tools:ignore="MergeRootFrame" >
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <fragment
-            android:id="@+id/preference_fragment"
-            android:name="de.hfu.meetme.views.SettingsFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <fragment
-            android:id="@+id/preference_save_button_fragment"
-            android:name="de.hfu.meetme.views.SettingsSaveButtonFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>
