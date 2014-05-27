@@ -106,7 +106,7 @@ public class MMMessageManager implements MMMessageListener
 			}
 		}
 		// Single Messages:
-		else if (aMessageEvent.isUdpProtocol() && aMessageEvent.isBroadcastMessage())
+		else if (aMessageEvent.isUdpProtocol() && aMessageEvent.isSingleMessage())
 		{
 			// User connects:
 			if (aMessageEvent.isConnectMessage())
@@ -115,7 +115,7 @@ public class MMMessageManager implements MMMessageListener
 			}
 			// User wants a meeting:
 			if (aMessageEvent.isMeetMeMessage())
-			{
+			{		
 				if (getUserListFragment() != null) 
 					getUserListFragment().addNotification(MMUser.valueOf(aMessageEvent.getMessageAsString()));
 			}						

@@ -71,7 +71,7 @@ public class UserListFragment extends ListFragment
 		startListening();
 		refreshUserList();
 	}
-
+	
 	/** */
 	@Override
 	public void onPause()
