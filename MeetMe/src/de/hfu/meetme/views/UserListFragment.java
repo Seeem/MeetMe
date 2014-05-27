@@ -32,19 +32,16 @@ public class UserListFragment extends ListFragment
 			{
 				case 0:
 				{
-					System.out.println("Listener started");
 					getMessageManager().startListening();
 					break;
 				}
 				case 1:
 				{
-					System.out.println("Listener stopped");
 					getMessageManager().stopListening();
 					break;
 				}
 				case 2:
 				{
-					System.out.println("Refreshing");
 					getMessageManager().refreshUsers();
 					break;
 				}			
