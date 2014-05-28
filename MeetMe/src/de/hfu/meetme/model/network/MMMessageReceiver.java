@@ -84,7 +84,7 @@ public final class MMMessageReceiver
 	// Class-Members:
 	
 	/** The maximum number of bytes an UDP receiver can receive in one UDP message. */
-	private static final int MAXIMUM_UDP_SIZE_IN_BYTES = 1024;
+	private static final int MAXIMUM_UDP_SIZE_IN_BYTES = 512;
 	
 	// MM-API:
 	
@@ -191,7 +191,7 @@ public final class MMMessageReceiver
 	{
 		DatagramPacket thePacket = new DatagramPacket(new byte[MAXIMUM_UDP_SIZE_IN_BYTES], MAXIMUM_UDP_SIZE_IN_BYTES);
 		getUdpBroadcastSocket().receive(thePacket);		
-		pushUDPMessage(thePacket, MMMessageTargetType.BROADCAST);	
+		handleUDPMessage(thePacket, MMMessageTargetType.BROADCAST);	
 	}
 	
 	/** 
@@ -201,42 +201,43 @@ public final class MMMessageReceiver
 	{
 		DatagramPacket thePacket = new DatagramPacket(new byte[MAXIMUM_UDP_SIZE_IN_BYTES], MAXIMUM_UDP_SIZE_IN_BYTES);
 		getUdpSocket().receive(thePacket);		
-		pushUDPMessage(thePacket, MMMessageTargetType.SINGLE);
+		handleUDPMessage(thePacket, MMMessageTargetType.SINGLE);
 	}
 
 	/**
 	 * TODO
 	 */
-	private void pushUDPMessage(DatagramPacket aDatagramPacket, MMMessageTargetType aMessageTargetType)
+	private void handleUDPMessage(DatagramPacket aDatagramPacket, MMMessageTargetType aMessageTargetType)
 	{
 		String theMessageAsString = new String(aDatagramPacket.getData(), 0, aDatagramPacket.getLength());		
-		String theSplittedString[] = theMessageAsString.split(":");		
-		String theContent;
-		MMMessageType theMessageType;
+		String theSplittedString[] = theMessageAsString.split(":");	
 		
 		if (theSplittedString.length < 2)
 		{
-			theContent = theMessageAsString;
-			theMessageType = MMMessageType.UNKNOWN;
+			pushMessageEvent(aDatagramPacket, aMessageTargetType, MMMessageType.UNKNOWN, theMessageAsString);
 		}
 		else
 		{
 			try
 			{
-				theMessageType = MMMessageType.valueOf(theSplittedString[0]);
+				pushMessageEvent(aDatagramPacket, aMessageTargetType, MMMessageType.valueOf(theSplittedString[0]), theSplittedString[1]);
 			}
-			catch (Exception anException)
+			catch (Exception anException) // valueOf
 			{
-				theMessageType = MMMessageType.UNKNOWN;
+				pushMessageEvent(aDatagramPacket, aMessageTargetType, MMMessageType.UNKNOWN, theSplittedString[1]);
 			}
-			
-			theContent = theSplittedString[1];
-		}
-				
+		}	
+	}
+	
+	/**
+	 * TODO 
+	 */
+	private void pushMessageEvent(DatagramPacket aDatagramPacket, MMMessageTargetType aMessageTargetType, MMMessageType theMessageType, String aMessageContent)
+	{
 		MMMessageEvent theMessageEvent = new MMMessageEvent(
 				aDatagramPacket.getAddress(), 
-				theContent, 
-				aDatagramPacket.getPort(), 
+				aMessageContent, 
+				aDatagramPacket.getPort(),
 				Calendar.getInstance(), 
 				MMMessageProtocol.UDP, 
 				aMessageTargetType,

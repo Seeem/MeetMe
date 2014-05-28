@@ -8,10 +8,8 @@ import org.junit.Test;
 import de.hfu.meetme.junittests.support.MMTestSupport;
 import de.hfu.meetme.model.network.MMMessageEvent;
 import de.hfu.meetme.model.network.MMMessageListener;
-import de.hfu.meetme.model.network.MMMessageProtocol;
 import de.hfu.meetme.model.network.MMMessageReceiver;
 import de.hfu.meetme.model.network.MMMessageSender;
-import de.hfu.meetme.model.network.MMMessageTargetType;
 import de.hfu.meetme.model.network.MMMessageType;
 import de.hfu.meetme.model.network.MMNetworkUtil;
 
@@ -61,20 +59,16 @@ public class MMSendMessageExample implements MMMessageListener
 	
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
 	{
-		if (aMessageEvent.getMessageProtocol() == MMMessageProtocol.UDP)
+		if (aMessageEvent.isUdpProtocol())
 		{
-			if (aMessageEvent.getMessageTargetType() == MMMessageTargetType.BROADCAST)
+			if (aMessageEvent.isBroadcastMessage())
 			{
 				System.out.print("UDP broadcast message received: ");
 			}
-			else if (aMessageEvent.getMessageTargetType() == MMMessageTargetType.SINGLE)
+			else if (aMessageEvent.isSingleMessage())
 			{
 				System.out.print("UDP single message received: ");
 			}
-		}
-		else if (aMessageEvent.getMessageProtocol() == MMMessageProtocol.TCP)
-		{
-			System.out.print("TCP message received: ");	
 		}
 		
 		System.out.print(aMessageEvent.getTimestampAsString() + ": ");

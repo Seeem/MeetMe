@@ -127,6 +127,12 @@ public class MMMessageEvent
 		return getMessageType() == MMMessageType.UNKNOWN;
 	}
 	
+	/** */
+	public boolean isFromMe()
+	{
+		return MMNetworkUtil.isMyLanAddress(getSenderAddress());
+	}
+	
 	// Accessors:
 	
 	/**
@@ -148,7 +154,7 @@ public class MMMessageEvent
 	/**
 	 * @return the message
 	 */
-	public Object getMessage()
+	private Object getMessage()
 	{
 		return message;
 	}
@@ -180,7 +186,7 @@ public class MMMessageEvent
 	/**
 	 * @return the time stamp
 	 */
-	public Calendar getTimestamp()
+	private Calendar getTimestamp()
 	{
 		return timestamp;
 	}
@@ -196,7 +202,7 @@ public class MMMessageEvent
 	/**
 	 * @return the messageProtocol
 	 */
-	public MMMessageProtocol getMessageProtocol()
+	private MMMessageProtocol getMessageProtocol()
 	{
 		return messageProtocol;
 	}
@@ -212,7 +218,7 @@ public class MMMessageEvent
 	/**
 	 * @return the messageType
 	 */
-	public MMMessageTargetType getMessageTargetType()
+	private MMMessageTargetType getMessageTargetType()
 	{
 		return messageTargetType;
 	}
@@ -228,7 +234,7 @@ public class MMMessageEvent
 	/**
 	 * @return the messageType
 	 */
-	public MMMessageType getMessageType()
+	private MMMessageType getMessageType()
 	{
 		return messageType;
 	}
@@ -236,7 +242,7 @@ public class MMMessageEvent
 	/**
 	 * @param messageType the messageType to set
 	 */
-	public void setMessageType(MMMessageType messageType)
+	private void setMessageType(MMMessageType messageType)
 	{
 		this.messageType = messageType;
 	}

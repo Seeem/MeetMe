@@ -17,12 +17,20 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	/** */
 	private MMMessageManager messageManager;
 	
+	// Constructor:
+	
+	/** */
+	private MMNetworkTask(MMMessageManager aMessageManager)
+	{
+		setMessageManager(aMessageManager);
+	}
+	
 	// MM-API:
 	
 	/** */
 	public static void startNetworkTask(MMMessageManager aMessageManager, MMNetworkTaskType aNetworkTasktype)
 	{
-		new MMNetworkTask().execute(aNetworkTasktype);
+		new MMNetworkTask(aMessageManager).execute(aNetworkTasktype);
 	}
 	
 	// Implementors:
@@ -54,17 +62,20 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	/**
 	 * @return the messageManager
 	 */
-	public MMMessageManager getMessageManager()
+	private MMMessageManager getMessageManager()
 	{
 		return messageManager;
 	}
 
 	/**
-	 * @param messageManager the messageManager to set
+	 * @param aMessageManager the messageManager to set
 	 */
-	public void setMessageManager(MMMessageManager messageManager)
+	private void setMessageManager(MMMessageManager aMessageManager)
 	{
-		this.messageManager = messageManager;
+		if (aMessageManager == null)
+			throw new NullPointerException("message manage is null");
+		
+		this.messageManager = aMessageManager;
 	}
 
 }

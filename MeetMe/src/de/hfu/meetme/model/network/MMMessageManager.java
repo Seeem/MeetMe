@@ -80,7 +80,7 @@ public class MMMessageManager implements MMMessageListener
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
 	{	
 		// Filter Messages from this device and unknown messages:
-		if (MMNetworkUtil.isMyLanAddress(aMessageEvent.getSenderAddress()) || aMessageEvent.isUnknownMessage()) return;
+		if (aMessageEvent.isFromMe() || aMessageEvent.isUnknownMessage()) return;
 		
 		// Broadcast Messages:
 		if (aMessageEvent.isUdpProtocol() && aMessageEvent.isBroadcastMessage())

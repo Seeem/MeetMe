@@ -11,10 +11,8 @@ import org.junit.Test;
 
 import de.hfu.meetme.model.network.MMMessageEvent;
 import de.hfu.meetme.model.network.MMMessageListener;
-import de.hfu.meetme.model.network.MMMessageProtocol;
 import de.hfu.meetme.model.network.MMMessageReceiver;
 import de.hfu.meetme.model.network.MMMessageSender;
-import de.hfu.meetme.model.network.MMMessageTargetType;
 import de.hfu.meetme.model.network.MMNetworkUtil;
 
 /**
@@ -90,13 +88,13 @@ public class MMSendMessageTest implements MMMessageListener
 	
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
 	{
-		if (aMessageEvent.getMessageProtocol() == MMMessageProtocol.UDP)
+		if (aMessageEvent.isUdpProtocol())
 		{
-			if (aMessageEvent.getMessageTargetType() == MMMessageTargetType.BROADCAST)
+			if (aMessageEvent.isBroadcastMessage())
 			{
 				hasUDPBroadcastMessageReceived = true;
 			}
-			else if (aMessageEvent.getMessageTargetType() == MMMessageTargetType.SINGLE)
+			else if (aMessageEvent.isSingleMessage())
 			{
 				hasUDPSingleMessageReceived = true;
 			}

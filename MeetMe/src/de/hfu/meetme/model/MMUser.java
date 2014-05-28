@@ -270,6 +270,8 @@ public class MMUser implements Serializable
 	 */
 	public boolean equals(MMUser anUser)
 	{
+		if (anUser == null) return false;
+		
 		return 
 				this.getId().equals(anUser.getId()) &&
 				this.getUsername().equals(anUser.getUsername()) &&
