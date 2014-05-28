@@ -18,6 +18,7 @@ import de.hfu.meetme.model.network.MMMessageManager;
 import de.hfu.meetme.model.network.MMNetworkTask;
 import de.hfu.meetme.model.network.MMNetworkTaskType;
 
+
 /**
  * 
  * @author Dominik Jung
@@ -200,7 +201,7 @@ public class UserListFragment extends ListFragment
 				.setContentTitle(anUser.getUsername()).setContentText(message)
 				.setWhen(System.currentTimeMillis())
 				.setDefaults(Notification.DEFAULT_ALL)
-				.setSmallIcon(R.drawable.ic_launcher)
+				.setSmallIcon(android.R.drawable.ic_dialog_email)
 				.setContentIntent(thePendingIntent).build();
 
 		NotificationManager theManager = (NotificationManager) getActivity()
