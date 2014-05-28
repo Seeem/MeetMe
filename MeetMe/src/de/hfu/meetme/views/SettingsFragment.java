@@ -16,10 +16,18 @@ public class SettingsFragment extends PreferenceFragment
 	/**
 	 * the keys of the preferences in the SettingsFragment
 	 */
-	private final String[] keys = { "username", "first_name", "last_name",
-			"date_of_birth", "gender", "description" };
+	private final static String[] EDIT_TEXT_KEYS = { "username", "first_name", "last_name",
+			"date_of_birth", "description" };
 
 	
+	/**
+	 * @return the keys
+	 */
+	public static String[] getEditTextKeys()
+	{
+		return EDIT_TEXT_KEYS;
+	}
+
 	@Override
 	public void onCreate(Bundle aSavedInstanceState)
 	{
@@ -42,7 +50,7 @@ public class SettingsFragment extends PreferenceFragment
 	public void changeSummaries()
 	{
 		// Reading: for each String theKey in keys
-		for (String theKey : keys)
+		for (String theKey : EDIT_TEXT_KEYS)
 		{
 			Preference thePreference = findPreference(theKey);
 
