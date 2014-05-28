@@ -83,7 +83,7 @@ public final class MMMessageReceiver
 	
 	// Class-Members:
 	
-	/** The maximum number of bytes a UDP receiver can receive in one UDP message. */
+	/** The maximum number of bytes an UDP receiver can receive in one UDP message. */
 	private static final int MAXIMUM_UDP_SIZE_IN_BYTES = 1024;
 	
 	// MM-API:
@@ -184,16 +184,6 @@ public final class MMMessageReceiver
 		getUdpSocket().close();
 	}
 	
-	/**
-	 * Sends a given {@link MMMessageEvent} to all message listeners.
-	 * @param aMessageEvent the message event to send
-	 */
-	private void triggerMessageEvent(MMMessageEvent aMessageEvent)
-	{
-		for (MMMessageListener aMessageListener : getMessageListener())	
-			aMessageListener.messageReceived(aMessageEvent);
-	}
-	
 	/** 
 	 * Waits for a UDP broadcast message.
 	 */
@@ -216,23 +206,44 @@ public final class MMMessageReceiver
 
 	/**
 	 * TODO
-	 * @param aDatagramPacket
-	 * @param aMessageTargetType
 	 */
 	private void pushUDPMessage(DatagramPacket aDatagramPacket, MMMessageTargetType aMessageTargetType)
 	{
-		String theMessageAsString = new String(aDatagramPacket.getData(), 0, aDatagramPacket.getLength());
+		String theMessageAsString = new String(aDatagramPacket.getData(), 0, aDatagramPacket.getLength());		
+		String theSplittedString[] = theMessageAsString.split(":");		
+		String theContent;
+		MMMessageType theMessageType;
 		
+		if (theSplittedString.length < 2)
+		{
+			theContent = theMessageAsString;
+			theMessageType = MMMessageType.UNKNOWN;
+		}
+		else
+		{
+			try
+			{
+				theMessageType = MMMessageType.valueOf(theSplittedString[0]);
+			}
+			catch (Exception anException)
+			{
+				theMessageType = MMMessageType.UNKNOWN;
+			}
+			
+			theContent = theSplittedString[1];
+		}
+				
 		MMMessageEvent theMessageEvent = new MMMessageEvent(
 				aDatagramPacket.getAddress(), 
-				theMessageAsString.split(":")[1], 
+				theContent, 
 				aDatagramPacket.getPort(), 
 				Calendar.getInstance(), 
 				MMMessageProtocol.UDP, 
 				aMessageTargetType,
-				MMMessageType.valueOf(theMessageAsString.split(":")[0]));
+				theMessageType);
 		
-		triggerMessageEvent(theMessageEvent);	
+		for (MMMessageListener aMessageListener : getMessageListener())	
+			aMessageListener.messageReceived(theMessageEvent);
 	}
 	
 	// Accessors:

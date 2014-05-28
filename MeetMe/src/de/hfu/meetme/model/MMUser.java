@@ -5,8 +5,8 @@ package de.hfu.meetme.model;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentHashMap;
 
 import de.hfu.meetme.model.validation.MMUserValidation;
 
@@ -45,9 +45,9 @@ public class MMUser implements Serializable
 	
 	/** The serial version UID of an MMUser-object. */
 	private static final long serialVersionUID = 4091994199398642117L;
-	
+
 	/** The users-"list" as HashMap. */
-	private static HashMap<String, MMUser> users = new HashMap<String,MMUser>();
+	private static ConcurrentHashMap<String, MMUser> users = new ConcurrentHashMap<String,MMUser>();
 	
 	/** The user associated with this device. */
 	private static MMUser myself;
@@ -125,7 +125,7 @@ public class MMUser implements Serializable
 	 */
 	public static void initializeUsers()
 	{
-		setUsers(new HashMap<String, MMUser>());
+		setUsers(new ConcurrentHashMap<String, MMUser>());
 	}
 	
 	/**
@@ -174,6 +174,7 @@ public class MMUser implements Serializable
 		
 		if (MMUser.containsUser(anUser))
 			throw new IllegalArgumentException("user already added");
+		
 		
 		MMUser.getUsers().put(anUser.getId(), anUser);
 	}
@@ -396,7 +397,7 @@ public class MMUser implements Serializable
 	/**
 	 * @param aHashMap the users as HashMap to set
 	 */
-	public static void setUsers(HashMap<String, MMUser> aHashMap)
+	public static void setUsers(ConcurrentHashMap<String, MMUser> aHashMap)
 	{
 		if (aHashMap == null)
 			throw new IllegalArgumentException("hashmap is null");
@@ -407,7 +408,7 @@ public class MMUser implements Serializable
 	/** 
 	 * @return the users as HashMap
 	 */
-	public static HashMap<String, MMUser> getUsers()
+	public static ConcurrentHashMap<String, MMUser> getUsers()
 	{
 		return users;
 	}
@@ -510,5 +511,6 @@ public class MMUser implements Serializable
 		for (MMUser anUser : MMUser.getUsersAsArray())
 			anUser.print();
 	}
+
 	
 }
