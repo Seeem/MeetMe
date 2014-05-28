@@ -18,6 +18,11 @@ import de.hfu.meetme.model.MMMessageManager;
 import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.MMNetworkTaskType;
 
+/**
+ * 
+ * @author Dominik Jung
+ * 
+ */
 public class UserListFragment extends ListFragment
 {
 
@@ -53,6 +58,9 @@ public class UserListFragment extends ListFragment
 
 	/** */
 	protected final static String MMUSER_KEY = "MMUserKey";
+
+	/** */
+	protected final static String NOTIFICATION_ID = "notificationId";
 
 	// Internals:
 
@@ -104,7 +112,7 @@ public class UserListFragment extends ListFragment
 	}
 
 	/** */
-	private void intentUserProfileActivity(MMUser anUser)
+	private void intentUserProfileActivity(final MMUser anUser)
 	{
 		final Intent theIntent = new Intent(getActivity(),
 				de.hfu.meetme.views.UserProfileActivity.class);
@@ -137,25 +145,7 @@ public class UserListFragment extends ListFragment
 			@Override
 			public void run()
 			{
-				// TODO: Notification
-
-				PendingIntent thePendingIntent = PendingIntent.getActivity(
-						getActivity(), 0, new Intent(),
-						PendingIntent.FLAG_UPDATE_CURRENT);
-
-				Notification theNotification = new Notification.Builder(
-						getActivity())
-						.setContentTitle("Message")
-						.setContentText(
-								anUser.getUsername() + " wants to meet you!")
-						.setContentIntent(thePendingIntent)
-						.build();
-				
-				NotificationManager mgr =(NotificationManager)
-						getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-						int theNotification_id = (int) System.currentTimeMillis();
-						mgr.notify(theNotification_id, theNotification);
-
+				generateNotification(anUser, "wants to meet you!");
 			}
 
 		});
@@ -198,6 +188,48 @@ public class UserListFragment extends ListFragment
 	public void setMessageManager(MMMessageManager aMessageManager)
 	{
 		this.messageManager = aMessageManager;
+	}
+
+	/**
+	 * 
+	 * @param anUser
+	 *            the user who sent the message. His username will be used as
+	 *            notification title, his id as notification id to seperate
+	 *            notifications from distinct users.
+	 * @param message
+	 *            the message to be shown as notification text, e.g.
+	 *            "wants to meet you!"
+	 */
+	private void generateNotification(final MMUser anUser, final String message)
+	{
+		/*
+		 * TODO: improve Notification 
+		 * Add Vibration 
+		 * Add Lights 
+		 * Add a proper icon
+		 * Add a proper intent
+		 */
+		String theUserId = anUser.getId();
+		theUserId = theUserId.replace(".", "")
+				.substring(theUserId.length() - 6);
+		int theId = Integer.parseInt(theUserId);
+		Intent theIntent = new Intent(getActivity(), UserListActivity.class);
+		theIntent.putExtra(NOTIFICATION_ID, theId);
+
+		PendingIntent thePendingIntent = PendingIntent.getActivity(
+				getActivity(), 0, theIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+		Notification theNotification = new Notification.Builder(getActivity())
+				.setContentTitle(anUser.getUsername()).setContentText(message)
+				.setWhen(System.currentTimeMillis())
+				.setDefaults(Notification.DEFAULT_ALL)
+				.setSmallIcon(R.drawable.ic_launcher)
+				.setContentIntent(thePendingIntent).build();
+
+		NotificationManager theManager = (NotificationManager) getActivity()
+				.getSystemService(Context.NOTIFICATION_SERVICE);
+		int theNotification_id = theId;
+		theManager.notify(theNotification_id, theNotification);
 	}
 
 }

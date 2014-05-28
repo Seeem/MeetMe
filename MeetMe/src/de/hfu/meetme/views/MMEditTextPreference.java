@@ -10,6 +10,11 @@ import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.util.AttributeSet;
 
+/**
+ * 
+ * @author Dominik Jung
+ * 
+ */
 public class MMEditTextPreference extends EditTextPreference
 {
 	public MMEditTextPreference(Context aContext, AttributeSet anAttributeSet)

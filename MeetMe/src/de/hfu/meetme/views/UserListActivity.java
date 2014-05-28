@@ -1,31 +1,49 @@
 package de.hfu.meetme.views;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import de.hfu.meetme.R;
+import de.hfu.meetme.model.MMUser;
 
+/**
+ * 
+ * @author Dominik Jung
+ * 
+ */
 public class UserListActivity extends Activity
 {
-	
+
 	// Class-Members:
-	
+
 	/** */
 	private final static int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
-	
+
 	/** */
 	public final static int REQUEST_CODE_USER_PROFILE_ACTIVITY = 2;
 
 	// Internals:
-	
+
 	@Override
 	protected void onCreate(Bundle aSavedInstanceState)
 	{
 		super.onCreate(aSavedInstanceState);
 		setContentView(R.layout.activity_user_list);
+
+		Bundle theExtras = getIntent().getExtras();
+		if (theExtras != null)
+		{
+			int theNotificationId = theExtras
+					.getInt(UserListFragment.NOTIFICATION_ID);
+			NotificationManager theManager = (NotificationManager)
+					getSystemService(Context.NOTIFICATION_SERVICE);
+			theManager.cancel(theNotificationId);
+		}
 	}
 
 	@Override
@@ -48,14 +66,23 @@ public class UserListActivity extends Activity
 		}
 		if (theId == R.id.action_refresh)
 		{
-			((UserListFragment) getFragmentManager().findFragmentById(R.id.user_list_fragment)).refreshUserList();
+			((UserListFragment) getFragmentManager().findFragmentById(
+					R.id.user_list_fragment)).refreshUserList();
+			return true;
+		}
+		if (theId == R.id.action_notification)
+		{
+			((UserListFragment) getFragmentManager().findFragmentById(
+					R.id.user_list_fragment)).addNotification(MMUser
+					.getMyself());
 			return true;
 		}
 		return super.onOptionsItemSelected(anItem);
 	}
 
 	@Override
-	public void onActivityResult(int aRequestCode, int aResultCode, Intent anIntent)
+	public void onActivityResult(int aRequestCode, int aResultCode,
+			Intent anIntent)
 	{
 		if ((aRequestCode == UserListActivity.REQUEST_CODE_USER_PROFILE_ACTIVITY)
 				&& (aResultCode == RESULT_OK))
@@ -78,7 +105,7 @@ public class UserListActivity extends Activity
 	}
 
 	// MM-API:
-	
+
 	/** Sends an intent to the SettingsActivity */
 	private void intentSettingsActivity()
 	{
@@ -87,5 +114,4 @@ public class UserListActivity extends Activity
 		startActivityForResult(theIntent, REQUEST_CODE_SETTINGS_ACTIVITY);
 	}
 
-		
 }
