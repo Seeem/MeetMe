@@ -11,8 +11,8 @@ import org.junit.Test;
 
 import de.hfu.meetme.junittests.support.MMTestSupport;
 import de.hfu.meetme.model.MMGender;
-import de.hfu.meetme.model.MMMessageManager;
 import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.MMMessageManager;
 import de.hfu.meetme.model.network.MMNetworkUtil;
 
 /**

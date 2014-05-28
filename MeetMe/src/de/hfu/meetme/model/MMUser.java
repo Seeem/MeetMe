@@ -174,8 +174,7 @@ public class MMUser implements Serializable
 		
 		if (MMUser.containsUser(anUser))
 			throw new IllegalArgumentException("user already added");
-		
-		
+				
 		MMUser.getUsers().put(anUser.getId(), anUser);
 	}
 	
@@ -243,6 +242,23 @@ public class MMUser implements Serializable
 	public static MMUser[] getUsersAsArray()
 	{
 		return MMUser.getUsers().values().toArray(new MMUser[MMUser.size()]);
+	}
+	
+	/**
+	 * Returns the user with the given key if it was added before,
+	 * otherwise it will return null.
+	 * @param anUserId the user ID
+	 * @return the user with the given key if it was added before, null otherwise
+	 */
+	public static MMUser getUserById(String anUserId)
+	{
+		if (anUserId == null)
+			throw new IllegalArgumentException("user id is null.");
+		
+		if (!MMUser.containsUser(anUserId))
+			return null;
+			
+		return MMUser.getUsers().get(anUserId);
 	}
 	
 	// Internals:

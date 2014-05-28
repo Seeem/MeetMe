@@ -1,14 +1,9 @@
 /**
  * 
  */
-package de.hfu.meetme.model;
+package de.hfu.meetme.model.network;
 
-import de.hfu.meetme.model.network.MMMessageEvent;
-import de.hfu.meetme.model.network.MMMessageListener;
-import de.hfu.meetme.model.network.MMMessageReceiver;
-import de.hfu.meetme.model.network.MMMessageSender;
-import de.hfu.meetme.model.network.MMMessageType;
-import de.hfu.meetme.model.network.MMNetworkUtil;
+import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.views.UserListFragment;
 
 /**
@@ -84,8 +79,8 @@ public class MMMessageManager implements MMMessageListener
 	/** */
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
 	{	
-		// Filter Messages from this device:
-		if (MMNetworkUtil.isMyLanAddress(aMessageEvent.getSenderAddress())) return;
+		// Filter Messages from this device and unknown messages:
+		if (MMNetworkUtil.isMyLanAddress(aMessageEvent.getSenderAddress()) || aMessageEvent.isUnknownMessage()) return;
 		
 		// Broadcast Messages:
 		if (aMessageEvent.isUdpProtocol() && aMessageEvent.isBroadcastMessage())
