@@ -121,6 +121,12 @@ public class MMMessageEvent
 		return getMessageType() == MMMessageType.MEETME;
 	}
 	
+	/** */
+	public boolean isUnknownMessage()
+	{
+		return getMessageType() == MMMessageType.UNKNOWN;
+	}
+	
 	// Accessors:
 	
 	/**

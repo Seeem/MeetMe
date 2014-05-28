@@ -8,8 +8,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import de.hfu.meetme.junittests.support.MMTestSupport;
-import de.hfu.meetme.model.MMMessageManager;
 import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.MMMessageManager;
 
 /**
  * @author Simeon Sembach

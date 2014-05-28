@@ -42,4 +42,15 @@ public class MMUserTest
 		assertTrue(theUser_1.equals(theUser_2));		
 	}
 	
+	@Test
+	public void testGetUserById_ShouldPass()
+	{
+		MMUser.initializeUsers();
+		MMUser theUser_1 = MMTestSupport.createANewValidUser();	
+		MMUser.addUserIfNotAlreadyAdded(theUser_1);
+		MMUser theUser_2 = MMUser.getUserById(theUser_1.getId());
+		MMUser theUser_3 = MMUser.getUserById("");
+		assertTrue(theUser_1.equals(theUser_2) && theUser_3 == null);
+	}
+	
 }

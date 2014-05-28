@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import de.hfu.meetme.MMUserArrayAdapter;
 import de.hfu.meetme.R;
-import de.hfu.meetme.model.MMMessageManager;
 import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.MMMessageManager;
+import de.hfu.meetme.model.network.MMNetworkTask;
 import de.hfu.meetme.model.network.MMNetworkTaskType;
 
 public class UserListFragment extends ListFragment
@@ -25,29 +25,6 @@ public class UserListFragment extends ListFragment
 
 	/** */
 	private MMMessageManager messageManager;
-
-	/** */
-	private class NetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
-	{
-
-		@Override
-		protected Void doInBackground(MMNetworkTaskType... someParams)
-		{
-			if (someParams[0] == MMNetworkTaskType.START_LISTENING)
-			{
-				getMessageManager().startListening();
-			} else if (someParams[0] == MMNetworkTaskType.STOP_LISTENING)
-			{
-				getMessageManager().stopListening();
-			} else if (someParams[0] == MMNetworkTaskType.REFRESH_USERLIST)
-			{
-				getMessageManager().refreshUsers();
-			}
-
-			return null;
-		}
-
-	}
 
 	// Class-Members:
 
@@ -113,6 +90,8 @@ public class UserListFragment extends ListFragment
 				UserListActivity.REQUEST_CODE_USER_PROFILE_ACTIVITY);
 	}
 
+	// MM-API:
+	
 	/** */
 	public void updateView()
 	{
@@ -161,24 +140,22 @@ public class UserListFragment extends ListFragment
 		});
 	}
 
-	// MM-API:
-
 	/** */
 	public void startListening()
 	{
-		new NetworkTask().execute(MMNetworkTaskType.START_LISTENING);
+		MMNetworkTask.startNetworkTask(getMessageManager(), MMNetworkTaskType.START_LISTENING);
 	}
 
 	/** */
 	public void stopListening()
 	{
-		new NetworkTask().execute(MMNetworkTaskType.STOP_LISTENING);
+		MMNetworkTask.startNetworkTask(getMessageManager(), MMNetworkTaskType.STOP_LISTENING);
 	}
 
 	/** */
 	public void refreshUserList()
 	{
-		new NetworkTask().execute(MMNetworkTaskType.REFRESH_USERLIST);
+		MMNetworkTask.startNetworkTask(getMessageManager(), MMNetworkTaskType.REFRESH_USERLIST);
 	}
 
 	// Accessors:
