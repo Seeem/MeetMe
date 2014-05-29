@@ -32,6 +32,7 @@ public final class R {
     }
     public static final class id {
         public static final int MainActicityScrollView=0x7f0a0000;
+        public static final int action_bar_refresh=0x7f0a001b;
         public static final int action_notification=0x7f0a001a;
         public static final int action_refresh=0x7f0a0019;
         public static final int action_settings=0x7f0a0018;

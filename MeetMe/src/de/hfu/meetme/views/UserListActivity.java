@@ -64,7 +64,7 @@ public class UserListActivity extends Activity
 			intentSettingsActivity();
 			return true;
 		}
-		if (theId == R.id.action_refresh)
+		if (theId == R.id.action_refresh || theId == R.id.action_bar_refresh)
 		{
 			((UserListFragment) getFragmentManager().findFragmentById(
 					R.id.user_list_fragment)).refreshUserList();
