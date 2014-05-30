@@ -30,12 +30,6 @@ public class MMMessageManager implements MMMessageListener
 	// Constructor:
 	
 	/** */
-	public MMMessageManager()
-	{
-		this(null);
-	}
-	
-	/** */
 	public MMMessageManager(UserListFragment anUserListFragment)
 	{
 		setMessageSender(new MMMessageSender());

@@ -23,7 +23,7 @@ public class MMMessageManagerTest
 	{
 		MMUser.initializeUsers();
 		MMUser.setMyself(MMTestSupport.createANewValidUser());		
-		MMMessageManager theMessageManager = new MMMessageManager();		
+		MMMessageManager theMessageManager = new MMMessageManager(null);		
 		theMessageManager.startListening();
 		theMessageManager.refreshUsers();
 		Thread.sleep(100);
