@@ -182,9 +182,8 @@ public class UserListFragment extends ListFragment
 	{
 		/*
 		 * TODO: improve Notification 
-		 * Add Vibration 
 		 * Add Lights 
-		 * Add a proper icon
+		 * Add a proper icon (could be better)
 		 * Add a proper intent
 		 */
 		String theUserId = anUser.getId();
