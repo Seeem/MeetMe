@@ -3,6 +3,9 @@
  */
 package de.hfu.meetme.model.network;
 
+import java.net.InetAddress;
+
+import de.hfu.meetme.views.UserListFragment;
 import android.os.AsyncTask;
 
 /**
@@ -12,25 +15,51 @@ import android.os.AsyncTask;
 public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 {
 
+	// Class-Members:
+	
+	/** */
+	private static MMMessageManager messageManager;
+		
 	// Instance-Members:
 	
 	/** */
-	private MMMessageManager messageManager;
+	private InetAddress inetAddress;
 	
 	// Constructor:
 	
 	/** */
-	private MMNetworkTask(MMMessageManager aMessageManager)
+	private MMNetworkTask(InetAddress anInetAddress)
 	{
-		setMessageManager(aMessageManager);
+		setInetAddress(anInetAddress);
 	}
 	
+	/** */
+	private MMNetworkTask(){};
+
 	// MM-API:
 	
 	/** */
-	public static void startNetworkTask(MMMessageManager aMessageManager, MMNetworkTaskType aNetworkTasktype)
+	public static void initialize(UserListFragment anUserListFragment)
 	{
-		new MMNetworkTask(aMessageManager).execute(aNetworkTasktype);
+		setMessageManager(new MMMessageManager(anUserListFragment));
+	}
+	
+	/** */
+	public static void startNetworkTask(MMNetworkTaskType aNetworkTasktype)
+	{
+		if (aNetworkTasktype == null)
+			throw new NullPointerException("network task type is null.");
+		
+		if (getMessageManager() == null)
+			throw new IllegalStateException("message manager not initialized.");
+				
+		new MMNetworkTask().execute(aNetworkTasktype);
+	}
+	
+	/** */
+	public static void sendMeetMeMessage(InetAddress anInetAddress)
+	{
+		new MMNetworkTask(anInetAddress).execute(MMNetworkTaskType.MEET_ME);
 	}
 	
 	// Implementors:
@@ -52,7 +81,11 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 		else if (someParameters[0] == MMNetworkTaskType.REFRESH_USERLIST)
 		{
 			getMessageManager().refreshUsers();
-		}	
+		}
+		else if (someParameters[0] == MMNetworkTaskType.MEET_ME)
+		{
+			getMessageManager().refreshUsers();
+		}
 		
 		return null;
 	}
@@ -62,7 +95,7 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	/**
 	 * @return the messageManager
 	 */
-	private MMMessageManager getMessageManager()
+	private static MMMessageManager getMessageManager()
 	{
 		return messageManager;
 	}
@@ -70,12 +103,30 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	/**
 	 * @param aMessageManager the messageManager to set
 	 */
-	private void setMessageManager(MMMessageManager aMessageManager)
+	private static void setMessageManager(MMMessageManager aMessageManager)
 	{
 		if (aMessageManager == null)
-			throw new NullPointerException("message manage is null");
+			throw new NullPointerException("message manager is null.");
 		
-		this.messageManager = aMessageManager;
+		messageManager = aMessageManager;
+	}
+
+	
+	/**
+	 * @return the inetAddress
+	 */
+	public InetAddress getInetAddress()
+	{
+		return inetAddress;
+	}
+	
+
+	/**
+	 * @param inetAddress the inetAddress to set
+	 */
+	public void setInetAddress(InetAddress inetAddress)
+	{
+		this.inetAddress = inetAddress;
 	}
 
 }

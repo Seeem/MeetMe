@@ -22,7 +22,7 @@ import de.hfu.meetme.model.validation.MMUserValidation;
  */
 public class MMSupporting
 {
-	
+
 	/**
 	 * Reads the user profile data from the SharedPreferences, set in the
 	 * settings.

@@ -14,7 +14,6 @@ import android.widget.ListView;
 import de.hfu.meetme.MMUserArrayAdapter;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
-import de.hfu.meetme.model.network.MMMessageManager;
 import de.hfu.meetme.model.network.MMNetworkTask;
 import de.hfu.meetme.model.network.MMNetworkTaskType;
 
@@ -26,11 +25,6 @@ import de.hfu.meetme.model.network.MMNetworkTaskType;
  */
 public class UserListFragment extends ListFragment
 {
-
-	// Instance-Members:
-
-	/** */
-	private MMMessageManager messageManager;
 
 	// Class-Members:
 
@@ -47,26 +41,26 @@ public class UserListFragment extends ListFragment
 	public void onCreate(Bundle aSavedInstanceState)
 	{
 		super.onCreate(aSavedInstanceState);
-		setMessageManager(new MMMessageManager(this));
-	}
 
+	}
+	
+	
 	/** */
-	@Override
-	public void onResume()
+	@Override public void onResume()
 	{
 		super.onResume();
-		startListening();
-		refreshUserList();
+		MMNetworkTask.initialize(this);
+		MMNetworkTask.startNetworkTask(MMNetworkTaskType.START_LISTENING);
+		MMNetworkTask.startNetworkTask(MMNetworkTaskType.REFRESH_USERLIST);
 	}
-
+	
 	/** */
-	@Override
-	public void onPause()
+	@Override public void onPause()
 	{
 		super.onPause();
-		stopListening();
+		MMNetworkTask.startNetworkTask(MMNetworkTaskType.STOP_LISTENING);
 	}
-
+	
 	/** */
 	@Override
 	public View onCreateView(LayoutInflater anInflater, ViewGroup aContainer,
@@ -76,7 +70,6 @@ public class UserListFragment extends ListFragment
 		View theView = anInflater.inflate(R.layout.fragment_user_list,
 				aContainer, false);
 
-		refreshUserList();
 		return theView;
 	}
 
@@ -108,7 +101,7 @@ public class UserListFragment extends ListFragment
 
 			@Override
 			public void run()
-			{
+			{	
 				setListAdapter(new MMUserArrayAdapter(getActivity(),
 						android.R.layout.simple_list_item_1, MMUser
 								.getUsersAsArray()));
@@ -130,43 +123,8 @@ public class UserListFragment extends ListFragment
 
 		});
 	}
-
-	/** */
-	public void startListening()
-	{
-		MMNetworkTask.startNetworkTask(getMessageManager(), MMNetworkTaskType.START_LISTENING);
-	}
-
-	/** */
-	public void stopListening()
-	{
-		MMNetworkTask.startNetworkTask(getMessageManager(), MMNetworkTaskType.STOP_LISTENING);
-	}
-
-	/** */
-	public void refreshUserList()
-	{
-		MMNetworkTask.startNetworkTask(getMessageManager(), MMNetworkTaskType.REFRESH_USERLIST);
-	}
-
-	// Accessors:
-
-	/**
-	 * @return the messageManager
-	 */
-	public MMMessageManager getMessageManager()
-	{
-		return messageManager;
-	}
-
-	/**
-	 * @param aMessageManager
-	 *            the messageManager to set
-	 */
-	public void setMessageManager(MMMessageManager aMessageManager)
-	{
-		this.messageManager = aMessageManager;
-	}
+ 
+	// Internals:
 
 	/**
 	 * 

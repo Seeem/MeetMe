@@ -4,7 +4,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import android.app.Fragment;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMGender;
-import de.hfu.meetme.model.MMUser;
-import de.hfu.meetme.model.network.MMMessageSender;
-import de.hfu.meetme.model.network.MMMessageType;
+import de.hfu.meetme.model.network.MMNetworkTask;
 
 /**
  * 
@@ -25,27 +22,6 @@ import de.hfu.meetme.model.network.MMMessageType;
  */
 public class UserProfileFragment extends Fragment
 {
-	private class NetworkTask extends AsyncTask<Void, Void, Void>
-	{
-
-		@Override
-		protected Void doInBackground(Void... someParams)
-		{
-			try
-			{
-				InetAddress theInetAddress = InetAddress.getByName(((UserProfileActivity) getActivity()).getUser().getId());
-				new MMMessageSender().sendUDPMessage(theInetAddress, MMMessageType.MEETME, MMUser.getMyself());
-				
-			} catch (UnknownHostException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-						
-			return null;
-		}
-
-	}
 
 	@Override
 	public void onCreate(Bundle aSavedInstanceState)
@@ -70,7 +46,11 @@ public class UserProfileFragment extends Fragment
 			@Override
 			public void onClick(View aView)
 			{
-				new NetworkTask().execute();
+				try
+				{
+					MMNetworkTask.sendMeetMeMessage(InetAddress.getByName(((UserProfileActivity) getActivity()).getUser().getId()));
+				} 
+				catch (UnknownHostException e) {}
 			}
 
 		});

@@ -8,10 +8,10 @@ import org.junit.Test;
 import de.hfu.meetme.junittests.support.MMTestSupport;
 import de.hfu.meetme.model.network.MMMessageEvent;
 import de.hfu.meetme.model.network.MMMessageListener;
-import de.hfu.meetme.model.network.MMMessageReceiver;
 import de.hfu.meetme.model.network.MMMessageSender;
 import de.hfu.meetme.model.network.MMMessageType;
 import de.hfu.meetme.model.network.MMNetworkUtil;
+import de.hfu.meetme.model.network.receiver.MMMessageReceiver;
 
 /**
  * @author Simeon Sembach
@@ -26,7 +26,7 @@ public class MMSendMessageExample implements MMMessageListener
 	private MMMessageSender messageSender = new MMMessageSender();
 
 	/** */
-	private MMMessageReceiver messageReceiver = new MMMessageReceiver();
+	private MMMessageReceiver messageReceiver = new MMMessageReceiver(MMNetworkUtil.UDP_BROADCAST_PORT, MMNetworkUtil.UDP_PORT);
 		
 	// Example as test:
 
@@ -72,7 +72,7 @@ public class MMSendMessageExample implements MMMessageListener
 		}
 		
 		System.out.print(aMessageEvent.getTimestampAsString() + ": ");
-		System.out.println(aMessageEvent.getMessageAsString());
+		System.out.println(aMessageEvent.getMessage());
 	}
 	
 }

@@ -3,7 +3,10 @@
  */
 package de.hfu.meetme.model.network;
 
+import java.net.InetAddress;
+
 import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.receiver.MMMessageReceiver;
 import de.hfu.meetme.views.UserListFragment;
 
 /**
@@ -33,7 +36,7 @@ public class MMMessageManager implements MMMessageListener
 	public MMMessageManager(UserListFragment anUserListFragment)
 	{
 		setMessageSender(new MMMessageSender());
-		setMessageReceiver(new MMMessageReceiver());
+		setMessageReceiver(new MMMessageReceiver(MMNetworkUtil.UDP_BROADCAST_PORT, MMNetworkUtil.UDP_PORT));
 		setUserListFragment(anUserListFragment);
 	}
 	
@@ -42,6 +45,7 @@ public class MMMessageManager implements MMMessageListener
 	/** */
 	public void refreshUsers()
 	{
+		if (!isStarted()) return;
 		MMUser.removeAllUsers();
 		if (getUserListFragment() != null)
 			getUserListFragment().updateView();
@@ -68,6 +72,12 @@ public class MMMessageManager implements MMMessageListener
 		setStarted(false);
 	}
 	
+	/** */
+	public void sendMeetMeMessage(InetAddress anInetAddress)
+	{
+		new MMMessageSender().sendUDPMessage(anInetAddress, MMMessageType.MEETME, MMUser.getMyself());	
+	}
+	
 	// Implementors:
 	
 	/** */
@@ -84,14 +94,14 @@ public class MMMessageManager implements MMMessageListener
 			{
 				if (MMUser.getMyself() != null)
 				{
-					MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));			
+					MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessage()));			
 					getMessageSender().sendUDPMessage(aMessageEvent.getSenderAddress(), MMMessageType.CONNECT, MMUser.getMyself());
 				}
 			}
 			// User disconnects:
 			else if (aMessageEvent.isDisconnectMessage())
 			{
-				MMUser.removeUserIfAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));
+				MMUser.removeUserIfAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessage()));
 			}
 		}
 		// Single Messages:
@@ -100,13 +110,13 @@ public class MMMessageManager implements MMMessageListener
 			// User connects:
 			if (aMessageEvent.isConnectMessage())
 			{
-				MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessageAsString()));
+				MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessage()));
 			}
 			// User wants a meeting:
 			if (aMessageEvent.isMeetMeMessage())
 			{		
 				if (getUserListFragment() != null) 
-					getUserListFragment().addNotification(MMUser.valueOf(aMessageEvent.getMessageAsString()));
+					getUserListFragment().addNotification(MMUser.valueOf(aMessageEvent.getMessage()));
 			}						
 		}
 		
@@ -183,6 +193,9 @@ public class MMMessageManager implements MMMessageListener
 	 */
 	private void setUserListFragment(UserListFragment userListFragment)
 	{
+//		if (userListFragment == null)
+//			throw new NullPointerException("user list fragment is null.");
+		
 		this.userListFragment = userListFragment;
 	}
 

@@ -9,5 +9,5 @@ package de.hfu.meetme.model.network;
  */
 public enum MMNetworkTaskType
 {
-	START_LISTENING, STOP_LISTENING, REFRESH_USERLIST
+	START_LISTENING, STOP_LISTENING, REFRESH_USERLIST, MEET_ME
 }
