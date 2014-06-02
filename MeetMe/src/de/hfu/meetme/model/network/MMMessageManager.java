@@ -7,7 +7,6 @@ import java.net.InetAddress;
 
 import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.receiver.MMMessageReceiver;
-import de.hfu.meetme.views.UserListFragment;
 
 /**
  * @author Simeon Sembach
@@ -28,16 +27,16 @@ public class MMMessageManager implements MMMessageListener
 	private boolean isStarted = false;
 	
 	/** */
-	private UserListFragment userListFragment;
+	private MMNetworkTask networkTask;
 	
 	// Constructor:
 	
 	/** */
-	public MMMessageManager(UserListFragment anUserListFragment)
+	public MMMessageManager(MMNetworkTask aNetworkTask)
 	{
 		setMessageSender(new MMMessageSender());
 		setMessageReceiver(new MMMessageReceiver(MMNetworkUtil.UDP_BROADCAST_PORT, MMNetworkUtil.UDP_PORT));
-		setUserListFragment(anUserListFragment);
+		setNetworkTask(aNetworkTask);
 	}
 	
 	// MM-API:
@@ -45,18 +44,16 @@ public class MMMessageManager implements MMMessageListener
 	/** */
 	public void refreshUsers()
 	{
-		if (!isStarted()) return;
+		if (!isStarted() || MMUser.getMyself() == null) return;
 		MMUser.removeAllUsers();
-		if (getUserListFragment() != null)
-			getUserListFragment().updateView();
-		if (MMUser.getMyself() != null)
-			getMessageSender().sendUDPBroadcastMessage(MMMessageType.CONNECT, MMUser.getMyself());	
+		getNetworkTask().updateUserListUi();
+		getMessageSender().sendUDPBroadcastMessage(MMMessageType.CONNECT, MMUser.getMyself());	
 	}
 	
 	/** */
 	public void startListening()
 	{
-		if (isStarted()) return;
+		if (isStarted() || MMUser.getMyself() == null) return;
 		getMessageReceiver().addMessageListener(this);
 		getMessageReceiver().startReceiver();
 		setStarted(true);
@@ -65,7 +62,7 @@ public class MMMessageManager implements MMMessageListener
 	/** */
 	public void stopListening()
 	{
-		if (!isStarted()) return;
+		if (!isStarted() || MMUser.getMyself() == null) return;
 		getMessageSender().sendUDPBroadcastMessage(MMMessageType.DISCONNECT, MMUser.getMyself());
 		getMessageReceiver().removeMessageListener(this);
 		getMessageReceiver().stopReceiver();	
@@ -75,6 +72,7 @@ public class MMMessageManager implements MMMessageListener
 	/** */
 	public void sendMeetMeMessage(InetAddress anInetAddress)
 	{
+		if (MMUser.getMyself() == null) return;
 		new MMMessageSender().sendUDPMessage(anInetAddress, MMMessageType.MEETME, MMUser.getMyself());	
 	}
 	
@@ -92,11 +90,8 @@ public class MMMessageManager implements MMMessageListener
 			// User connects:
 			if (aMessageEvent.isConnectMessage())
 			{
-				if (MMUser.getMyself() != null)
-				{
-					MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessage()));			
-					getMessageSender().sendUDPMessage(aMessageEvent.getSenderAddress(), MMMessageType.CONNECT, MMUser.getMyself());
-				}
+				MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessage()));			
+				getMessageSender().sendUDPMessage(aMessageEvent.getSenderAddress(), MMMessageType.CONNECT, MMUser.getMyself());	
 			}
 			// User disconnects:
 			else if (aMessageEvent.isDisconnectMessage())
@@ -115,13 +110,12 @@ public class MMMessageManager implements MMMessageListener
 			// User wants a meeting:
 			if (aMessageEvent.isMeetMeMessage())
 			{		
-				if (getUserListFragment() != null) 
-					getUserListFragment().addNotification(MMUser.valueOf(aMessageEvent.getMessage()));
+				getNetworkTask().addNotification(MMUser.valueOf(aMessageEvent.getMessage()));
 			}						
 		}
 		
 		// Update user-list:
-		if (getUserListFragment() != null) getUserListFragment().updateView();
+		getNetworkTask().updateUserListUi();
 	}
 	 
 	// Accessors:
@@ -179,24 +173,24 @@ public class MMMessageManager implements MMMessageListener
 	{
 		this.isStarted = isStarted;
 	}
-	
+
 	/**
-	 * @return the userListFragment
+	 * @return the networkTask
 	 */
-	private UserListFragment getUserListFragment()
+	public MMNetworkTask getNetworkTask()
 	{
-		return userListFragment;
-	}
-	
-	/**
-	 * @param userListFragment the userListFragment to set
-	 */
-	private void setUserListFragment(UserListFragment userListFragment)
-	{
-//		if (userListFragment == null)
-//			throw new NullPointerException("user list fragment is null.");
-		
-		this.userListFragment = userListFragment;
+		return networkTask;
 	}
 
+	/**
+	 * @param aNetworkTask the networkTask to set
+	 */
+	public void setNetworkTask(MMNetworkTask aNetworkTask)
+	{
+		if (aNetworkTask == null)
+			throw new NullPointerException("network task is null.");
+		
+		this.networkTask = aNetworkTask;
+	}
+	
 }

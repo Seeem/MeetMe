@@ -5,6 +5,7 @@ package de.hfu.meetme.model.network;
 
 import java.net.InetAddress;
 
+import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.views.UserListFragment;
 import android.os.AsyncTask;
 
@@ -14,12 +15,15 @@ import android.os.AsyncTask;
  */
 public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 {
-
+	
 	// Class-Members:
 	
 	/** */
-	private static MMMessageManager messageManager;
+	private static final MMMessageManager messageManager = new MMMessageManager(new MMNetworkTask());
 		
+	/** */
+	private static UserListFragment userListFragment;
+	
 	// Instance-Members:
 	
 	/** */
@@ -39,13 +43,46 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	// MM-API:
 	
 	/** */
-	public static void initialize(UserListFragment anUserListFragment)
+	public void updateUserListUi()
 	{
-		setMessageManager(new MMMessageManager(anUserListFragment));
+		getUserListFragment().updateView();
 	}
 	
 	/** */
-	public static void startNetworkTask(MMNetworkTaskType aNetworkTasktype)
+	public void addNotification(MMUser anUser)
+	{
+		getUserListFragment().addNotification(anUser);
+	}
+	
+	/** */
+	public static void startListening(UserListFragment anUserListFragment)
+	{
+		setUserListFragment(anUserListFragment);
+		startNetworkTask(MMNetworkTaskType.START_LISTENING);
+	}
+	
+	/** */
+	public static void stopListening()
+	{
+		startNetworkTask(MMNetworkTaskType.STOP_LISTENING);
+	}
+	
+	/** */
+	public static void refreshUserlist()
+	{
+		startNetworkTask(MMNetworkTaskType.REFRESH_USERLIST);
+	}
+	
+	/** */
+	public static void sendMeetMeMessage(InetAddress anInetAddress)
+	{
+		new MMNetworkTask(anInetAddress).execute(MMNetworkTaskType.MEET_ME);
+	}
+	
+	// Internals:
+	
+	/** */
+	private static void startNetworkTask(MMNetworkTaskType aNetworkTasktype)
 	{
 		if (aNetworkTasktype == null)
 			throw new NullPointerException("network task type is null.");
@@ -56,19 +93,12 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 		new MMNetworkTask().execute(aNetworkTasktype);
 	}
 	
-	/** */
-	public static void sendMeetMeMessage(InetAddress anInetAddress)
-	{
-		new MMNetworkTask(anInetAddress).execute(MMNetworkTaskType.MEET_ME);
-	}
-	
 	// Implementors:
 	
 	/** */
 	@Override protected Void doInBackground(MMNetworkTaskType... someParameters)
 	{
-		if (someParameters == null) 
-			return null;
+		if (someParameters == null) return null;
 		
 		if (someParameters[0] == MMNetworkTaskType.START_LISTENING)
 		{
@@ -84,7 +114,7 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 		}
 		else if (someParameters[0] == MMNetworkTaskType.MEET_ME)
 		{
-			getMessageManager().refreshUsers();
+			getMessageManager().sendMeetMeMessage(getInetAddress());
 		}
 		
 		return null;
@@ -101,32 +131,41 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	}
 
 	/**
-	 * @param aMessageManager the messageManager to set
-	 */
-	private static void setMessageManager(MMMessageManager aMessageManager)
-	{
-		if (aMessageManager == null)
-			throw new NullPointerException("message manager is null.");
-		
-		messageManager = aMessageManager;
-	}
-
-	
-	/**
 	 * @return the inetAddress
 	 */
-	public InetAddress getInetAddress()
+	private InetAddress getInetAddress()
 	{
 		return inetAddress;
 	}
 	
+	/**
+	 * @param anInetAddress the inetAddress to set
+	 */
+	private void setInetAddress(InetAddress anInetAddress)
+	{
+		if (anInetAddress == null)
+			throw new NullPointerException("internet address is null.");
+		
+		this.inetAddress = anInetAddress;
+	}
 
 	/**
-	 * @param inetAddress the inetAddress to set
+	 * @return the userListFragment
 	 */
-	public void setInetAddress(InetAddress inetAddress)
+	private static UserListFragment getUserListFragment()
 	{
-		this.inetAddress = inetAddress;
+		return userListFragment;
+	}
+	
+	/**
+	 * @param userListFragment the userListFragment to set
+	 */
+	private static void setUserListFragment(UserListFragment userListFragment)
+	{
+		if (userListFragment == null)
+			throw new NullPointerException("user list fragment is null.");
+			
+		MMNetworkTask.userListFragment = userListFragment;
 	}
 
 }

@@ -11,7 +11,6 @@ import android.widget.Toast;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.MMNetworkTask;
-import de.hfu.meetme.model.network.MMNetworkTaskType;
 
 /**
  * 
@@ -68,7 +67,7 @@ public class UserListActivity extends Activity
 		}
 		if (theId == R.id.action_refresh || theId == R.id.action_bar_refresh)
 		{
-			MMNetworkTask.startNetworkTask(MMNetworkTaskType.REFRESH_USERLIST);
+			MMNetworkTask.refreshUserlist();
 			return true;
 		}
 		if (theId == R.id.action_notification)

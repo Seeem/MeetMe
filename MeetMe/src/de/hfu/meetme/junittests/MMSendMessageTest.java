@@ -65,7 +65,7 @@ public class MMSendMessageTest implements MMMessageListener
 		try
 		{
 			messageReceiver.addMessageListener(this);
-			messageReceiver.startReceiver();	
+			messageReceiver.startReceiver();
 			messageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), MMNetworkUtil.UDP_MESSAGE_PING);
 			Thread.sleep(100);
 		}

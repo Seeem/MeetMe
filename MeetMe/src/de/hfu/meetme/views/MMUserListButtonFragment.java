@@ -2,7 +2,6 @@ package de.hfu.meetme.views;
 
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.network.MMNetworkTask;
-import de.hfu.meetme.model.network.MMNetworkTaskType;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,7 +40,7 @@ public class MMUserListButtonFragment extends Fragment
 			@Override
 			public void onClick(View aView)
 			{
-				MMNetworkTask.startNetworkTask(MMNetworkTaskType.REFRESH_USERLIST);
+				MMNetworkTask.refreshUserlist();
 			}
 
 		});

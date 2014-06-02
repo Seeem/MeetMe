@@ -15,7 +15,6 @@ import de.hfu.meetme.MMUserArrayAdapter;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.MMNetworkTask;
-import de.hfu.meetme.model.network.MMNetworkTaskType;
 
 
 /**
@@ -41,24 +40,21 @@ public class UserListFragment extends ListFragment
 	public void onCreate(Bundle aSavedInstanceState)
 	{
 		super.onCreate(aSavedInstanceState);
-
 	}
-	
-	
+		
 	/** */
 	@Override public void onResume()
 	{
 		super.onResume();
-		MMNetworkTask.initialize(this);
-		MMNetworkTask.startNetworkTask(MMNetworkTaskType.START_LISTENING);
-		MMNetworkTask.startNetworkTask(MMNetworkTaskType.REFRESH_USERLIST);
+		MMNetworkTask.startListening(this);
+		MMNetworkTask.refreshUserlist();
 	}
 	
 	/** */
 	@Override public void onPause()
 	{
 		super.onPause();
-		MMNetworkTask.startNetworkTask(MMNetworkTaskType.STOP_LISTENING);
+		MMNetworkTask.stopListening();
 	}
 	
 	/** */
@@ -74,9 +70,7 @@ public class UserListFragment extends ListFragment
 	}
 
 	/** */
-	@Override
-	public void onListItemClick(ListView aListView, View aView, int aPosition,
-			long anId)
+	@Override public void onListItemClick(ListView aListView, View aView, int aPosition, long anId)
 	{
 		MMUser theUser = (MMUser) getListView().getItemAtPosition(aPosition);
 		intentUserProfileActivity(theUser);
@@ -93,7 +87,7 @@ public class UserListFragment extends ListFragment
 	}
 
 	// MM-API:
-	
+		
 	/** */
 	public void updateView()
 	{
