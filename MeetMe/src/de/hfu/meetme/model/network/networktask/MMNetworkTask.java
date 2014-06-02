@@ -1,12 +1,13 @@
 /**
  * 
  */
-package de.hfu.meetme.model.network;
+package de.hfu.meetme.model.network.networktask;
 
 import java.net.InetAddress;
 
-import de.hfu.meetme.model.MMUser;
-import de.hfu.meetme.views.UserListFragment;
+import de.hfu.meetme.model.network.messagemanager.MMMessageManager;
+import de.hfu.meetme.model.network.messagemanager.MMMessageManagerListener;
+
 import android.os.AsyncTask;
 
 /**
@@ -19,10 +20,7 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	// Class-Members:
 	
 	/** */
-	private static final MMMessageManager messageManager = new MMMessageManager(new MMNetworkTask());
-		
-	/** */
-	private static UserListFragment userListFragment;
+	private static final MMMessageManager messageManager = new MMMessageManager();
 	
 	// Instance-Members:
 	
@@ -41,23 +39,10 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	private MMNetworkTask(){};
 
 	// MM-API:
-	
+
 	/** */
-	public void updateUserListUi()
+	public static void startListening()
 	{
-		getUserListFragment().updateView();
-	}
-	
-	/** */
-	public void addNotification(MMUser anUser)
-	{
-		getUserListFragment().addNotification(anUser);
-	}
-	
-	/** */
-	public static void startListening(UserListFragment anUserListFragment)
-	{
-		setUserListFragment(anUserListFragment);
 		startNetworkTask(MMNetworkTaskType.START_LISTENING);
 	}
 	
@@ -77,6 +62,18 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	public static void sendMeetMeMessage(InetAddress anInetAddress)
 	{
 		new MMNetworkTask(anInetAddress).execute(MMNetworkTaskType.MEET_ME);
+	}
+	
+	/** */
+	public static void addMessageManagerListener(MMMessageManagerListener aMessageManagerListener)
+	{
+		getMessageManager().addMessageManagerListener(aMessageManagerListener);
+	}
+	
+	/** */
+	public static void removeMessageManagerListener(MMMessageManagerListener aMessageManagerListener)
+	{
+		getMessageManager().removeMessageManagerListener(aMessageManagerListener);
 	}
 	
 	// Internals:
@@ -147,25 +144,6 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 			throw new NullPointerException("internet address is null.");
 		
 		this.inetAddress = anInetAddress;
-	}
-
-	/**
-	 * @return the userListFragment
-	 */
-	private static UserListFragment getUserListFragment()
-	{
-		return userListFragment;
-	}
-	
-	/**
-	 * @param userListFragment the userListFragment to set
-	 */
-	private static void setUserListFragment(UserListFragment userListFragment)
-	{
-		if (userListFragment == null)
-			throw new NullPointerException("user list fragment is null.");
-			
-		MMNetworkTask.userListFragment = userListFragment;
 	}
 
 }

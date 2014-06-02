@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMGender;
-import de.hfu.meetme.model.network.MMNetworkTask;
+import de.hfu.meetme.model.network.networktask.MMNetworkTask;
 
 /**
  * 

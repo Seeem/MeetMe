@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.hfu.meetme.model.network;
+package de.hfu.meetme.model.network.message;
 
 /**
  * @author Simeon Sembach

@@ -6,12 +6,12 @@ package de.hfu.meetme.examples;
 import org.junit.Test;
 
 import de.hfu.meetme.junittests.support.MMTestSupport;
-import de.hfu.meetme.model.network.MMMessageEvent;
-import de.hfu.meetme.model.network.MMMessageListener;
-import de.hfu.meetme.model.network.MMMessageSender;
-import de.hfu.meetme.model.network.MMMessageType;
 import de.hfu.meetme.model.network.MMNetworkUtil;
+import de.hfu.meetme.model.network.message.MMMessageEvent;
+import de.hfu.meetme.model.network.message.MMMessageListener;
+import de.hfu.meetme.model.network.message.MMMessageType;
 import de.hfu.meetme.model.network.receiver.MMMessageReceiver;
+import de.hfu.meetme.model.network.sender.MMMessageSender;
 
 /**
  * @author Simeon Sembach

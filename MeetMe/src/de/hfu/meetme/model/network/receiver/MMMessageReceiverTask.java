@@ -8,7 +8,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-import de.hfu.meetme.model.network.MMMessageTargetType;
+import de.hfu.meetme.model.network.message.MMMessageTargetType;
 
 /**
  * @author Simeon Sembach
@@ -26,6 +26,9 @@ public class MMMessageReceiverTask extends Thread
 	private DatagramSocket datagramSocket;
 	
 	/** */
+	private int datagramPort;
+	
+	/** */
 	private MMMessageTargetType messageTargetType;
 	
 	// Class-Members:
@@ -36,11 +39,11 @@ public class MMMessageReceiverTask extends Thread
 	// Constructor:
 	
 	/** */
-	private MMMessageReceiverTask(MMMessageReceiver aMessageReceiver, MMMessageTargetType aMessageTargetType, int aPort) throws SocketException
+	private MMMessageReceiverTask(MMMessageReceiver aMessageReceiver, MMMessageTargetType aMessageTargetType, int aPort)
 	{
 		setMessageReceiver(aMessageReceiver);
 		setMessageTargetType(aMessageTargetType);
-		setDatagramSocket(new DatagramSocket(aPort));
+		setDatagramPort(aPort);
 	}
 	
 	// Factory:
@@ -48,14 +51,7 @@ public class MMMessageReceiverTask extends Thread
 	/** */
 	public static MMMessageReceiverTask getInstance(MMMessageReceiver aMessageReceiver, MMMessageTargetType aMessageTargetType, int aPort)
 	{
-		try
-		{
-			return new MMMessageReceiverTask(aMessageReceiver, aMessageTargetType, aPort);
-		} 
-		catch (SocketException e)
-		{
-			return null;
-		}
+		return new MMMessageReceiverTask(aMessageReceiver, aMessageTargetType, aPort);
 	}
 	
 	// MM-API:
@@ -71,6 +67,16 @@ public class MMMessageReceiverTask extends Thread
 	
 	@Override public void run()
 	{
+		try
+		{
+			setDatagramSocket(new DatagramSocket(getDatagramPort()));
+		} 
+		catch (SocketException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		while(!interrupted())
 		{		
 			try
@@ -138,6 +144,24 @@ public class MMMessageReceiverTask extends Thread
 	private void setMessageTargetType(MMMessageTargetType messageTargetType)
 	{
 		this.messageTargetType = messageTargetType;
+	}
+
+	
+	/**
+	 * @return the datagramPort
+	 */
+	private int getDatagramPort()
+	{
+		return datagramPort;
+	}
+	
+
+	/**
+	 * @param datagramPort the datagramPort to set
+	 */
+	private void setDatagramPort(int datagramPort)
+	{
+		this.datagramPort = datagramPort;
 	}
 
 }

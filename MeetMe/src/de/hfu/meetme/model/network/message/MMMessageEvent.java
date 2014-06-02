@@ -1,11 +1,13 @@
 /**
  * 
  */
-package de.hfu.meetme.model.network;
+package de.hfu.meetme.model.network.message;
 
 import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import de.hfu.meetme.model.network.MMNetworkUtil;
 
 /**
  * @author Simeon Sembach

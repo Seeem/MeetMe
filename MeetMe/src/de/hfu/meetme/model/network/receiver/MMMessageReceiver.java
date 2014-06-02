@@ -10,11 +10,11 @@ import java.util.Vector;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import de.hfu.meetme.model.network.MMMessageEvent;
-import de.hfu.meetme.model.network.MMMessageListener;
-import de.hfu.meetme.model.network.MMMessageProtocol;
-import de.hfu.meetme.model.network.MMMessageTargetType;
-import de.hfu.meetme.model.network.MMMessageType;
+import de.hfu.meetme.model.network.message.MMMessageEvent;
+import de.hfu.meetme.model.network.message.MMMessageListener;
+import de.hfu.meetme.model.network.message.MMMessageProtocol;
+import de.hfu.meetme.model.network.message.MMMessageTargetType;
+import de.hfu.meetme.model.network.message.MMMessageType;
 
 /**
  * @author Simeon Sembach
