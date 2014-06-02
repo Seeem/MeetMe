@@ -57,7 +57,7 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 		return null;
 	}
 
-	// Accesors:
+	// Accessors:
 	
 	/**
 	 * @return the messageManager

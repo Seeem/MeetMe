@@ -201,7 +201,10 @@ public class UserListFragment extends ListFragment
 				.setWhen(System.currentTimeMillis())
 				.setDefaults(Notification.DEFAULT_ALL)
 				.setSmallIcon(android.R.drawable.ic_dialog_email)
-				.setContentIntent(thePendingIntent).build();
+				.setTicker(anUser.getUsername() + " wants to meet you!")
+				.setLights(0xFFFFFFFF, 1500, 3000) //TODO: Does not work.
+				.setContentIntent(thePendingIntent)
+				.build();
 
 		NotificationManager theManager = (NotificationManager) getActivity()
 				.getSystemService(Context.NOTIFICATION_SERVICE);

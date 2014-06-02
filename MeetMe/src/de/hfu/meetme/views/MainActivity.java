@@ -48,6 +48,7 @@ public class MainActivity extends Activity
 	 *         {@link MMUser} object will be built from the data saved in the
 	 *         SharedPreferences.
 	 */
+	//TODO: Move to MMUser
 	public boolean isUserCreated()
 	{
 		SharedPreferences theSettings = getSharedPreferences(
@@ -59,6 +60,7 @@ public class MainActivity extends Activity
 	 * @param isUserCreated
 	 *            the isUserCreated to set
 	 */
+	//TODO: Move to MMUser
 	public void setIsUserCreated(boolean isUserCreated)
 	{
 		SharedPreferences thePrefs = getSharedPreferences(SHARED_PREFERENCES_NAME,

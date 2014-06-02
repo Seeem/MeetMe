@@ -91,6 +91,10 @@ public class UserListActivity extends Activity
 		if ((aRequestCode == UserListActivity.REQUEST_CODE_SETTINGS_ACTIVITY)
 				&& (aResultCode == RESULT_OK))
 		{
+			Bundle theExtras = anIntent.getExtras();
+			if (theExtras != null) {
+				MMUser.setMyself((MMUser) theExtras.getSerializable(MainActivity.MMUSER_TAG));
+			}
 			Toast.makeText(this, "Your profile has been saved",
 					Toast.LENGTH_SHORT).show();
 		}
