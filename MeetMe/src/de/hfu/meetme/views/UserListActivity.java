@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.MMNetworkTask;
 
 /**
  * 
@@ -17,10 +18,10 @@ import de.hfu.meetme.model.MMUser;
  * 
  */
 public class UserListActivity extends Activity
-{
-
+{	
+	
 	// Class-Members:
-
+	
 	/** */
 	private final static int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
 
@@ -66,8 +67,7 @@ public class UserListActivity extends Activity
 		}
 		if (theId == R.id.action_refresh || theId == R.id.action_bar_refresh)
 		{
-			((UserListFragment) getFragmentManager().findFragmentById(
-					R.id.user_list_fragment)).refreshUserList();
+			MMNetworkTask.refreshUserlist();
 			return true;
 		}
 		if (theId == R.id.action_notification)

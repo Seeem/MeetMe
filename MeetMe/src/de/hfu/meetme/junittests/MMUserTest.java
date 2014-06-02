@@ -31,7 +31,8 @@ public class MMUserTest
 	{
 		MMUser theUser_1 = MMTestSupport.createANewValidUser();
 		MMUser theUser_2 = MMTestSupport.createANewValidUser();
-		assertTrue(theUser_1.equals(theUser_2));
+		MMUser theUser_3 = MMTestSupport.createANewValidUser();
+		assertTrue(theUser_1.equals(theUser_2) && theUser_2.equals(theUser_1) && theUser_2.equals(theUser_3) && theUser_1.equals(theUser_3) && !theUser_1.equals(null));
 	}
 	
 	@Test

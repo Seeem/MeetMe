@@ -22,7 +22,7 @@ public class MMRefreshUsersExample
 	@Test public void testExample() throws InterruptedException
 	{
 		MMUser.setMyself(MMTestSupport.createANewValidUser());		
-		MMMessageManager theMessageManager = new MMMessageManager();		
+		MMMessageManager theMessageManager = new MMMessageManager(null);		
 		theMessageManager.startListening();
 		theMessageManager.refreshUsers();
 		Thread.sleep(1000);

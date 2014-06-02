@@ -16,26 +16,29 @@ public class MMMessageEvent
 
 	// Instance-Members:
 	
-	/** The sender Internet Address. */
-	private InetAddress senderAddress;
-	
 	/** The send Message. */
-	private Object message;
-	
-	/** The port of the sender. */
-	private int senderPort;
+	private final String message;
 	
 	/** The time/moment the message was received. */
-	private Calendar timestamp;
+	private final Calendar timestamp;
+	
+	/** The time/moment the message was received as a {@link String} */
+	private final String timestampAsString;
+	
+	/** The sender Internet Address. */
+	private final InetAddress senderAddress;
+		
+	/** The port of the sender. */
+	private final int senderPort;
 	
 	/** The used message protocol (UDP or TCP). */
-	private MMMessageProtocol messageProtocol;
+	private final MMMessageProtocol messageProtocol;
 	
 	/** The message target type (single- or broadcast message). */
-	private MMMessageTargetType messageTargetType;
+	private final MMMessageTargetType messageTargetType;
 
-	/** */
-	private MMMessageType messageType;
+	/** The message type. */
+	private final MMMessageType messageType;
 	
 	// Constructor:
 	
@@ -48,86 +51,87 @@ public class MMMessageEvent
 	 * @param aMessageProtocoll the message protocol
 	 * @param aMessageType the message type
 	 */
-	public MMMessageEvent(InetAddress aSenderAddress, Object aMessage, int aSenderPort, Calendar aTimestamp, MMMessageProtocol aMessageProtocoll, MMMessageTargetType aMessageType, MMMessageType aMeesageType)
+	public MMMessageEvent(InetAddress aSenderAddress, String aMessage, int aSenderPort, Calendar aTimestamp, MMMessageProtocol aMessageProtocoll, MMMessageTargetType aMessageTargetType, MMMessageType aMessageType)
 	{
-		setSenderAddress(aSenderAddress);
-		setMessage(aMessage);
-		setSenderPort(aSenderPort);
-		setTimestamp(aTimestamp);
-		setMessageProtocol(aMessageProtocoll);
-		setMessageTargetType(aMessageType);
-		setMessageType(aMeesageType);
-	}
-	
-	// MM-API:
-	
-	/**
-	 * Returns the received message as @link {@link String}.
-	 * @return the message as string
-	 */
-	public String getMessageAsString()
-	{
-		if (getMessage() instanceof String)
-		{
-			return (String) getMessage();
-		}
-		return getMessage().toString();
-	}
-	
-	/**
-	 * Returns the time stamp of the received message as easy readable {@link String}.
-	 * @return the time stamp as string
-	 */
-	public String getTimestampAsString()
-	{		
-		return ((SimpleDateFormat) SimpleDateFormat.getDateInstance()).format(getTimestamp().getTime());
+		this.senderAddress	   = aSenderAddress;
+		this.message		   = aMessage;
+		this.senderPort		   = aSenderPort;
+		this.timestamp		   = aTimestamp;
+		this.timestampAsString = (((SimpleDateFormat) SimpleDateFormat.getDateInstance()).format(getTimestamp().getTime()));
+		this.messageProtocol   = aMessageProtocoll;
+		this.messageTargetType = aMessageTargetType;
+		this.messageType	   = aMessageType;
 	}
 	
 	// Is-Methods:
 	
-	/** */
+	/**
+	 * Returns whether the used message protocol is UDP.
+	 * @return true if the used message protocol is UDP, false otherwise
+	 */
 	public boolean isUdpProtocol()
 	{
 		return getMessageProtocol() == MMMessageProtocol.UDP;
 	}
 	
-	/** */
+	/**
+	 * Returns whether the target of this message is a single.
+	 * @return true if the target is a single, false otherwise
+	 */
 	public boolean isSingleMessage()
 	{
 		return getMessageTargetType() == MMMessageTargetType.SINGLE;
 	}
 	
-	/** */
+	/**
+	 * Returns whether the target of this message is a broadcast.
+	 * @return true if the target is a broadcast, false otherwise.
+	 */
 	public boolean isBroadcastMessage()
 	{
 		return getMessageTargetType() == MMMessageTargetType.BROADCAST;
 	}
 	
-	/** */
+	/**
+	 * Returns whether the message type is CONNECT.
+	 * @return true if the message type is CONNECT, false otherwise
+	 */
 	public boolean isConnectMessage()
 	{
 		return getMessageType() == MMMessageType.CONNECT;
 	}
 	
-	/** */
+	/**
+	 * Returns whether the message type is DISCONNECT.
+	 * @return true if the message type is DISCONNECT, false otherwise
+	 */
 	public boolean isDisconnectMessage()
 	{
 		return getMessageType() == MMMessageType.DISCONNECT;
 	}
 	
-	/** */
+	/**
+	 * Returns whether the message type is MEETME.
+	 * @return true if the message type is MEETME, false otherwise
+	 */
 	public boolean isMeetMeMessage()
 	{
 		return getMessageType() == MMMessageType.MEETME;
 	}
 	
-	/** */
+	/**
+	 * Returns whether the message type is UNKNOWN
+	 * @return true if the message type is UNKNOWN, false otherwise
+	 */
 	public boolean isUnknownMessage()
 	{
 		return getMessageType() == MMMessageType.UNKNOWN;
 	}
 	
-	/** */
+	/**
+	 * Returns whether the message is from this device.
+	 * @return true if the message is from this device, false otherwise
+	 */
 	public boolean isFromMe()
 	{
 		return MMNetworkUtil.isMyLanAddress(getSenderAddress());
@@ -144,27 +148,11 @@ public class MMMessageEvent
 	}
 
 	/**
-	 * @param aSenderAddress the senderAddress to set
-	 */
-	private void setSenderAddress(InetAddress aSenderAddress)
-	{
-		this.senderAddress = aSenderAddress;
-	}
-
-	/**
 	 * @return the message
 	 */
-	private Object getMessage()
+	public String getMessage()
 	{
 		return message;
-	}
-
-	/**
-	 * @param aMessage the message to set
-	 */
-	private void setMessage(Object aMessage)
-	{
-		this.message = aMessage;
 	}
 
 	/**
@@ -176,27 +164,11 @@ public class MMMessageEvent
 	}
 
 	/**
-	 * @param aSenderPort the senderPort to set
-	 */
-	private void setSenderPort(int aSenderPort)
-	{
-		this.senderPort = aSenderPort;
-	}
-
-	/**
 	 * @return the time stamp
 	 */
-	private Calendar getTimestamp()
+	public Calendar getTimestamp()
 	{
 		return timestamp;
-	}
-
-	/**
-	 * @param aTimestamp the time stamp to set
-	 */
-	private void setTimestamp(Calendar aTimestamp)
-	{
-		this.timestamp = aTimestamp;
 	}
 
 	/**
@@ -208,14 +180,6 @@ public class MMMessageEvent
 	}
 
 	/**
-	 * @param messageProtocoll the messageProtocol to set
-	 */
-	private void setMessageProtocol(MMMessageProtocol aMessageProtocol)
-	{
-		this.messageProtocol = aMessageProtocol;
-	}
-
-	/**
 	 * @return the messageType
 	 */
 	private MMMessageTargetType getMessageTargetType()
@@ -223,14 +187,6 @@ public class MMMessageEvent
 		return messageTargetType;
 	}
 
-	/**
-	 * @param aMessageType the messageType to set
-	 */
-	private void setMessageTargetType(MMMessageTargetType aMessageType)
-	{
-		this.messageTargetType = aMessageType;
-	}
-	
 	/**
 	 * @return the messageType
 	 */
@@ -240,11 +196,12 @@ public class MMMessageEvent
 	}
 	
 	/**
-	 * @param messageType the messageType to set
+	 * @return the timestampAsString
 	 */
-	private void setMessageType(MMMessageType messageType)
+	public String getTimestampAsString()
 	{
-		this.messageType = messageType;
+		return timestampAsString;
 	}
 	
+
 }

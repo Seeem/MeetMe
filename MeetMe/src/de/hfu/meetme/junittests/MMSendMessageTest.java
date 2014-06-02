@@ -5,15 +5,13 @@ package de.hfu.meetme.junittests;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
-
 import org.junit.Test;
 
 import de.hfu.meetme.model.network.MMMessageEvent;
 import de.hfu.meetme.model.network.MMMessageListener;
-import de.hfu.meetme.model.network.MMMessageReceiver;
 import de.hfu.meetme.model.network.MMMessageSender;
 import de.hfu.meetme.model.network.MMNetworkUtil;
+import de.hfu.meetme.model.network.receiver.MMMessageReceiver;
 
 /**
  * @author Simeon Sembach
@@ -28,7 +26,7 @@ public class MMSendMessageTest implements MMMessageListener
 	private MMMessageSender messageSender = new MMMessageSender();
 
 	/** */
-	private MMMessageReceiver messageReceiver = new MMMessageReceiver();
+	private MMMessageReceiver messageReceiver = new MMMessageReceiver(MMNetworkUtil.UDP_BROADCAST_PORT, MMNetworkUtil.UDP_PORT);
 	
 	/** */
 	private boolean hasUDPBroadcastMessageReceived = false;
@@ -39,7 +37,7 @@ public class MMSendMessageTest implements MMMessageListener
 	// Tests:
 	
 	@Test
-	public void testSendAndReceiveAnUDPBroadcastMessage() throws IOException
+	public void testSendAndReceiveAnUDPBroadcastMessage()
 	{
 		try
 		{
@@ -62,12 +60,12 @@ public class MMSendMessageTest implements MMMessageListener
 	}
 
 	@Test
-	public void testSendAndReceiveAnUDPSingleMessage() throws IOException
+	public void testSendAndReceiveAnUDPSingleMessage()
 	{
 		try
 		{
 			messageReceiver.addMessageListener(this);
-			messageReceiver.startReceiver();	
+			messageReceiver.startReceiver();
 			messageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), MMNetworkUtil.UDP_MESSAGE_PING);
 			Thread.sleep(100);
 		}

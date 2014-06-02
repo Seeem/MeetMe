@@ -9,9 +9,9 @@ import org.junit.Test;
 
 import de.hfu.meetme.model.network.MMMessageEvent;
 import de.hfu.meetme.model.network.MMMessageListener;
-import de.hfu.meetme.model.network.MMMessageReceiver;
 import de.hfu.meetme.model.network.MMMessageSender;
 import de.hfu.meetme.model.network.MMNetworkUtil;
+import de.hfu.meetme.model.network.receiver.MMMessageReceiver;
 
 /**
  * @author Simeon Sembach
@@ -65,7 +65,7 @@ public class MMNetworkTest
 	@Test public void testIsMyLanAddress_ShouldPass() throws InterruptedException
 	{	
 		MMMessageSender theMessageSender = new MMMessageSender();
-		MMMessageReceiver theMessageReceiver = new MMMessageReceiver();
+		MMMessageReceiver theMessageReceiver = new MMMessageReceiver(MMNetworkUtil.UDP_BROADCAST_PORT, MMNetworkUtil.UDP_PORT);
 		MMMessageListener theMessageListener = new MMMessageListener()
 		{			
 			@Override

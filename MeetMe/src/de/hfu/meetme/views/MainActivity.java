@@ -1,4 +1,4 @@
-package de.hfu.meetme.views;
+ package de.hfu.meetme.views;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -84,6 +84,12 @@ public class MainActivity extends Activity
 		}
 	}
 
+	/** */
+	@Override protected void onResume()
+	{
+		super.onResume();			
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu aMenu)
 	{
@@ -129,9 +135,8 @@ public class MainActivity extends Activity
 
 	/** Sends an intent to the UserListActivity */
 	public void intentUserListActivity(View aView)
-	{
-		final Intent theIntent = new Intent(this,
-				de.hfu.meetme.views.UserListActivity.class);
+	{	
+		final Intent theIntent = new Intent(this,de.hfu.meetme.views.UserListActivity.class);
 		startActivityForResult(theIntent, REQUEST_CODE_USER_LIST_ACTIVITY);
 	}
 
