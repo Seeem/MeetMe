@@ -124,7 +124,6 @@ public class MainActivity extends Activity
 
 			Bundle theBundle = anIntent.getExtras();
 			setIsUserCreated(theBundle.getBoolean(IS_USER_CREATED));
-			MMUser.setMyself((MMUser) theBundle.getSerializable(MMUSER_TAG));
 
 			Toast.makeText(this, "Your profile has been saved",
 					Toast.LENGTH_SHORT).show();

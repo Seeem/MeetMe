@@ -46,8 +46,8 @@ public class SettingsActivity extends Activity
 		{
 			final Intent theIntent = new Intent();
 			theIntent.putExtra(MainActivity.IS_USER_CREATED, true);
-			theIntent.putExtra(MainActivity.MMUSER_TAG, user);
 			setResult(RESULT_OK, theIntent);
+			MMUser.setMyself(user);
 			MMNetworkTask.sendUpdate();
 			super.finish();
 		}

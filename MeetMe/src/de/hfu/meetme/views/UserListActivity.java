@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.R;
-import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.networktask.MMNetworkTask;
 import de.hfu.meetme.service.MMNetworkService;
 
@@ -20,10 +19,10 @@ import de.hfu.meetme.service.MMNetworkService;
  * 
  */
 public class UserListActivity extends Activity
-{	
-	
+{
+
 	// Class-Members:
-	
+
 	/** */
 	private final static int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
 
@@ -43,8 +42,7 @@ public class UserListActivity extends Activity
 		{
 			int theNotificationId = theExtras
 					.getInt(MMSupporting.NOTIFICATION_ID);
-			NotificationManager theManager = (NotificationManager)
-					getSystemService(Context.NOTIFICATION_SERVICE);
+			NotificationManager theManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 			theManager.cancel(theNotificationId);
 		}
 	}
@@ -91,10 +89,6 @@ public class UserListActivity extends Activity
 		if ((aRequestCode == UserListActivity.REQUEST_CODE_SETTINGS_ACTIVITY)
 				&& (aResultCode == RESULT_OK))
 		{
-			Bundle theExtras = anIntent.getExtras();
-			if (theExtras != null) {
-				MMUser.setMyself((MMUser) theExtras.getSerializable(MainActivity.MMUSER_TAG));
-			}
 			Toast.makeText(this, "Your profile has been saved",
 					Toast.LENGTH_SHORT).show();
 		}
@@ -107,7 +101,7 @@ public class UserListActivity extends Activity
 		setResult(RESULT_OK, theIntent);
 		super.finish();
 	}
-	
+
 	// MM-API:
 
 	/** Sends an intent to the SettingsActivity */

@@ -40,7 +40,7 @@ public class UserListFragment extends ListFragment implements
 
 		if (getActivity().getIntent() != null)
 		{
-			// MMNetworkTask.refreshUserlist();
+			MMNetworkTask.refreshUserlist();
 		}
 	}
 
