@@ -113,7 +113,9 @@ public class MMMessageManager implements MMMessageListener
 	private void pushMessageManagerEvents(MMMessageManagerEvent aMessageManagerEvent)
 	{
 		for (MMMessageManagerListener aMessageManagerListener : getMessageManagerListeners())
+		{
 			aMessageManagerListener.managerEventPerformed(aMessageManagerEvent);
+		}			
 	}
 	
 	// Implementors:
