@@ -143,8 +143,7 @@ public class UserListFragment extends ListFragment implements MMMessageManagerLi
 		 * Add a proper intent
 		 */
 		String theUserId = anUser.getId();
-		theUserId = theUserId.replace(".", "")
-				.substring(theUserId.length() - 6);
+		theUserId = theUserId.replace(".", "").substring(theUserId.length() - 6);
 		int theId = Integer.parseInt(theUserId);
 		Intent theIntent = new Intent(getActivity(), UserListActivity.class);
 		theIntent.putExtra(NOTIFICATION_ID, theId);
