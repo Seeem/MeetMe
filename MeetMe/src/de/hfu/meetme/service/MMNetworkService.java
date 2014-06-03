@@ -122,6 +122,5 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		int theNotification_id = theId;
 		theManager.notify(theNotification_id, theNotification);
-		stopService(new Intent(this, MMNetworkService.class));
 	}
 }

@@ -12,6 +12,7 @@ import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.networktask.MMNetworkTask;
+import de.hfu.meetme.service.MMNetworkService;
 
 /**
  * 
@@ -71,8 +72,9 @@ public class UserListActivity extends Activity
 			MMNetworkTask.refreshUserlist();
 			return true;
 		}
-		if (theId == R.id.action_notification)
+		if (theId == R.id.action_stop_service)
 		{
+			stopService(new Intent(this, MMNetworkService.class));
 			return true;
 		}
 		return super.onOptionsItemSelected(anItem);

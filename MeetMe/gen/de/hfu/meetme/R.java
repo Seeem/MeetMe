@@ -33,9 +33,9 @@ public final class R {
     public static final class id {
         public static final int MainActicityScrollView=0x7f0a0000;
         public static final int action_bar_refresh=0x7f0a001b;
-        public static final int action_notification=0x7f0a001a;
         public static final int action_refresh=0x7f0a0019;
         public static final int action_settings=0x7f0a0018;
+        public static final int action_stop_service=0x7f0a001a;
         public static final int container=0x7f0a0006;
         public static final int container_settings=0x7f0a0003;
         public static final int preference_fragment=0x7f0a0004;
@@ -76,11 +76,11 @@ public final class R {
         public static final int user_profile=0x7f090002;
     }
     public static final class string {
-        public static final int action_notification=0x7f060016;
         /**  UserListActivityMenu 
          */
         public static final int action_refresh=0x7f060015;
         public static final int action_settings=0x7f060002;
+        public static final int action_stop_service=0x7f060016;
         /**  Auto Generated 
          */
         public static final int app_name=0x7f060000;
