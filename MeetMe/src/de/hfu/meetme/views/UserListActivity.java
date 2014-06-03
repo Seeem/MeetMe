@@ -67,7 +67,7 @@ public class UserListActivity extends Activity
 			intentSettingsActivity();
 			return true;
 		}
-		if (theId == R.id.action_refresh || theId == R.id.action_bar_refresh)
+		if (theId == R.id.action_bar_refresh)
 		{
 			MMNetworkTask.refreshUserlist();
 			return true;
