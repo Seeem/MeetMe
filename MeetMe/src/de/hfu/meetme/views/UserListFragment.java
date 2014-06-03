@@ -1,5 +1,7 @@
 package de.hfu.meetme.views;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,13 +16,13 @@ import de.hfu.meetme.model.network.messagemanager.MMMessageManagerEvent;
 import de.hfu.meetme.model.network.messagemanager.MMMessageManagerListener;
 import de.hfu.meetme.model.network.networktask.MMNetworkTask;
 
-
 /**
  * 
  * @author Dominik Jung
  * 
  */
-public class UserListFragment extends ListFragment implements MMMessageManagerListener
+public class UserListFragment extends ListFragment implements
+		MMMessageManagerListener
 {
 
 	// Class-Members:
@@ -35,27 +37,30 @@ public class UserListFragment extends ListFragment implements MMMessageManagerLi
 	public void onCreate(Bundle aSavedInstanceState)
 	{
 		super.onCreate(aSavedInstanceState);
-		
-		if(getActivity().getIntent() != null) {
-			MMNetworkTask.refreshUserlist();
+
+		if (getActivity().getIntent() != null)
+		{
+			//MMNetworkTask.refreshUserlist();
 		}
 	}
-		
+
 	/** */
-	@Override public void onResume()
+	@Override
+	public void onResume()
 	{
 		super.onResume();
 		MMNetworkTask.addMessageManagerListener(this);
 		updateUserListView();
 	}
-	
+
 	/** */
-	@Override public void onPause()
+	@Override
+	public void onPause()
 	{
 		MMNetworkTask.removeMessageManagerListener(this);
 		super.onPause();
 	}
-	
+
 	/** */
 	@Override
 	public View onCreateView(LayoutInflater anInflater, ViewGroup aContainer,
@@ -69,7 +74,9 @@ public class UserListFragment extends ListFragment implements MMMessageManagerLi
 	}
 
 	/** */
-	@Override public void onListItemClick(ListView aListView, View aView, int aPosition, long anId)
+	@Override
+	public void onListItemClick(ListView aListView, View aView, int aPosition,
+			long anId)
 	{
 		MMUser theUser = (MMUser) getListView().getItemAtPosition(aPosition);
 		intentUserProfileActivity(theUser);
@@ -94,7 +101,14 @@ public class UserListFragment extends ListFragment implements MMMessageManagerLi
 
 			@Override
 			public void run()
-			{	
+			{
+				if (MMUser.getUsersAsArray().length > 0)
+				{
+					makeNoUsersFoundTextFragmentVisible(false);
+				} else
+				{
+					makeNoUsersFoundTextFragmentVisible(true);
+				}
 				setListAdapter(new MMUserArrayAdapter(getActivity(),
 						android.R.layout.simple_list_item_1, MMUser
 								.getUsersAsArray()));
@@ -103,23 +117,45 @@ public class UserListFragment extends ListFragment implements MMMessageManagerLi
 		});
 	}
 
-	
+	private void makeNoUsersFoundTextFragmentVisible(boolean makeVisible)
+	{
+		FragmentManager theFragmentManager = getFragmentManager();
+		FragmentTransaction theTransaction = getFragmentManager()
+				.beginTransaction()
+				.setCustomAnimations(android.R.animator.fade_in,
+						android.R.animator.fade_out);
+
+		if (makeVisible)
+		{
+			theTransaction.show(
+					theFragmentManager
+							.findFragmentById(R.id.mm_user_list_text_fragment))
+					.commit();
+		} else
+		{
+			theTransaction.hide(
+					theFragmentManager
+							.findFragmentById(R.id.mm_user_list_text_fragment))
+					.commit();
+		}
+	}
+
 	// Implementors:
-	
+
 	/** */
-	@Override public void managerEventPerformed(MMMessageManagerEvent aMessageManagerEvent)
+	@Override
+	public void managerEventPerformed(MMMessageManagerEvent aMessageManagerEvent)
 	{
 		if (aMessageManagerEvent == null)
 			throw new NullPointerException("message manager event is null.");
-		
+
 		if (aMessageManagerEvent.isUserAdded())
 		{
 			updateUserListView();
-		}
-		else if (aMessageManagerEvent.isUserRemoved())
+		} else if (aMessageManagerEvent.isUserRemoved())
 		{
 			updateUserListView();
-		}	
+		}
 	}
 
 }

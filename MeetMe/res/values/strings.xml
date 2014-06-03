@@ -36,6 +36,10 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_stop_service">Stop Service</string>
     
+    <!-- UserListTextFragment -->
+    <string name="user_list_text_fragment_no_users_found">Sorry, there are currently
+         no users in your network.</string>
+    
     <!-- UserProfileActivity -->
     <string name="title_activity_user_profile">User Profile</string>
     

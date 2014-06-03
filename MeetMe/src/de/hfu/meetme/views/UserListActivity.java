@@ -107,7 +107,7 @@ public class UserListActivity extends Activity
 		setResult(RESULT_OK, theIntent);
 		super.finish();
 	}
-
+	
 	// MM-API:
 
 	/** Sends an intent to the SettingsActivity */

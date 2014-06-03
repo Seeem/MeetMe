@@ -74,7 +74,6 @@ public class MainActivity extends Activity
 	{
 		super.onCreate(aSavedInstanceState);
 		setContentView(R.layout.activity_main);
-		startService(new Intent(this, MMNetworkService.class));
 
 		if (!isUserCreated())
 		{
@@ -85,6 +84,7 @@ public class MainActivity extends Activity
 			MMUser.getMyself().print();
 		}
 		
+		startService(new Intent(this, MMNetworkService.class));
 	}
 
 	/** */

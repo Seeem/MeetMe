@@ -7,11 +7,17 @@
     android:orientation="vertical"
     tools:context="de.hfu.meetme.views.UserListActivity"
     tools:ignore="MergeRootFrame" >
-
+    
     <fragment
         android:id="@+id/user_list_fragment"
         android:name="de.hfu.meetme.views.UserListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    
+    <fragment 
+        android:id="@+id/mm_user_list_text_fragment"
+    	android:name="de.hfu.meetme.views.MMUserListTextFragment"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content" />
 
 </LinearLayout>
