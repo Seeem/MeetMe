@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.networktask.MMNetworkTask;
@@ -40,7 +41,7 @@ public class UserListActivity extends Activity
 		if (theExtras != null)
 		{
 			int theNotificationId = theExtras
-					.getInt(UserListFragment.NOTIFICATION_ID);
+					.getInt(MMSupporting.NOTIFICATION_ID);
 			NotificationManager theManager = (NotificationManager)
 					getSystemService(Context.NOTIFICATION_SERVICE);
 			theManager.cancel(theNotificationId);
@@ -72,9 +73,6 @@ public class UserListActivity extends Activity
 		}
 		if (theId == R.id.action_notification)
 		{
-			((UserListFragment) getFragmentManager().findFragmentById(
-					R.id.user_list_fragment)).addNotification(MMUser
-					.getMyself());
 			return true;
 		}
 		return super.onOptionsItemSelected(anItem);

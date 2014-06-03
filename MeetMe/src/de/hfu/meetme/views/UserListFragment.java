@@ -1,10 +1,6 @@
 package de.hfu.meetme.views;
 
 import android.app.ListFragment;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,7 +13,6 @@ import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.messagemanager.MMMessageManagerEvent;
 import de.hfu.meetme.model.network.messagemanager.MMMessageManagerListener;
 import de.hfu.meetme.model.network.networktask.MMNetworkTask;
-import de.hfu.meetme.service.MMNetworkService;
 
 
 /**
@@ -33,9 +28,6 @@ public class UserListFragment extends ListFragment implements MMMessageManagerLi
 	/** */
 	protected final static String MMUSER_KEY = "MMUserKey";
 
-	/** */
-	protected final static String NOTIFICATION_ID = "notificationId";
-
 	// Internals:
 
 	/** */
@@ -43,6 +35,10 @@ public class UserListFragment extends ListFragment implements MMMessageManagerLi
 	public void onCreate(Bundle aSavedInstanceState)
 	{
 		super.onCreate(aSavedInstanceState);
+		
+		if(getActivity().getIntent() != null) {
+			MMNetworkTask.refreshUserlist();
+		}
 	}
 		
 	/** */
@@ -108,67 +104,7 @@ public class UserListFragment extends ListFragment implements MMMessageManagerLi
 		});
 	}
 
-	/** TODO After tests make it private! */
-	public void addNotification(final MMUser anUser)
-	{
-		if (anUser == null)
-			throw new NullPointerException("user is null.");
-		
-		this.getActivity().runOnUiThread(new Runnable() {
-
-			@Override
-			public void run()
-			{
-				generateNotification(anUser, "wants to meet you!");
-			}
-
-		});
-	}
 	
-	/**
-	 * 
-	 * @param anUser
-	 *            the user who sent the message. His username will be used as
-	 *            notification title, his id as notification id to seperate
-	 *            notifications from distinct users.
-	 * @param message
-	 *            the message to be shown as notification text, e.g.
-	 *            "wants to meet you!"
-	 */
-	private void generateNotification(final MMUser anUser, final String message)
-	{
-		/*
-		 * TODO: improve Notification 
-		 * Add Lights 
-		 * Add a proper icon (could be better)
-		 * Add a proper intent
-		 */
-		String theUserId = anUser.getId();
-		theUserId = theUserId.replace(".", "").substring(theUserId.length() - 6);
-		int theId = Integer.parseInt(theUserId);
-		Intent theIntent = new Intent(getActivity(), UserListActivity.class);
-		theIntent.putExtra(NOTIFICATION_ID, theId);
-
-		PendingIntent thePendingIntent = PendingIntent.getActivity(
-				getActivity(), 0, theIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-		Notification theNotification = new Notification.Builder(getActivity())
-				.setContentTitle(anUser.getUsername()).setContentText(message)
-				.setWhen(System.currentTimeMillis())
-				.setDefaults(Notification.DEFAULT_ALL)
-				.setSmallIcon(android.R.drawable.ic_dialog_email)
-				.setTicker(anUser.getUsername() + " wants to meet you!")
-				.setLights(0xFFFFFFFF, 1500, 3000)
-				.setContentIntent(thePendingIntent)
-				.build();
-
-		NotificationManager theManager = (NotificationManager) getActivity()
-				.getSystemService(Context.NOTIFICATION_SERVICE);
-		int theNotification_id = theId;
-		theManager.notify(theNotification_id, theNotification);
-		getActivity().stopService(new Intent(getActivity(), MMNetworkService.class));
-	}
-
 	// Implementors:
 	
 	/** */
