@@ -67,6 +67,8 @@ public class MMMessageReceiverTask extends Thread
 	
 	@Override public void run()
 	{
+		// TODO Reuse DatagramSocket
+		
 		try
 		{
 			setDatagramSocket(new DatagramSocket(getDatagramPort()));
