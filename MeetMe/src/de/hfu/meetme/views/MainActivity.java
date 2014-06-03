@@ -11,6 +11,7 @@ import android.widget.Toast;
 import de.hfu.meetme.R;
 import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.service.MMNetworkService;
 
 /**
  * 
@@ -73,6 +74,7 @@ public class MainActivity extends Activity
 	{
 		super.onCreate(aSavedInstanceState);
 		setContentView(R.layout.activity_main);
+		startService(new Intent(this, MMNetworkService.class));
 
 		if (!isUserCreated())
 		{
@@ -82,6 +84,7 @@ public class MainActivity extends Activity
 			MMUser.setMyself(MMSupporting.getUserFromSharedPreferences(this, false));
 			MMUser.getMyself().print();
 		}
+		
 	}
 
 	/** */

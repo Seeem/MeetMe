@@ -17,6 +17,7 @@ import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.messagemanager.MMMessageManagerEvent;
 import de.hfu.meetme.model.network.messagemanager.MMMessageManagerListener;
 import de.hfu.meetme.model.network.networktask.MMNetworkTask;
+import de.hfu.meetme.service.MMNetworkService;
 
 
 /**
@@ -168,6 +169,7 @@ public class UserListFragment extends ListFragment implements MMMessageManagerLi
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		int theNotification_id = theId;
 		theManager.notify(theNotification_id, theNotification);
+		getActivity().stopService(new Intent(getActivity(), MMNetworkService.class));
 	}
 
 	// Implementors:

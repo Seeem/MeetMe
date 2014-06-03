@@ -47,9 +47,7 @@
         </activity>
 
         <service
-            android:name="de.hfu.meetme.service.MMConnectionService"
-            android:enabled="true"
-            android:exported="true" >
+            android:name="de.hfu.meetme.service.MMNetworkService" >
         </service>
     </application>
 
