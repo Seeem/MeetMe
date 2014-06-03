@@ -104,13 +104,13 @@ public class MMMessageManager implements MMMessageListener
 		if (MMUser.getMyself() == null)
 			throw new IllegalStateException("myself is null.");
 		
-		new MMMessageSender().sendUDPMessage(anInetAddress, MMMessageType.MEETME, MMUser.getMyself());	
+		getMessageSender().sendUDPMessage(anInetAddress, MMMessageType.MEETME, MMUser.getMyself());	
 	}
 	
 	/** */
 	public void sendUpdate()
 	{
-		new MMMessageSender().sendUDPBroadcastMessage(MMMessageType.UPDATE, MMUser.getMyself());	
+		getMessageSender().sendUDPBroadcastMessage(MMMessageType.UPDATE, MMUser.getMyself());	
 	}
 	
 	// Internals:
@@ -158,7 +158,7 @@ public class MMMessageManager implements MMMessageListener
 			{
 				MMUser theUser = MMUser.valueOf(aMessageEvent.getMessage());
 				if (MMUser.updateUserIfAlreadyAdded(theUser))
-					pushMessageManagerEvents(MMMessageManagerEvent.getUserUpdatedInstance(theUser));	
+					pushMessageManagerEvents(MMMessageManagerEvent.getUserUpdatedInstance(theUser));
 			}
 		}
 		// Single Messages:
