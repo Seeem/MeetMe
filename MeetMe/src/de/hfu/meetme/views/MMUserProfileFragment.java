@@ -20,7 +20,7 @@ import de.hfu.meetme.model.network.networktask.MMNetworkTask;
  * @author Dominik Jung
  * 
  */
-public class UserProfileFragment extends Fragment
+public class MMUserProfileFragment extends Fragment
 {
 
 	@Override
@@ -48,7 +48,7 @@ public class UserProfileFragment extends Fragment
 			{
 				try
 				{
-					MMNetworkTask.sendMeetMeMessage(InetAddress.getByName(((UserProfileActivity) getActivity()).getUser().getId()));
+					MMNetworkTask.sendMeetMeMessage(InetAddress.getByName(((MMUserProfileActivity) getActivity()).getUser().getId()));
 				} 
 				catch (UnknownHostException e) {}
 			}
@@ -74,26 +74,26 @@ public class UserProfileFragment extends Fragment
 	{
 		TextView theUserNameTextView = (TextView) getActivity().findViewById(
 				R.id.user_profile_fragment_user_name_value_tv);
-		theUserNameTextView.setText(((UserProfileActivity) getActivity())
+		theUserNameTextView.setText(((MMUserProfileActivity) getActivity())
 				.getUser().getUsername());
 
 		TextView theFirstNameTextView = (TextView) getActivity().findViewById(
 				R.id.user_profile_fragment_first_name_value_tv);
-		theFirstNameTextView.setText(((UserProfileActivity) getActivity())
+		theFirstNameTextView.setText(((MMUserProfileActivity) getActivity())
 				.getUser().getFirstName());
 
 		TextView theLastNameTextView = (TextView) getActivity().findViewById(
 				R.id.user_profile_fragment_last_name_value_tv);
-		theLastNameTextView.setText(((UserProfileActivity) getActivity())
+		theLastNameTextView.setText(((MMUserProfileActivity) getActivity())
 				.getUser().getLastName());
 
 		TextView theBirthdayTextView = (TextView) getActivity().findViewById(
 				R.id.user_profile_fragment_birthday_value_tv);
-		theBirthdayTextView.setText(((UserProfileActivity) getActivity())
+		theBirthdayTextView.setText(((MMUserProfileActivity) getActivity())
 				.getUser().getBirthdayAsString());
 
 		String theGenderText;
-		MMGender theGender = ((UserProfileActivity) getActivity()).getUser()
+		MMGender theGender = ((MMUserProfileActivity) getActivity()).getUser()
 				.getGender();
 		if (theGender == MMGender.MALE)
 			theGenderText = "Male";
@@ -107,7 +107,7 @@ public class UserProfileFragment extends Fragment
 		TextView theDescriptionTextView = (TextView) getActivity()
 				.findViewById(R.id.user_profile_fragment_description_tv);
 		theDescriptionTextView.setText("Description: \n"
-				+ ((UserProfileActivity) getActivity()).getUser()
+				+ ((MMUserProfileActivity) getActivity()).getUser()
 						.getDescription());
 	}
 

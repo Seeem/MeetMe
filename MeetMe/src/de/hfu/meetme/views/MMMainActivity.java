@@ -18,7 +18,7 @@ import de.hfu.meetme.service.MMNetworkService;
  * @author Dominik Jung
  * 
  */
-public class MainActivity extends Activity
+public class MMMainActivity extends Activity
 {
 
 	/**
@@ -138,7 +138,7 @@ public class MainActivity extends Activity
 	/** Sends an intent to the UserListActivity */
 	public void intentUserListActivity(View aView)
 	{	
-		final Intent theIntent = new Intent(this,de.hfu.meetme.views.UserListActivity.class);
+		final Intent theIntent = new Intent(this,de.hfu.meetme.views.MMUserListActivity.class);
 		startActivityForResult(theIntent, REQUEST_CODE_USER_LIST_ACTIVITY);
 	}
 
@@ -146,7 +146,7 @@ public class MainActivity extends Activity
 	private void intentSettingsActivity()
 	{
 		final Intent theIntent = new Intent(this,
-				de.hfu.meetme.views.SettingsActivity.class);
+				de.hfu.meetme.views.MMSettingsActivity.class);
 		startActivityForResult(theIntent, REQUEST_CODE_SETTINGS_ACTIVITY);
 	}
 

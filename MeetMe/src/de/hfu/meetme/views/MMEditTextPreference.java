@@ -40,7 +40,7 @@ public class MMEditTextPreference extends EditTextPreference
 			{
 				boolean isValid = true;
 				String theKey = getKey();
-				String[] theKeys = SettingsFragment.getEditTextKeys();
+				String[] theKeys = MMSettingsFragment.getEditTextKeys();
 				if (theKey.equals(theKeys[0]))
 				{
 					if (!MMUserValidation.isValidUsername(theChange.toString())

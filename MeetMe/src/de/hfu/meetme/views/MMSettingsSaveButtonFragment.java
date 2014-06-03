@@ -14,7 +14,7 @@ import de.hfu.meetme.R;
  * @author Dominik Jung
  * 
  */
-public class SettingsSaveButtonFragment extends Fragment
+public class MMSettingsSaveButtonFragment extends Fragment
 {
 	@Override
 	public void onCreate(Bundle aSavedInstanceState)

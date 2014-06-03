@@ -10,7 +10,7 @@ import android.preference.PreferenceFragment;
  * @author Dominik Jung
  * 
  */
-public class SettingsFragment extends PreferenceFragment
+public class MMSettingsFragment extends PreferenceFragment
 {
 	
 	/**

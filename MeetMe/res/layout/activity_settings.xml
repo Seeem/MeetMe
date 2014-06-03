@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="de.hfu.meetme.views.SettingsActivity"
+    tools:context="de.hfu.meetme.views.MMSettingsActivity"
     tools:ignore="MergeRootFrame" >
 
     <fragment
         android:id="@+id/preference_fragment"
-        android:name="de.hfu.meetme.views.SettingsFragment"
+        android:name="de.hfu.meetme.views.MMSettingsFragment"
         android:layout_width="wrap_content"
         android:layout_height="0dp" 
         android:layout_weight="9" />
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/preference_save_button_fragment"
-        android:name="de.hfu.meetme.views.SettingsSaveButtonFragment"
+        android:name="de.hfu.meetme.views.MMSettingsSaveButtonFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />

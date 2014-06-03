@@ -15,10 +15,10 @@ import de.hfu.meetme.model.MMUser;
  * @author Dominik Jung
  * 
  */
-public class UserProfileActivity extends Activity
+public class MMUserProfileActivity extends Activity
 {
 	/**
-	 * The user clicked in the {@link UserListActivity}
+	 * The user clicked in the {@link MMUserListActivity}
 	 */
 	private MMUser user;
 
@@ -52,7 +52,7 @@ public class UserProfileActivity extends Activity
 		
 
 		Bundle theExtras = getIntent().getExtras();
-		setUser((MMUser) theExtras.getSerializable(UserListFragment.MMUSER_KEY));
+		setUser((MMUser) theExtras.getSerializable(MMUserListFragment.MMUSER_KEY));
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class UserProfileActivity extends Activity
 	@Override
 	public void finish()
 	{
-		Intent theIntent = new Intent(this, UserListActivity.class);
+		Intent theIntent = new Intent(this, MMUserListActivity.class);
 		setResult(RESULT_OK, theIntent);
 		super.finish();
 	}
@@ -88,7 +88,7 @@ public class UserProfileActivity extends Activity
 	private void intentSettingsActivity()
 	{
 		final Intent theIntent = new Intent(this,
-				de.hfu.meetme.views.SettingsActivity.class);
+				de.hfu.meetme.views.MMSettingsActivity.class);
 		startActivityForResult(theIntent, REQUEST_CODE_SETTINGS_ACTIVITY);
 	}
 
