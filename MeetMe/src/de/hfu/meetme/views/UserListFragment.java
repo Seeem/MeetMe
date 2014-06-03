@@ -14,7 +14,9 @@ import android.widget.ListView;
 import de.hfu.meetme.MMUserArrayAdapter;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
-import de.hfu.meetme.model.network.MMNetworkTask;
+import de.hfu.meetme.model.network.messagemanager.MMMessageManagerEvent;
+import de.hfu.meetme.model.network.messagemanager.MMMessageManagerListener;
+import de.hfu.meetme.model.network.networktask.MMNetworkTask;
 
 
 /**
@@ -22,7 +24,7 @@ import de.hfu.meetme.model.network.MMNetworkTask;
  * @author Dominik Jung
  * 
  */
-public class UserListFragment extends ListFragment
+public class UserListFragment extends ListFragment implements MMMessageManagerListener
 {
 
 	// Class-Members:
@@ -46,15 +48,18 @@ public class UserListFragment extends ListFragment
 	@Override public void onResume()
 	{
 		super.onResume();
-		MMNetworkTask.startListening(this);
-		MMNetworkTask.refreshUserlist();
+		MMNetworkTask.addMessageManagerListener(this);
+		MMNetworkTask.startListening(); // TODO in Service when App starts
+		MMNetworkTask.refreshUserlist(); // TODO just call it once when coming from MainActivity (or pressing the refresh-button)
+		updateUserListView();
 	}
 	
 	/** */
 	@Override public void onPause()
 	{
 		super.onPause();
-		MMNetworkTask.stopListening();
+		MMNetworkTask.stopListening(); // TODO in Service when App ends
+		MMNetworkTask.removeMessageManagerListener(this);
 	}
 	
 	/** */
@@ -86,10 +91,10 @@ public class UserListFragment extends ListFragment
 				UserListActivity.REQUEST_CODE_USER_PROFILE_ACTIVITY);
 	}
 
-	// MM-API:
-		
+	// Internals:
+
 	/** */
-	public void updateView()
+	private void updateUserListView()
 	{
 		this.getActivity().runOnUiThread(new Runnable() {
 
@@ -104,9 +109,12 @@ public class UserListFragment extends ListFragment
 		});
 	}
 
-	/** */
+	/** TODO After tests make it private! */
 	public void addNotification(final MMUser anUser)
 	{
+		if (anUser == null)
+			throw new NullPointerException("user is null.");
+		
 		this.getActivity().runOnUiThread(new Runnable() {
 
 			@Override
@@ -117,9 +125,7 @@ public class UserListFragment extends ListFragment
 
 		});
 	}
- 
-	// Internals:
-
+	
 	/**
 	 * 
 	 * @param anUser
@@ -162,6 +168,24 @@ public class UserListFragment extends ListFragment
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		int theNotification_id = theId;
 		theManager.notify(theNotification_id, theNotification);
+	}
+
+	// Implementors:
+	
+	/** */
+	@Override public void managerEventPerformed(MMMessageManagerEvent aMessageManagerEvent)
+	{
+		if (aMessageManagerEvent == null)
+			throw new NullPointerException("message manager event is null.");
+		
+		if (aMessageManagerEvent.isUserAdded())
+		{
+			updateUserListView();
+		}
+		else if (aMessageManagerEvent.isUserRemoved())
+		{
+			updateUserListView();
+		}	
 	}
 
 }

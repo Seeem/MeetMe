@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
-import de.hfu.meetme.model.network.MMNetworkTask;
+import de.hfu.meetme.model.network.networktask.MMNetworkTask;
 
 /**
  * 

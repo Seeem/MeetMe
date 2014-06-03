@@ -1,12 +1,14 @@
 /**
  * 
  */
-package de.hfu.meetme.model.network;
+package de.hfu.meetme.model.network.sender;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.MMNetworkUtil;
+import de.hfu.meetme.model.network.message.MMMessageType;
 
 /**
  * @author Simeon Sembach

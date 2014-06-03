@@ -179,16 +179,22 @@ public class MMUser implements Serializable
 	}
 	
 	/**
-	 * Adds an specified user to the user-map if it is not already added before.
+	 * Adds a specified user to the user-map if it is not already added before.
 	 * @param anUser the user to add
+	 * @return true if the user was added, false otherwise
 	 */
-	public static void addUserIfNotAlreadyAdded(MMUser anUser)
+	public static boolean addUserIfNotAlreadyAdded(MMUser anUser)
 	{
 		if (anUser == null)
 			throw new NullPointerException("user to add is null");
 		
 		if (!MMUser.containsUser(anUser))
+		{
 			MMUser.addUser(anUser);
+			return true;
+		}
+		
+		return false;		
 	}
 	
 	/**
@@ -207,16 +213,22 @@ public class MMUser implements Serializable
 	}
 	
 	/**
-	 * 
+	 * Removes a specified user from its user-map if it is already added before.
 	 * @param aUser the user to remove
+	 * @return true if the user was removed, false otherwise
 	 */
-	public static void removeUserIfAlreadyAdded(MMUser anUser)
+	public static boolean removeUserIfAlreadyAdded(MMUser anUser)
 	{
 		if (anUser == null)
 			throw new NullPointerException("user to remove is null");
 		
-		if (MMUser.containsUser(anUser))	
+		if (MMUser.containsUser(anUser))
+		{
 			MMUser.removeUser(anUser);
+			return true;
+		}
+		
+		return false;
 	}	
 	
 	/**

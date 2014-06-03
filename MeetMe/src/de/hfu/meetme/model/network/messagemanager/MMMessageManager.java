@@ -1,12 +1,18 @@
 /**
  * 
  */
-package de.hfu.meetme.model.network;
+package de.hfu.meetme.model.network.messagemanager;
 
 import java.net.InetAddress;
+import java.util.Vector;
 
 import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.MMNetworkUtil;
+import de.hfu.meetme.model.network.message.MMMessageEvent;
+import de.hfu.meetme.model.network.message.MMMessageListener;
+import de.hfu.meetme.model.network.message.MMMessageType;
 import de.hfu.meetme.model.network.receiver.MMMessageReceiver;
+import de.hfu.meetme.model.network.sender.MMMessageSender;
 
 /**
  * @author Simeon Sembach
@@ -27,33 +33,53 @@ public class MMMessageManager implements MMMessageListener
 	private boolean isStarted = false;
 	
 	/** */
-	private MMNetworkTask networkTask;
+	private Vector<MMMessageManagerListener> messageManagerListeners;
 	
 	// Constructor:
 	
 	/** */
-	public MMMessageManager(MMNetworkTask aNetworkTask)
+	public MMMessageManager()
 	{
 		setMessageSender(new MMMessageSender());
 		setMessageReceiver(new MMMessageReceiver(MMNetworkUtil.UDP_BROADCAST_PORT, MMNetworkUtil.UDP_PORT));
-		setNetworkTask(aNetworkTask);
+		setMessageManagerListeners(new Vector<MMMessageManagerListener>());
 	}
 	
 	// MM-API:
+	
+	/** */
+	public void addMessageManagerListener(MMMessageManagerListener aMessageManagerListener)
+	{
+		if (aMessageManagerListener == null)
+			throw new NullPointerException("message manager listener is null.");
+		
+		getMessageManagerListeners().add(aMessageManagerListener);
+	}
+	
+	/** */
+	public void removeMessageManagerListener(MMMessageManagerListener aMessageManagerListener)
+	{
+		if (aMessageManagerListener == null)
+			throw new NullPointerException("message manager listener is null.");
+		
+		getMessageManagerListeners().remove(aMessageManagerListener);
+	}
 	
 	/** */
 	public void refreshUsers()
 	{
 		if (!isStarted() || MMUser.getMyself() == null) return;
 		MMUser.removeAllUsers();
-		getNetworkTask().updateUserListUi();
 		getMessageSender().sendUDPBroadcastMessage(MMMessageType.CONNECT, MMUser.getMyself());	
 	}
 	
 	/** */
 	public void startListening()
 	{
-		if (isStarted() || MMUser.getMyself() == null) return;
+		if (MMUser.getMyself() == null)
+			throw new IllegalStateException("myself is null.");
+		
+		if (isStarted()) return;
 		getMessageReceiver().addMessageListener(this);
 		getMessageReceiver().startReceiver();
 		setStarted(true);
@@ -62,7 +88,10 @@ public class MMMessageManager implements MMMessageListener
 	/** */
 	public void stopListening()
 	{
-		if (!isStarted() || MMUser.getMyself() == null) return;
+		if (MMUser.getMyself() == null)
+			throw new IllegalStateException("myself is null.");
+		
+		if (!isStarted()) return;
 		getMessageSender().sendUDPBroadcastMessage(MMMessageType.DISCONNECT, MMUser.getMyself());
 		getMessageReceiver().removeMessageListener(this);
 		getMessageReceiver().stopReceiver();	
@@ -72,15 +101,29 @@ public class MMMessageManager implements MMMessageListener
 	/** */
 	public void sendMeetMeMessage(InetAddress anInetAddress)
 	{
-		if (MMUser.getMyself() == null) return;
+		if (MMUser.getMyself() == null)
+			throw new IllegalStateException("myself is null.");
+		
 		new MMMessageSender().sendUDPMessage(anInetAddress, MMMessageType.MEETME, MMUser.getMyself());	
+	}
+	
+	// Internals:
+	
+	/** */
+	private void pushMessageManagerEvents(MMMessageManagerEvent aMessageManagerEvent)
+	{
+		for (MMMessageManagerListener aMessageManagerListener : getMessageManagerListeners())
+			aMessageManagerListener.managerEventPerformed(aMessageManagerEvent);
 	}
 	
 	// Implementors:
 	
 	/** */
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
-	{	
+	{
+		if (aMessageEvent == null)
+			throw new NullPointerException("message event is null.");
+		
 		// Filter Messages from this device and unknown messages:
 		if (aMessageEvent.isFromMe() || aMessageEvent.isUnknownMessage()) return;
 		
@@ -90,13 +133,17 @@ public class MMMessageManager implements MMMessageListener
 			// User connects:
 			if (aMessageEvent.isConnectMessage())
 			{
-				MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessage()));			
+				MMUser theUser = MMUser.valueOf(aMessageEvent.getMessage());			
+				if (MMUser.addUserIfNotAlreadyAdded(theUser))
+					pushMessageManagerEvents(MMMessageManagerEvent.getUserAddedInstance(theUser));
 				getMessageSender().sendUDPMessage(aMessageEvent.getSenderAddress(), MMMessageType.CONNECT, MMUser.getMyself());	
 			}
 			// User disconnects:
 			else if (aMessageEvent.isDisconnectMessage())
 			{
-				MMUser.removeUserIfAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessage()));
+				MMUser theUser = MMUser.valueOf(aMessageEvent.getMessage());	
+				if (MMUser.removeUserIfAlreadyAdded(theUser))
+					pushMessageManagerEvents(MMMessageManagerEvent.getUserRemovedInstance(theUser));
 			}
 		}
 		// Single Messages:
@@ -105,17 +152,17 @@ public class MMMessageManager implements MMMessageListener
 			// User connects:
 			if (aMessageEvent.isConnectMessage())
 			{
-				MMUser.addUserIfNotAlreadyAdded(MMUser.valueOf(aMessageEvent.getMessage()));
+				MMUser theUser = MMUser.valueOf(aMessageEvent.getMessage());			
+				if (MMUser.addUserIfNotAlreadyAdded(theUser))
+					pushMessageManagerEvents(MMMessageManagerEvent.getUserAddedInstance(theUser));
 			}
 			// User wants a meeting:
 			if (aMessageEvent.isMeetMeMessage())
-			{		
-				getNetworkTask().addNotification(MMUser.valueOf(aMessageEvent.getMessage()));
+			{
+				MMUser theUser = MMUser.valueOf(aMessageEvent.getMessage());		
+				pushMessageManagerEvents(MMMessageManagerEvent.getUserWantsAMeetingInstance(theUser));
 			}						
 		}
-		
-		// Update user-list:
-		getNetworkTask().updateUserListUi();
 	}
 	 
 	// Accessors:
@@ -173,24 +220,21 @@ public class MMMessageManager implements MMMessageListener
 	{
 		this.isStarted = isStarted;
 	}
-
+	
 	/**
-	 * @return the networkTask
+	 * @return the messageManagerListeners
 	 */
-	public MMNetworkTask getNetworkTask()
+	public Vector<MMMessageManagerListener> getMessageManagerListeners()
 	{
-		return networkTask;
-	}
-
-	/**
-	 * @param aNetworkTask the networkTask to set
-	 */
-	public void setNetworkTask(MMNetworkTask aNetworkTask)
-	{
-		if (aNetworkTask == null)
-			throw new NullPointerException("network task is null.");
-		
-		this.networkTask = aNetworkTask;
+		return messageManagerListeners;
 	}
 	
+	/**
+	 * @param messageManagerListeners the messageManagerListeners to set
+	 */
+	public void setMessageManagerListeners(Vector<MMMessageManagerListener> messageManagerListeners)
+	{
+		this.messageManagerListeners = messageManagerListeners;
+	}
+
 }

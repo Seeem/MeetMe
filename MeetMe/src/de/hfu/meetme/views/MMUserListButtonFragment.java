@@ -1,7 +1,7 @@
 package de.hfu.meetme.views;
 
 import de.hfu.meetme.R;
-import de.hfu.meetme.model.network.MMNetworkTask;
+import de.hfu.meetme.model.network.networktask.MMNetworkTask;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;

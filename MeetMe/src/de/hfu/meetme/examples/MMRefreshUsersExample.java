@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import de.hfu.meetme.junittests.support.MMTestSupport;
 import de.hfu.meetme.model.MMUser;
-import de.hfu.meetme.model.network.MMMessageManager;
+import de.hfu.meetme.model.network.messagemanager.MMMessageManager;
 
 /**
  * @author Simeon Sembach
@@ -22,7 +22,7 @@ public class MMRefreshUsersExample
 	@Test public void testExample() throws InterruptedException
 	{
 		MMUser.setMyself(MMTestSupport.createANewValidUser());		
-		MMMessageManager theMessageManager = new MMMessageManager(null);		
+		MMMessageManager theMessageManager = new MMMessageManager();		
 		theMessageManager.startListening();
 		theMessageManager.refreshUsers();
 		Thread.sleep(1000);

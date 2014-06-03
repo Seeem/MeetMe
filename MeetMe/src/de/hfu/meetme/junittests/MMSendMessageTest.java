@@ -7,11 +7,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import de.hfu.meetme.model.network.MMMessageEvent;
-import de.hfu.meetme.model.network.MMMessageListener;
-import de.hfu.meetme.model.network.MMMessageSender;
 import de.hfu.meetme.model.network.MMNetworkUtil;
+import de.hfu.meetme.model.network.message.MMMessageEvent;
+import de.hfu.meetme.model.network.message.MMMessageListener;
 import de.hfu.meetme.model.network.receiver.MMMessageReceiver;
+import de.hfu.meetme.model.network.sender.MMMessageSender;
 
 /**
  * @author Simeon Sembach
@@ -42,7 +42,7 @@ public class MMSendMessageTest implements MMMessageListener
 		try
 		{
 			messageReceiver.addMessageListener(this);
-			messageReceiver.startReceiver();		
+			messageReceiver.startReceiver();			
 			messageSender.sendUDPBroadcastMessage(MMNetworkUtil.UDP_MESSAGE_PING);		
 			Thread.sleep(100);
 		} 
