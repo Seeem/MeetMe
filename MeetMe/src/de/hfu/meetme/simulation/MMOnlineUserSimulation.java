@@ -1,6 +1,3 @@
-/**
- * 
- */
 package de.hfu.meetme.simulation;
 
 import java.io.BufferedReader;
