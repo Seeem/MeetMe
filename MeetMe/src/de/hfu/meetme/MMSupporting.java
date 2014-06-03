@@ -22,6 +22,8 @@ import de.hfu.meetme.model.validation.MMUserValidation;
  */
 public class MMSupporting
 {
+	/** */
+	public final static String NOTIFICATION_ID = "notificationId";
 
 	/**
 	 * Reads the user profile data from the SharedPreferences, set in the
