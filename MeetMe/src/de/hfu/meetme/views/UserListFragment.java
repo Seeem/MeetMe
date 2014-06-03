@@ -50,7 +50,6 @@ public class UserListFragment extends ListFragment implements MMMessageManagerLi
 	{
 		super.onResume();
 		MMNetworkTask.addMessageManagerListener(this);
-		MMNetworkTask.refreshUserlist(); // TODO just call it once when coming from MainActivity (or pressing the refresh-button)
 		updateUserListView();
 	}
 	
