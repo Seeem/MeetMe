@@ -273,6 +273,27 @@ public class MMUser implements Serializable
 		return MMUser.getUsers().get(anUserId);
 	}
 	
+	/**
+	 * Updates a specified user if it is already added before,
+	 * this method removes the user and add it again.
+	 * @param anUser the user to update
+	 * @return true if the user was updated, false otherwise
+	 */
+	public static boolean updateUserIfAlreadyAdded(MMUser anUser)
+	{
+		if (anUser == null)
+			throw new NullPointerException("user is null");
+		
+		if (MMUser.containsUser(anUser))
+		{
+			MMUser.removeUser(anUser);
+			MMUser.addUser(anUser);
+			return true;
+		}
+		
+		return false;
+	}
+	
 	// Internals:
 	
 	/**

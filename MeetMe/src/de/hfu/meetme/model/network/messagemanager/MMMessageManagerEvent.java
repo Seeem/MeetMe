@@ -70,6 +70,12 @@ public class MMMessageManagerEvent
 		return getInstance(MMMessageManagerEventType.USER_WANTS_A_MEETING, anUser);
 	}
 	
+	/** */
+	public static MMMessageManagerEvent getUserUpdatedInstance(MMUser anUser)
+	{
+		return getInstance(MMMessageManagerEventType.USER_UPDATED, anUser);
+	}
+	
 	// Is-Methods:
 	
 	/** */
@@ -88,6 +94,12 @@ public class MMMessageManagerEvent
 	public boolean isUserWantsAMeeting()
 	{
 		return getMessageManagerEventType().isUserWantsAMeeting();
+	}
+	
+	/** */
+	public boolean isUserUpdate()
+	{
+		return getMessageManagerEventType().isUserUpdated();
 	}
 	
 	// Accessors:

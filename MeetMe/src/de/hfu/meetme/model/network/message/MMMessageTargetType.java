@@ -9,5 +9,16 @@ package de.hfu.meetme.model.network.message;
  */
 public enum MMMessageTargetType
 {
-	BROADCAST, SINGLE
+	BROADCAST, SINGLE;
+	
+	public boolean isBroadcast()
+	{
+		return this == BROADCAST;
+	}
+	
+	public boolean isSingle()
+	{
+		return this == SINGLE;
+	}
+	
 }

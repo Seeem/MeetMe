@@ -65,6 +65,12 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	}
 	
 	/** */
+	public static void sendUpdate()
+	{
+		new MMNetworkTask().execute(MMNetworkTaskType.UPDATE);
+	}
+	
+	/** */
 	public static void addMessageManagerListener(MMMessageManagerListener aMessageManagerListener)
 	{
 		getMessageManager().addMessageManagerListener(aMessageManagerListener);
@@ -112,6 +118,10 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 		else if (someParameters[0] == MMNetworkTaskType.MEET_ME)
 		{
 			getMessageManager().sendMeetMeMessage(getInetAddress());
+		}
+		else if (someParameters[0] == MMNetworkTaskType.UPDATE)
+		{
+			getMessageManager().sendUpdate();
 		}
 		
 		return null;

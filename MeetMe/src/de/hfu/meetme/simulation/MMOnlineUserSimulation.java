@@ -67,6 +67,11 @@ public class MMOnlineUserSimulation implements MMMessageManagerListener
 			System.out.println("User wants a meeting: ");
 			aMessageManagerEvent.getUser().print();
 		}
+		else if (aMessageManagerEvent.isUserUpdate())
+		{
+			System.out.println("User updated:");
+			aMessageManagerEvent.getUser().print();
+		}
 		System.out.println("-----");
 	}
 

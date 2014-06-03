@@ -102,7 +102,6 @@ public class UserListFragment extends ListFragment implements MMMessageManagerLi
 
 		});
 	}
-
 	
 	// Implementors:
 	

@@ -9,5 +9,16 @@ package de.hfu.meetme.model.network.message;
  */
 public enum MMMessageProtocol
 {
-	TCP, UDP
+	TCP, UDP;
+	
+	public boolean isTcp()
+	{
+		return this == TCP;
+	}
+
+	public boolean isUdp()
+	{
+		return this == UDP;
+	}
+	
 }
