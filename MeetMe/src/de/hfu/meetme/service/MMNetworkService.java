@@ -59,6 +59,9 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 	@Override
 	public void managerEventPerformed(MMMessageManagerEvent aMessageManagerEvent)
 	{
-		System.out.println("Hallo");
+		if (aMessageManagerEvent.isUserWantsAMeeting())
+		{
+			System.out.println("User wants a meeting: "+aMessageManagerEvent.getUser());
+		}		
 	}
 }
