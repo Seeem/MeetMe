@@ -154,7 +154,7 @@ public class UserListFragment extends ListFragment
 				.setDefaults(Notification.DEFAULT_ALL)
 				.setSmallIcon(android.R.drawable.ic_dialog_email)
 				.setTicker(anUser.getUsername() + " wants to meet you!")
-				.setLights(0xFFFFFFFF, 1500, 3000) //TODO: Does not work.
+				.setLights(0xFFFFFFFF, 1500, 3000)
 				.setContentIntent(thePendingIntent)
 				.build();
 
