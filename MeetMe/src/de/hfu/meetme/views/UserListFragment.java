@@ -40,7 +40,7 @@ public class UserListFragment extends ListFragment implements
 
 		if (getActivity().getIntent() != null)
 		{
-			//MMNetworkTask.refreshUserlist();
+			// MMNetworkTask.refreshUserlist();
 		}
 	}
 
@@ -152,10 +152,14 @@ public class UserListFragment extends ListFragment implements
 		if (aMessageManagerEvent.isUserAdded())
 		{
 			updateUserListView();
-		} else if (aMessageManagerEvent.isUserRemoved())
+		} 
+		else if (aMessageManagerEvent.isUserRemoved())
+		{
+			updateUserListView();
+		} 
+		else if (aMessageManagerEvent.isUserUpdate())
 		{
 			updateUserListView();
 		}
 	}
-
 }

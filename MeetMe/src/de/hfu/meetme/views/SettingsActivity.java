@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import de.hfu.meetme.R;
 import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.networktask.MMNetworkTask;
 
 /**
  * 
@@ -47,6 +48,7 @@ public class SettingsActivity extends Activity
 			theIntent.putExtra(MainActivity.IS_USER_CREATED, true);
 			theIntent.putExtra(MainActivity.MMUSER_TAG, user);
 			setResult(RESULT_OK, theIntent);
+			MMNetworkTask.sendUpdate();
 			super.finish();
 		}
 
