@@ -58,7 +58,7 @@ public class MMMessageReceiverTask extends Thread
 	
 	/** */
 	public void interrupt()
-	{
+	{	
 		super.interrupt();
 		getDatagramSocket().close();
 	};
@@ -67,8 +67,6 @@ public class MMMessageReceiverTask extends Thread
 	
 	@Override public void run()
 	{
-		// TODO Reuse DatagramSocket
-		
 		try
 		{
 			setDatagramSocket(new DatagramSocket(getDatagramPort()));
@@ -148,7 +146,6 @@ public class MMMessageReceiverTask extends Thread
 		this.messageTargetType = messageTargetType;
 	}
 
-	
 	/**
 	 * @return the datagramPort
 	 */
@@ -157,7 +154,6 @@ public class MMMessageReceiverTask extends Thread
 		return datagramPort;
 	}
 	
-
 	/**
 	 * @param datagramPort the datagramPort to set
 	 */

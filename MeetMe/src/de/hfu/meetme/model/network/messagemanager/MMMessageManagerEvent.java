@@ -81,7 +81,7 @@ public class MMMessageManagerEvent
 	/** */
 	public boolean isUserRemoved()
 	{
-		return getMessageManagerEventType().isUserAdded();
+		return getMessageManagerEventType().isUserRemoved();
 	}
 	
 	/** */

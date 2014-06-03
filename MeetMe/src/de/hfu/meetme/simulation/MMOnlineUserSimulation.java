@@ -1,6 +1,3 @@
-/**
- * 
- */
 package de.hfu.meetme.simulation;
 
 import java.io.BufferedReader;
@@ -55,7 +52,21 @@ public class MMOnlineUserSimulation implements MMMessageManagerListener
 	@Override public void managerEventPerformed(MMMessageManagerEvent aMessageManagerEvent)
 	{
 		System.out.println("-----");
-		MMUser.printUsers();
+		if (aMessageManagerEvent.isUserAdded())
+		{
+			System.out.println("User was added:");
+			aMessageManagerEvent.getUser().print();
+		}
+		else if (aMessageManagerEvent.isUserRemoved())
+		{
+			System.out.println("User was removed: ");
+			aMessageManagerEvent.getUser().print();
+		}
+		else if (aMessageManagerEvent.isUserWantsAMeeting())
+		{
+			System.out.println("User wants a meeting: ");
+			aMessageManagerEvent.getUser().print();
+		}
 		System.out.println("-----");
 	}
 
