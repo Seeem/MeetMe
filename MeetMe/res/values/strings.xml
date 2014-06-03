@@ -36,9 +36,6 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_stop_service">Stop Service</string>
     
-    <!-- MMUserListButtonFragment -->
-    <string name="user_list_refresh_button">Refresh</string>
-    
     <!-- UserProfileActivity -->
     <string name="title_activity_user_profile">User Profile</string>
     
