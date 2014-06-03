@@ -32,6 +32,7 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 	
 	@Override
 	public int onStartCommand (Intent intent, int flags, int startId) {
+		MMNetworkTask.addMessageManagerListener(this);
 		MMNetworkTask.startListening();
 		Toast.makeText(this, "Service started", Toast.LENGTH_SHORT).show();
 		return START_STICKY;
@@ -39,6 +40,7 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 	
 	@Override
 	public void onDestroy() {
+		MMNetworkTask.removeMessageManagerListener(this);
 		MMNetworkTask.stopListening();
 		Toast.makeText(this, "Service stopped", Toast.LENGTH_SHORT).show();
 	}
@@ -57,7 +59,7 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 	@Override
 	public void managerEventPerformed(MMMessageManagerEvent aMessageManagerEvent)
 	{
-		Toast.makeText(this, "Irgendwas tolles", Toast.LENGTH_SHORT).show();
-		
+//		aMessageManagerEvent.isUserWantsAMeeting()
+		System.out.println("Irgendwas tolles");
 	}
 }

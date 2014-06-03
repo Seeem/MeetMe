@@ -49,8 +49,7 @@ public class UserListFragment extends ListFragment implements MMMessageManagerLi
 	@Override public void onResume()
 	{
 		super.onResume();
-		MMNetworkTask.addMessageManagerListener(this);
-		MMNetworkTask.startListening(); // TODO in Service when App starts
+//		MMNetworkTask.addMessageManagerListener(this);
 		MMNetworkTask.refreshUserlist(); // TODO just call it once when coming from MainActivity (or pressing the refresh-button)
 		updateUserListView();
 	}
@@ -59,8 +58,7 @@ public class UserListFragment extends ListFragment implements MMMessageManagerLi
 	@Override public void onPause()
 	{
 		super.onPause();
-		MMNetworkTask.stopListening(); // TODO in Service when App ends
-		MMNetworkTask.removeMessageManagerListener(this);
+//		MMNetworkTask.removeMessageManagerListener(this);
 	}
 	
 	/** */
