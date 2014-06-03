@@ -73,7 +73,7 @@ public class MMMessageEvent
 	 */
 	public boolean isUdpProtocol()
 	{
-		return getMessageProtocol() == MMMessageProtocol.UDP;
+		return getMessageProtocol().isUdp();
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class MMMessageEvent
 	 */
 	public boolean isSingleMessage()
 	{
-		return getMessageTargetType() == MMMessageTargetType.SINGLE;
+		return getMessageTargetType().isSingle();
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public class MMMessageEvent
 	 */
 	public boolean isBroadcastMessage()
 	{
-		return getMessageTargetType() == MMMessageTargetType.BROADCAST;
+		return getMessageTargetType().isBroadcast();
 	}
 	
 	/**
@@ -100,7 +100,7 @@ public class MMMessageEvent
 	 */
 	public boolean isConnectMessage()
 	{
-		return getMessageType() == MMMessageType.CONNECT;
+		return getMessageType().isConnect();
 	}
 	
 	/**
@@ -109,7 +109,7 @@ public class MMMessageEvent
 	 */
 	public boolean isDisconnectMessage()
 	{
-		return getMessageType() == MMMessageType.DISCONNECT;
+		return getMessageType().isDisconnect();
 	}
 	
 	/**
@@ -118,16 +118,25 @@ public class MMMessageEvent
 	 */
 	public boolean isMeetMeMessage()
 	{
-		return getMessageType() == MMMessageType.MEETME;
+		return getMessageType().isMeetMe();
 	}
 	
 	/**
-	 * Returns whether the message type is UNKNOWN
+	 * Returns whether the message type is UNKNOWN.
 	 * @return true if the message type is UNKNOWN, false otherwise
 	 */
 	public boolean isUnknownMessage()
 	{
-		return getMessageType() == MMMessageType.UNKNOWN;
+		return getMessageType().isUnknown();
+	}
+	
+	/**
+	 * Returns whether the message type is UPDATE.
+	 * @return true if the message type is UNKNOWN, false otherwise
+	 */
+	public boolean isUpdateMessage()
+	{
+		return getMessageType().isUpdate();
 	}
 	
 	/**

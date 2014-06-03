@@ -107,6 +107,12 @@ public class MMMessageManager implements MMMessageListener
 		new MMMessageSender().sendUDPMessage(anInetAddress, MMMessageType.MEETME, MMUser.getMyself());	
 	}
 	
+	/** */
+	public void sendUpdate()
+	{
+		new MMMessageSender().sendUDPBroadcastMessage(MMMessageType.UPDATE, MMUser.getMyself());	
+	}
+	
 	// Internals:
 	
 	/** */
@@ -120,7 +126,7 @@ public class MMMessageManager implements MMMessageListener
 	
 	// Implementors:
 	
-	/** */
+	/** TODO make it right and fast */
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
 	{
 		if (aMessageEvent == null)
@@ -146,6 +152,13 @@ public class MMMessageManager implements MMMessageListener
 				MMUser theUser = MMUser.valueOf(aMessageEvent.getMessage());	
 				if (MMUser.removeUserIfAlreadyAdded(theUser))
 					pushMessageManagerEvents(MMMessageManagerEvent.getUserRemovedInstance(theUser));
+			}
+			// User updates:
+			else if (aMessageEvent.isUpdateMessage())
+			{
+				MMUser theUser = MMUser.valueOf(aMessageEvent.getMessage());
+				if (MMUser.updateUserIfAlreadyAdded(theUser))
+					pushMessageManagerEvents(MMMessageManagerEvent.getUserUpdatedInstance(theUser));	
 			}
 		}
 		// Single Messages:
