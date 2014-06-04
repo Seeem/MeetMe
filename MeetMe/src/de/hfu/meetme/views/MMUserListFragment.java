@@ -21,7 +21,7 @@ import de.hfu.meetme.model.network.networktask.MMNetworkTask;
  * @author Dominik Jung
  * 
  */
-public class UserListFragment extends ListFragment implements
+public class MMUserListFragment extends ListFragment implements
 		MMMessageManagerListener
 {
 
@@ -84,10 +84,10 @@ public class UserListFragment extends ListFragment implements
 	private void intentUserProfileActivity(final MMUser anUser)
 	{
 		final Intent theIntent = new Intent(getActivity(),
-				de.hfu.meetme.views.UserProfileActivity.class);
+				de.hfu.meetme.views.MMUserProfileActivity.class);
 		theIntent.putExtra(MMUSER_KEY, anUser);
 		startActivityForResult(theIntent,
-				UserListActivity.REQUEST_CODE_USER_PROFILE_ACTIVITY);
+				MMUserListActivity.REQUEST_CODE_USER_PROFILE_ACTIVITY);
 	}
 
 	// Internals:

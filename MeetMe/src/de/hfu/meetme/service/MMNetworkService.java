@@ -5,7 +5,7 @@ import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.messagemanager.MMMessageManagerEvent;
 import de.hfu.meetme.model.network.messagemanager.MMMessageManagerListener;
 import de.hfu.meetme.model.network.networktask.MMNetworkTask;
-import de.hfu.meetme.views.UserListActivity;
+import de.hfu.meetme.views.MMUserListActivity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -102,7 +102,7 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 		String theUserId = anUser.getId();
 		theUserId = theUserId.replace(".", "").substring(theUserId.length() - 6);
 		int theId = Integer.parseInt(theUserId);
-		Intent theIntent = new Intent(this, UserListActivity.class);
+		Intent theIntent = new Intent(this, MMUserListActivity.class);
 		theIntent.putExtra(MMSupporting.NOTIFICATION_ID, theId);
 
 		PendingIntent thePendingIntent = PendingIntent.getActivity(

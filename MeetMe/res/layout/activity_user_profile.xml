@@ -16,7 +16,7 @@
 
         <fragment
             android:id="@+id/user_profile_fragment"
-            android:name="de.hfu.meetme.views.UserProfileFragment"
+            android:name="de.hfu.meetme.views.MMUserProfileFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
