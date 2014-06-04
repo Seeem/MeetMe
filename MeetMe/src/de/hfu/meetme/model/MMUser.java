@@ -42,10 +42,10 @@ public class MMUser implements Serializable
 	private String description;
 	
 	// Class-Members:
-	
+
 	/** The serial version UID of an MMUser-object. */
 	private static final long serialVersionUID = 4091994199398642117L;
-
+	
 	/** The users-"list" as HashMap. */
 	private static ConcurrentHashMap<String, MMUser> users = new ConcurrentHashMap<String,MMUser>();
 	
@@ -55,7 +55,7 @@ public class MMUser implements Serializable
 	// Constructor:
 	
 	/**
-	 * The MMUser Constructor.
+	 * Creates a new instance of {@link MMUser}.
 	 * @param aId the users Id
 	 * @param aGender the users gender to set
 	 * @param aUsername the user name to set
@@ -76,7 +76,7 @@ public class MMUser implements Serializable
 	}
 	
 	/**
-	 * Creates a MMUser with an empty description.
+	 * Creates a {@link MMUser} with an empty description.
 	 * @param aId the users Id
 	 * @param aGender the users gender to set
 	 * @param aUsername the user name to set
@@ -97,7 +97,7 @@ public class MMUser implements Serializable
 	 */
 	public boolean isMan()
 	{
-		return getGender() == MMGender.MALE;
+		return getGender().isMale();
 	}
 	
 	/**
@@ -106,7 +106,7 @@ public class MMUser implements Serializable
 	 */
 	public boolean isWoman()
 	{
-		return getGender() == MMGender.FEMALE;
+		return getGender().isFemale();
 	}
 	
 	/**
@@ -164,7 +164,7 @@ public class MMUser implements Serializable
 	}
 	
 	/**
-	 * Adds an specified user to the user-map.
+	 * Adds a specified user to the user-map.
 	 * @param anUser the user to add
 	 */
 	public static void addUser(MMUser anUser)
@@ -198,8 +198,8 @@ public class MMUser implements Serializable
 	}
 	
 	/**
-	 * Removes an single user based on the associated user-id.
-	 * @param aUser the user to remove
+	 * Removes a specified user based on the associated user-id.
+	 * @param anUser the user to remove
 	 */
 	public static void removeUser(MMUser anUser)
 	{
@@ -507,7 +507,7 @@ public class MMUser implements Serializable
 			String theStrings[] = anUDPMessageAsString.split(";");
 			Calendar theBirthday = Calendar.getInstance();
 			theBirthday.setTime(((SimpleDateFormat) SimpleDateFormat.getDateInstance()).parse(theStrings[5]));	
-			MMGender theGender = theStrings[1].equals(MMGender.MALE.toString()) ? MMGender.MALE : MMGender.FEMALE;
+			MMGender theGender = MMGender.valueOf(theStrings[1]);
 			if (theStrings.length == 7)
 				return new MMUser(theStrings[0], theGender, theStrings[2], theStrings[3], theStrings[4], theBirthday, theStrings[6]);
 			else

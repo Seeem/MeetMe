@@ -57,8 +57,8 @@ public class UserListFragment extends ListFragment implements
 	@Override
 	public void onPause()
 	{
-		MMNetworkTask.removeMessageManagerListener(this);
 		super.onPause();
+		MMNetworkTask.removeMessageManagerListener(this);
 	}
 
 	/** */
@@ -75,11 +75,9 @@ public class UserListFragment extends ListFragment implements
 
 	/** */
 	@Override
-	public void onListItemClick(ListView aListView, View aView, int aPosition,
-			long anId)
+	public void onListItemClick(ListView aListView, View aView, int aPosition, long anId)
 	{
-		MMUser theUser = (MMUser) getListView().getItemAtPosition(aPosition);
-		intentUserProfileActivity(theUser);
+		intentUserProfileActivity((MMUser) getListView().getItemAtPosition(aPosition));
 	}
 
 	/** */
