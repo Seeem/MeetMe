@@ -51,7 +51,8 @@
 
         <activity
             android:name="de.hfu.meetme.views.MMChatActivity"
-            android:label="@string/title_activity_mmchat" >
+            android:label="@string/title_activity_mmchat"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

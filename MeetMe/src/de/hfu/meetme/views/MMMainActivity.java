@@ -81,6 +81,8 @@ public class MMMainActivity extends Activity
 		}
 		
 		startService(new Intent(this, MMNetworkService.class));
+		Intent intent = new Intent(this, MMChatActivity.class); //TODO: Remove
+		startActivity(intent);
 	}
 
 	/** */

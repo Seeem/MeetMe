@@ -1,11 +1,5 @@
 package de.hfu.meetme.service;
 
-import de.hfu.meetme.MMSupporting;
-import de.hfu.meetme.model.MMUser;
-import de.hfu.meetme.model.network.messagemanager.MMMessageManagerEvent;
-import de.hfu.meetme.model.network.messagemanager.MMMessageManagerListener;
-import de.hfu.meetme.model.network.networktask.MMNetworkTask;
-import de.hfu.meetme.views.MMUserListActivity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,6 +9,12 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.widget.Toast;
+import de.hfu.meetme.MMSupporting;
+import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.messagemanager.MMMessageManagerEvent;
+import de.hfu.meetme.model.network.messagemanager.MMMessageManagerListener;
+import de.hfu.meetme.model.network.networktask.MMNetworkTask;
+import de.hfu.meetme.views.MMChatActivity;
 
 /**
  * 
@@ -87,11 +87,10 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 			throw new NullPointerException("user is null.");
 		/*
 		 * TODO: improve Notification 
-		 * Add a proper intent
 		 */
 		int theId = anUser.getNotificationId();
 			
-		Intent theIntent = new Intent(this, MMUserListActivity.class);
+		Intent theIntent = new Intent(this, MMChatActivity.class);
 		theIntent.putExtra(MMSupporting.NOTIFICATION_ID, theId);
 
 		Notification theNotification = new Notification.Builder(this)
@@ -100,7 +99,7 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 				.setDefaults(Notification.DEFAULT_ALL)
 				.setSmallIcon(android.R.drawable.ic_dialog_email)
 				.setTicker(anUser.getUsername() + " wants to meet you!")
-				.setLights(0xFFFFFFFF, 1500, 3000)
+				.setLights(0xFFFFFFFF, 2000, 3000)
 				.setContentIntent(PendingIntent.getActivity(this, 0, theIntent, PendingIntent.FLAG_UPDATE_CURRENT))
 				.build();
 

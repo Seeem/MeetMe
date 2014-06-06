@@ -1,8 +1,6 @@
 package de.hfu.meetme.views;
 
 import android.app.Activity;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,15 +26,6 @@ public class MMUserListActivity extends Activity
 	{
 		super.onCreate(aSavedInstanceState);
 		setContentView(R.layout.activity_user_list);
-
-		Bundle theExtras = getIntent().getExtras();
-		if (theExtras != null)
-		{
-			int theNotificationId = theExtras
-					.getInt(MMSupporting.NOTIFICATION_ID);
-			NotificationManager theManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-			theManager.cancel(theNotificationId);
-		}
 	}
 
 	@Override

@@ -6,7 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import de.hfu.meetme.R;
 
 /**
@@ -28,18 +29,29 @@ public class MMChatFragment extends Fragment
 	{
 
 		// Inflate the layout for this fragment
-		View theView = anInflater.inflate(R.layout.fragment_user_profile,
-				aContainer, false);
-
+		final View theView = anInflater.inflate(R.layout.fragment_mmchat, aContainer,
+				false);
+		
 		// Add an onClickListener
-		Button theMeetMeButton = (Button) theView
-				.findViewById(R.id.user_profile_fragment_meet_me_button);
-		theMeetMeButton.setOnClickListener(new OnClickListener() {
+		ImageButton theSendButton = (ImageButton) theView
+				.findViewById(R.id.mmchat_fragment_chat_send_button);
+		theSendButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View aView)
 			{
+				// TODO: the sending operations
 
+				// Test:
+				TextView theChatTextView = (TextView) theView
+						.findViewById(R.id.mmchat_fragment_chat_text_view);
+				theChatTextView.setText("very very very very very very " +
+						"very very very very very very very very very " +
+						"very very very very very very very very very very " +
+						"very very very very very very very very very " +
+						"very very very very very very very very very " +
+						"very very very very very very very very very long text");
+				//Test
 			}
 
 		});

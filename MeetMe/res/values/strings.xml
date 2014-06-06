@@ -52,5 +52,8 @@
     <string name="user_profile_fragment_description_key">Description:</string>
     <string name="user_profile_fragment_meet_me_button_text">Meet me!</string>
     <string name="title_activity_mmchat">Chat</string>
-
+    
+    <!-- MMChatFragment -->
+	<string name="mm_chat_fragment_send_button_description">Send Button</string>
+	
 </resources>
