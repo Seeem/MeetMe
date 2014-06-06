@@ -23,18 +23,13 @@ import android.widget.Toast;
  */
 public class MMNetworkService extends Service implements MMMessageManagerListener
 {
-	//Class Members:
-	/** */
-	
-	
+
 	//Instance Members:
 	
 	private final IBinder binder = new MMNetworkServiceBinder();
-	// public MMNetworkService()
-	// {
-	// }
 
-	//Internals
+	//Internals:
+	
 	@Override
 	public void onCreate()
 	{
@@ -72,12 +67,9 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 	{
 		if (aMessageManagerEvent.isUserWantsAMeeting())
 		{
-			System.out.println("User wants a meeting: "+aMessageManagerEvent.getUser());
 			generateNotification(aMessageManagerEvent.getUser(), " wants to meet you!");
 		}		
 	}
-	
-	
 	
 	/**
 	 * 
@@ -90,23 +82,17 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 	 *            "wants to meet you!"
 	 */
 	private void generateNotification(final MMUser anUser, final String message)
-	{
-		
+	{		
 		if (anUser == null)
 			throw new NullPointerException("user is null.");
 		/*
 		 * TODO: improve Notification 
-		 * Add a proper icon (could be better)
 		 * Add a proper intent
 		 */
-		String theUserId = anUser.getId();
-		theUserId = theUserId.replace(".", "").substring(theUserId.length() - 6);
-		int theId = Integer.parseInt(theUserId);
+		int theId = anUser.getNotificationId();
+			
 		Intent theIntent = new Intent(this, MMUserListActivity.class);
 		theIntent.putExtra(MMSupporting.NOTIFICATION_ID, theId);
-
-		PendingIntent thePendingIntent = PendingIntent.getActivity(
-				this, 0, theIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		Notification theNotification = new Notification.Builder(this)
 				.setContentTitle(anUser.getUsername()).setContentText(message)
@@ -115,12 +101,10 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 				.setSmallIcon(android.R.drawable.ic_dialog_email)
 				.setTicker(anUser.getUsername() + " wants to meet you!")
 				.setLights(0xFFFFFFFF, 1500, 3000)
-				.setContentIntent(thePendingIntent)
+				.setContentIntent(PendingIntent.getActivity(this, 0, theIntent, PendingIntent.FLAG_UPDATE_CURRENT))
 				.build();
 
-		NotificationManager theManager = (NotificationManager) this
-				.getSystemService(Context.NOTIFICATION_SERVICE);
-		int theNotification_id = theId;
-		theManager.notify(theNotification_id, theNotification);
+		((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE))
+			.notify(theId, theNotification);
 	}
 }

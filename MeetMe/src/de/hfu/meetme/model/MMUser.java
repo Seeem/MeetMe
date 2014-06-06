@@ -118,6 +118,12 @@ public class MMUser implements Serializable
 		return ((SimpleDateFormat) SimpleDateFormat.getDateInstance()).format(getBirthday().getTime());
 	}
 	
+	/** */
+	public int getNotificationId()
+	{
+		return Integer.parseInt(getId().replace(".", "").substring(getId().length() - 6));
+	}
+	
 	// MM-API (Class):
 	
 	/**

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.MMUserArrayAdapter;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
@@ -24,11 +25,6 @@ import de.hfu.meetme.model.network.networktask.MMNetworkTask;
 public class MMUserListFragment extends ListFragment implements
 		MMMessageManagerListener
 {
-
-	// Class-Members:
-
-	/** */
-	protected final static String MMUSER_KEY = "MMUserKey";
 
 	// Internals:
 
@@ -85,9 +81,9 @@ public class MMUserListFragment extends ListFragment implements
 	{
 		final Intent theIntent = new Intent(getActivity(),
 				de.hfu.meetme.views.MMUserProfileActivity.class);
-		theIntent.putExtra(MMUSER_KEY, anUser);
+		theIntent.putExtra(MMSupporting.MMUSER_KEY, anUser);
 		startActivityForResult(theIntent,
-				MMUserListActivity.REQUEST_CODE_USER_PROFILE_ACTIVITY);
+				MMSupporting.REQUEST_CODE_USER_PROFILE_ACTIVITY);
 	}
 
 	// Internals:
@@ -115,6 +111,7 @@ public class MMUserListFragment extends ListFragment implements
 		});
 	}
 
+	/** */
 	private void makeNoUsersFoundTextFragmentVisible(boolean makeVisible)
 	{
 		FragmentManager theFragmentManager = getFragmentManager();
@@ -127,13 +124,13 @@ public class MMUserListFragment extends ListFragment implements
 		{
 			theTransaction.show(
 					theFragmentManager
-							.findFragmentById(R.id.mm_user_list_text_fragment))
+					.findFragmentById(R.id.mm_user_list_text_fragment))
 					.commit();
 		} else
 		{
 			theTransaction.hide(
 					theFragmentManager
-							.findFragmentById(R.id.mm_user_list_text_fragment))
+					.findFragmentById(R.id.mm_user_list_text_fragment))
 					.commit();
 		}
 	}

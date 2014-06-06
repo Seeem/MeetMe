@@ -87,12 +87,12 @@ public class MMMessageReceiverTask extends Thread
 			} 
 			catch (SocketException aSocketException)
 			{
-				break; // close()
+				Thread.currentThread().interrupt();
 			}
 			catch (IOException e)
 			{		
 				e.printStackTrace();
-			}		
+			}	
 		}
 	}
 	

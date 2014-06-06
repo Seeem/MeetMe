@@ -20,11 +20,23 @@ import de.hfu.meetme.model.validation.MMUserValidation;
  *         Supporting class with methods which do not fit in any other class
  *         because they're used in multiple different classes.
  */
-public class MMSupporting
+public final class MMSupporting
 {
 	/** */
 	public final static String NOTIFICATION_ID = "notificationId";
 
+	/** */
+	public final static String MMUSER_KEY = "MMUserKey";
+
+	/** */
+	public static final int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
+	
+	/** */
+	public static final int REQUEST_CODE_USER_LIST_ACTIVITY = 2;
+	
+	/** */
+	public final static int REQUEST_CODE_USER_PROFILE_ACTIVITY = 3;
+	
 	/**
 	 * Reads the user profile data from the SharedPreferences, set in the
 	 * settings.
