@@ -157,4 +157,5 @@ public class MMUserListFragment extends ListFragment implements
 			updateUserListView();
 		}
 	}
+	
 }

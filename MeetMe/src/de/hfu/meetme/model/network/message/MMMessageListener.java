@@ -11,6 +11,10 @@ package de.hfu.meetme.model.network.message;
 public interface MMMessageListener
 {
 
+	/**
+	 * 
+	 * @param aMessageEvent the {@link MMMessageEvent}
+	 */
 	public void messageReceived(MMMessageEvent aMessageEvent);
 	
 }

@@ -148,6 +148,15 @@ public class MMMessageEvent
 		return MMNetworkUtil.isMyLanAddress(getSenderAddress());
 	}
 	
+	/**
+	 * Returns whether the message type is MESSAGE.
+	 * @return true if the message type is MESSAGE, false otherwise
+	 */
+	public boolean isMessage()
+	{
+		return getMessageType().isMessage();
+	}
+	
 	// Accessors:
 	
 	/**

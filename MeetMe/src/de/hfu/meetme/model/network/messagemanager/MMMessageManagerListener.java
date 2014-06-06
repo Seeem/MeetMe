@@ -10,7 +10,10 @@ package de.hfu.meetme.model.network.messagemanager;
 public interface MMMessageManagerListener
 {
 
-	/** */
+	/**
+	 * 
+	 * @param aMessageManagerEvent
+	 */
 	public void managerEventPerformed(MMMessageManagerEvent aMessageManagerEvent);
 	
 }

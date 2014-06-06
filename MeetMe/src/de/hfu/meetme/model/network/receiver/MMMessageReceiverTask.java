@@ -19,16 +19,16 @@ public class MMMessageReceiverTask extends Thread
 
 	// Instance-Members:
 	
-	/** */
+	/** The {@link MMMessageReceiver} for message handling. */
 	private MMMessageReceiver messageReceiver;
 	
-	/** */
+	/** The {@link DatagramSocket} which receives the data. */
 	private DatagramSocket datagramSocket;
 	
-	/** */
+	/** The port on which the socket is bound. */
 	private int datagramPort;
 	
-	/** */
+	/** The {@link MMMessageTargetType} (BROADCAST or SINGLE). */
 	private MMMessageTargetType messageTargetType;
 	
 	// Class-Members:
@@ -38,26 +38,26 @@ public class MMMessageReceiverTask extends Thread
 	
 	// Constructor:
 	
-	/** */
-	private MMMessageReceiverTask(MMMessageReceiver aMessageReceiver, MMMessageTargetType aMessageTargetType, int aPort)
+	/**
+	 * Creates new {@link MMMessageReceiverTask} instance.
+	 * 
+	 * @param aMessageReceiver the {@link MMMessageReceiver}
+	 * @param aMessageTargetType the {@link MMMessageTargetType}
+	 * @param aPort the Port
+	 */
+	public MMMessageReceiverTask(MMMessageReceiver aMessageReceiver, MMMessageTargetType aMessageTargetType, int aPort)
 	{
 		setMessageReceiver(aMessageReceiver);
 		setMessageTargetType(aMessageTargetType);
 		setDatagramPort(aPort);
 	}
 	
-	// Factory:
-	
-	/** */
-	public static MMMessageReceiverTask getInstance(MMMessageReceiver aMessageReceiver, MMMessageTargetType aMessageTargetType, int aPort)
-	{
-		return new MMMessageReceiverTask(aMessageReceiver, aMessageTargetType, aPort);
-	}
-	
 	// MM-API:
 	
-	/** */
-	public void interrupt()
+	/**
+	 * Interrupts the thread and closes the associated {@link DatagramSocket}.
+	 */
+	@Override public void interrupt()
 	{	
 		super.interrupt();
 		getDatagramSocket().close();
@@ -65,10 +65,16 @@ public class MMMessageReceiverTask extends Thread
 	
 	// Implementors: 
 	
+	/**
+	 * Creates a new {@link DatagramSocket} which is receiving incoming UDP-messages on the bound port.
+	 * If a new message is received it will call the <code>handleUDPMessage()</code>-method from the {@link MMMessageReceiver}.
+	 * If a {@link SocketException} occurs the thread will shutdown.
+	 */
 	@Override public void run()
 	{
 		try
 		{
+			// TODO if you feel lucky reuse the socket
 			setDatagramSocket(new DatagramSocket(getDatagramPort()));
 		} 
 		catch (SocketException e1)

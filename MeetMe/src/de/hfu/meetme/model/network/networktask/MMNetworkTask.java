@@ -19,64 +19,86 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	
 	// Class-Members:
 	
-	/** */
+	/** The {@link MMMessageManager}. */
 	private static final MMMessageManager messageManager = new MMMessageManager();
 	
 	// Instance-Members:
 	
-	/** */
+	/** The {@link InetAddress}. */
 	private InetAddress inetAddress;
 	
 	// Constructor:
 	
-	/** */
+	/**
+	 * Creates a new {@link MMNetworkTask} instance with a specific {@link InetAddress}.
+	 * @param anInetAddress the {@link InetAddress} to set
+	 */
 	private MMNetworkTask(InetAddress anInetAddress)
 	{
 		setInetAddress(anInetAddress);
 	}
 	
-	/** */
+	/**
+	 * Creates a new {@link MMNetworkTask} instance.
+	 */
 	private MMNetworkTask(){};
 
 	// MM-API:
 
-	/** */
+	/**
+	 * Starts a new START_LISTENING {@link MMNetworkTask}.
+	 */
 	public static void startListening()
 	{
 		startNetworkTask(MMNetworkTaskType.START_LISTENING);
 	}
 	
-	/** */
+	/**
+	 * Starts a new STOP_LISTENING {@link MMNetworkTask}.
+	 */
 	public static void stopListening()
 	{
 		startNetworkTask(MMNetworkTaskType.STOP_LISTENING);
 	}
 	
-	/** */
+	/**
+	 * Starts a new REFRESH_USERLIST {@link MMNetworkTask}.
+	 */
 	public static void refreshUserlist()
 	{
 		startNetworkTask(MMNetworkTaskType.REFRESH_USERLIST);
 	}
 	
-	/** */
+	/**
+	 * Starts a new MEET_ME {@link MMNetworkTask} with a specific {@link InetAddress}.
+	 * @param anInetAddress the {@link InetAddress} to set
+	 */
 	public static void sendMeetMeMessage(InetAddress anInetAddress)
 	{
 		new MMNetworkTask(anInetAddress).execute(MMNetworkTaskType.MEET_ME);
 	}
 	
-	/** */
+	/**
+	 * Starts a new UPDATE {@link MMNetworkTask}.
+	 */
 	public static void sendUpdate()
 	{
 		new MMNetworkTask().execute(MMNetworkTaskType.UPDATE);
 	}
 	
-	/** */
+	/**
+	 * Adds a {@link MMMessageManagerListener} to the {@link MMMessageManagerListener}.
+	 * @param aMessageManagerListener the {@link MMMessageManagerListener} to add
+	 */
 	public static void addMessageManagerListener(MMMessageManagerListener aMessageManagerListener)
 	{
 		getMessageManager().addMessageManagerListener(aMessageManagerListener);
 	}
 	
-	/** */
+	/**
+	 * Removes a {@link MMMessageManagerListener} from the {@link MMMessageManagerListener}.
+	 * @param aMessageManagerListener the {@link MMMessageManagerListener} to remove
+	 */
 	public static void removeMessageManagerListener(MMMessageManagerListener aMessageManagerListener)
 	{
 		getMessageManager().removeMessageManagerListener(aMessageManagerListener);
@@ -84,7 +106,10 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	
 	// Internals:
 	
-	/** */
+	/**
+	 * Starts a new {@link MMNetworkTask}.
+	 * @param aNetworkTasktype the {@link MMNetworkTask} to start
+	 */
 	private static void startNetworkTask(MMNetworkTaskType aNetworkTasktype)
 	{
 		if (aNetworkTasktype == null)
@@ -98,7 +123,9 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	
 	// Implementors:
 	
-	/** */
+	/**
+	 * Handles the {@link MMNetworkTask}.
+	 */
 	@Override protected Void doInBackground(MMNetworkTaskType... someParameters)
 	{
 		if (someParameters == null) return null;

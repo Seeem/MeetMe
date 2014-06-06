@@ -118,7 +118,10 @@ public class MMUser implements Serializable
 		return ((SimpleDateFormat) SimpleDateFormat.getDateInstance()).format(getBirthday().getTime());
 	}
 	
-	/** */
+	/**
+	 * Returns the notification-id as integer.
+	 * @return the notification-id
+	 */
 	public int getNotificationId()
 	{
 		return Integer.parseInt(getId().replace(".", "").substring(getId().length() - 6));
@@ -491,7 +494,10 @@ public class MMUser implements Serializable
 	
 	// Conversion:
 	
-	/** */
+	/**
+	 * Gets a {@link MMUser} as special {@link String} to send via UDP.
+	 * @return
+	 */
 	public String toUdpMessage()
 	{	
 		return new StringBuffer().
@@ -505,7 +511,11 @@ public class MMUser implements Serializable
 				toString();
 	}
 	
-	/** */
+	/**
+	 * Converts the specified {@link String} to its {@link MMUser} representation.
+	 * @param anUDPMessageAsString the UDP message as {@link String}
+	 * @return the {@link String} converted to a {@link MMUser}
+	 */
 	public static MMUser valueOf(String anUDPMessageAsString)
 	{		
 		try

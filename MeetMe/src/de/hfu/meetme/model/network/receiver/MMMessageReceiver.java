@@ -103,8 +103,8 @@ public class MMMessageReceiver
 	/** */
 	public MMMessageReceiver(int anUdpBroadcastPort, int anUdpPort)
 	{
-		setReceiveUdpBroadcastThread(MMMessageReceiverTask.getInstance(this, MMMessageTargetType.BROADCAST, anUdpBroadcastPort));
-		setReceiveUdpSingleThread(MMMessageReceiverTask.getInstance(this, MMMessageTargetType.SINGLE, anUdpPort));
+		setReceiveUdpBroadcastThread(new MMMessageReceiverTask(this, MMMessageTargetType.BROADCAST, anUdpBroadcastPort));
+		setReceiveUdpSingleThread(new MMMessageReceiverTask(this, MMMessageTargetType.SINGLE, anUdpPort));
 		setThreadPoolExecutor((ThreadPoolExecutor) Executors.newFixedThreadPool(2));
 	}
 	
@@ -231,7 +231,6 @@ public class MMMessageReceiver
 		this.threadPoolExecutor = threadPoolExecutor;
 	}
 
-	
 	/**
 	 * @return the receiveUdpBroadcastThread
 	 */
@@ -239,7 +238,6 @@ public class MMMessageReceiver
 	{
 		return ReceiveUdpBroadcastThread;
 	}
-
 
 	/**
 	 * @param receiveUdpBroadcastThread the receiveUdpBroadcastThread to set

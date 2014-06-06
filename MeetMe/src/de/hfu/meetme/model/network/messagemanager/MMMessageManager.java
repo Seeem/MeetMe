@@ -23,21 +23,23 @@ public class MMMessageManager implements MMMessageListener
 	
 	// Instance-Members:
 	
-	/** */
+	/** The {@link MMMessageSender} of the {@link MMMessageManager}. */
 	private MMMessageSender messageSender;
 	
-	/** */
+	/** The {@link MMMessageReceiver} of the {@link MMMessageManager}. */
 	private MMMessageReceiver messageReceiver;
 	
-	/** */
+	/** The isStarted Boolean of the {@link MMMessageManager}. */
 	private boolean isStarted = false;
 	
-	/** */
+	/** The {@link MMMessageManagerListener} of the {@link MMMessageManager}. */
 	private Vector<MMMessageManagerListener> messageManagerListeners;
 	
 	// Constructor:
 	
-	/** */
+	/**
+	 * Creates a new {@link MMMessageManager} instance.
+	 */
 	public MMMessageManager()
 	{
 		setMessageSender(new MMMessageSender());
@@ -47,7 +49,10 @@ public class MMMessageManager implements MMMessageListener
 	
 	// MM-API:
 	
-	/** */
+	/**
+	 * Adds a {@link MMMessageManagerListener} to the {@link MMMessageManager}.
+	 * @param aMessageManagerListener the {@link MMMessageManagerListener} to add
+	 */
 	public void addMessageManagerListener(MMMessageManagerListener aMessageManagerListener)
 	{
 		if (aMessageManagerListener == null)
@@ -56,7 +61,10 @@ public class MMMessageManager implements MMMessageListener
 		getMessageManagerListeners().add(aMessageManagerListener);
 	}
 	
-	/** */
+	/**
+	 * Removes a {@link MMMessageManagerListener} from the {@link MMMessageManager}.
+	 * @param aMessageManagerListener the {@link MMMessageManagerListener} to remove
+	 */
 	public void removeMessageManagerListener(MMMessageManagerListener aMessageManagerListener)
 	{
 		if (aMessageManagerListener == null)
@@ -65,7 +73,10 @@ public class MMMessageManager implements MMMessageListener
 		getMessageManagerListeners().remove(aMessageManagerListener);
 	}
 	
-	/** */
+	/**
+	 * Removes all users from the {@link MMUser} and sends a new UDP broadcast message
+	 * with {@link MMMessageType} CONNECT.
+	 */
 	public void refreshUsers()
 	{
 		if (!isStarted() || MMUser.getMyself() == null) return;
@@ -73,7 +84,9 @@ public class MMMessageManager implements MMMessageListener
 		getMessageSender().sendUDPBroadcastMessage(MMMessageType.CONNECT, MMUser.getMyself());	
 	}
 	
-	/** */
+	/**
+	 * Starts the {@link MMMessageReceiver}.
+	 */
 	public void startListening()
 	{
 		if (MMUser.getMyself() == null)
@@ -85,7 +98,9 @@ public class MMMessageManager implements MMMessageListener
 		setStarted(true);
 	}
 	
-	/** */
+	/**
+	 * Stops the {@link MMMessageReceiver}.
+	 */
 	public void stopListening()
 	{
 		if (MMUser.getMyself() == null)
@@ -98,7 +113,10 @@ public class MMMessageManager implements MMMessageListener
 		setStarted(false);
 	}
 	
-	/** */
+	/**
+	 * Sends a MEETME message to a single target
+	 * @param anInetAddress the {@link InetAddress} of the target
+	 */
 	public void sendMeetMeMessage(InetAddress anInetAddress)
 	{
 		if (MMUser.getMyself() == null)
@@ -107,7 +125,9 @@ public class MMMessageManager implements MMMessageListener
 		getMessageSender().sendUDPMessage(anInetAddress, MMMessageType.MEETME, MMUser.getMyself());	
 	}
 	
-	/** */
+	/**
+	 * Sends a UPDATE message as broadcast message.
+	 */
 	public void sendUpdate()
 	{
 		getMessageSender().sendUDPBroadcastMessage(MMMessageType.UPDATE, MMUser.getMyself());	
@@ -115,7 +135,10 @@ public class MMMessageManager implements MMMessageListener
 	
 	// Internals:
 	
-	/** */
+	/**
+	 * Pushes a {@link MMMessageManagerEvent} to all {@link MMMessageManagerListener}.
+	 * @param aMessageManagerEvent the {@link MMMessageManagerEvent} to push
+	 */
 	private void pushMessageManagerEvent(MMMessageManagerEvent aMessageManagerEvent)
 	{
 		for (MMMessageManagerListener aMessageManagerListener : getMessageManagerListeners())
@@ -126,7 +149,9 @@ public class MMMessageManager implements MMMessageListener
 	
 	// Implementors:
 	
-	/** */
+	/**
+	 * Handles a {@link MMMessageEvent}.
+	 */
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
 	{
 		if (aMessageEvent == null)
@@ -174,7 +199,12 @@ public class MMMessageManager implements MMMessageListener
 			else if (aMessageEvent.isMeetMeMessage())
 			{		
 				pushMessageManagerEvent(MMMessageManagerEvent.getUserWantsAMeetingInstance(theUser));
-			}						
+			}
+			// Chat message
+			else if (aMessageEvent.isMessage())
+			{
+				pushMessageManagerEvent(MMMessageManagerEvent.getUserMessageInstance(MMUser.getUserById(aMessageEvent.getSenderAddress().getHostAddress()), aMessageEvent.getMessage()));
+			}
 		}
 	}
 	 
