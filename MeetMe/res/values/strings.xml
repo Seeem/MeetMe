@@ -31,25 +31,26 @@
 
     <!-- UserListActivity -->
     <string name="title_activity_user_list">Users</string>
-    
+
     <!-- UserListActivityMenu -->
     <string name="action_refresh">Refresh</string>
     <string name="action_stop_service">Stop Service</string>
-    
+
     <!-- UserListTextFragment -->
     <string name="user_list_text_fragment_no_users_found">Sorry, there are currently
          no users in your network.</string>
-    
+
     <!-- UserProfileActivity -->
     <string name="title_activity_user_profile">User Profile</string>
-    
+
     <!-- UserProfileFragment -->
-	<string name="user_profile_fragment_user_name_key">Username:</string>
-	<string name="user_profile_fragment_first_name_key">First name:</string>
-	<string name="user_profile_fragment_last_name_key">Last name:</string>
-	<string name="user_profile_fragment_birthday_key">Birthday:</string>
-	<string name="user_profile_fragment_gender_key">Gender:</string>
-	<string name="user_profile_fragment_description_key">Description:</string>
-	<string name="user_profile_fragment_meet_me_button_text">Meet me!</string>
+    <string name="user_profile_fragment_user_name_key">Username:</string>
+    <string name="user_profile_fragment_first_name_key">First name:</string>
+    <string name="user_profile_fragment_last_name_key">Last name:</string>
+    <string name="user_profile_fragment_birthday_key">Birthday:</string>
+    <string name="user_profile_fragment_gender_key">Gender:</string>
+    <string name="user_profile_fragment_description_key">Description:</string>
+    <string name="user_profile_fragment_meet_me_button_text">Meet me!</string>
+    <string name="title_activity_mmchat">Chat</string>
 
 </resources>

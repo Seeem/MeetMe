@@ -32,10 +32,10 @@
         <activity
             android:name="de.hfu.meetme.views.MMUserListActivity"
             android:label="@string/title_activity_user_list"
-            android:parentActivityName="android.app.ListActivity" >
+            android:parentActivityName="de.hfu.meetme.views.MMMainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="android.app.ListActivity" />
+                android:value="de.hfu.meetme.views.MMMainActivity" />
         </activity>
         <activity
             android:name="de.hfu.meetme.views.MMUserProfileActivity"
@@ -46,9 +46,13 @@
                 android:value="de.hfu.meetme.views.UserListActivity" />
         </activity>
 
-        <service
-            android:name="de.hfu.meetme.service.MMNetworkService" >
+        <service android:name="de.hfu.meetme.service.MMNetworkService" >
         </service>
+
+        <activity
+            android:name="de.hfu.meetme.views.MMChatActivity"
+            android:label="@string/title_activity_mmchat" >
+        </activity>
     </application>
 
 </manifest>
