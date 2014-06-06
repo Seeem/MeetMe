@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
 
@@ -22,25 +23,24 @@ public class MMUserProfileActivity extends Activity
 	 */
 	private MMUser user;
 
+	// Accessors:
+	
 	/**
 	 * @return the user
 	 */
-	public MMUser getUser()
+	protected MMUser getUser()
 	{
 		return user;
 	}
 
 	/**
-	 * @param aUser
-	 *            the user to set
+	 * @param anUser the user to set
 	 */
-	public void setUser(MMUser aUser)
+	protected void setUser(MMUser anUser)
 	{
-		user = aUser;
-	}
-
-	private static final int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
-
+		user = anUser;
+	}	
+	
 	@Override
 	protected void onCreate(Bundle aSavedInstanceState)
 	{
@@ -50,9 +50,8 @@ public class MMUserProfileActivity extends Activity
 		final ActionBar theActionBar = getActionBar();
 		theActionBar.setDisplayHomeAsUpEnabled(true);
 		
-
 		Bundle theExtras = getIntent().getExtras();
-		setUser((MMUser) theExtras.getSerializable(MMUserListFragment.MMUSER_KEY));
+		setUser((MMUser) theExtras.getSerializable(MMSupporting.MMUSER_KEY));
 	}
 
 	@Override
@@ -64,8 +63,8 @@ public class MMUserProfileActivity extends Activity
 		return true;
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem anItem)
+	/** */
+	@Override public boolean onOptionsItemSelected(MenuItem anItem)
 	{
 		int theId = anItem.getItemId();
 		if (theId == R.id.action_settings)
@@ -84,23 +83,26 @@ public class MMUserProfileActivity extends Activity
 		super.finish();
 	}
 
-	/** Sends an intent to the SettingsActivity */
+	/**
+	 * Sends an intent to the SettingsActivity
+	 */
 	private void intentSettingsActivity()
 	{
 		final Intent theIntent = new Intent(this,
 				de.hfu.meetme.views.MMSettingsActivity.class);
-		startActivityForResult(theIntent, REQUEST_CODE_SETTINGS_ACTIVITY);
+		startActivityForResult(theIntent, MMSupporting.REQUEST_CODE_SETTINGS_ACTIVITY);
 	}
 
-	@Override
-	protected void onActivityResult(int aRequestCode, int aResultCode,
+	/** */
+	@Override protected void onActivityResult(int aRequestCode, int aResultCode,
 			Intent anIntent)
 	{
-		if ((aRequestCode == REQUEST_CODE_SETTINGS_ACTIVITY)
+		if ((aRequestCode == MMSupporting.REQUEST_CODE_SETTINGS_ACTIVITY)
 				&& (aResultCode == RESULT_OK))
 		{
 			Toast.makeText(this, "Your profile has been saved",
 					Toast.LENGTH_SHORT).show();
 		}
 	}
+
 }

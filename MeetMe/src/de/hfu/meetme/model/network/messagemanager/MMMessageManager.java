@@ -116,7 +116,7 @@ public class MMMessageManager implements MMMessageListener
 	// Internals:
 	
 	/** */
-	private void pushMessageManagerEvents(MMMessageManagerEvent aMessageManagerEvent)
+	private void pushMessageManagerEvent(MMMessageManagerEvent aMessageManagerEvent)
 	{
 		for (MMMessageManagerListener aMessageManagerListener : getMessageManagerListeners())
 		{
@@ -126,7 +126,7 @@ public class MMMessageManager implements MMMessageListener
 	
 	// Implementors:
 	
-	/** TODO make it right and fast */
+	/** */
 	@Override public void messageReceived(MMMessageEvent aMessageEvent)
 	{
 		if (aMessageEvent == null)
@@ -135,30 +135,30 @@ public class MMMessageManager implements MMMessageListener
 		// Filter Messages from this device and unknown messages:
 		if (aMessageEvent.isFromMe() || aMessageEvent.isUnknownMessage()) return;
 		
+		// Get the user:
+		MMUser theUser = MMUser.valueOf(aMessageEvent.getMessage());
+			
 		// Broadcast Messages:
 		if (aMessageEvent.isUdpProtocol() && aMessageEvent.isBroadcastMessage())
-		{
+		{			
 			// User connects:
 			if (aMessageEvent.isConnectMessage())
-			{
-				MMUser theUser = MMUser.valueOf(aMessageEvent.getMessage());			
+			{							
 				if (MMUser.addUserIfNotAlreadyAdded(theUser))
-					pushMessageManagerEvents(MMMessageManagerEvent.getUserAddedInstance(theUser));
+					pushMessageManagerEvent(MMMessageManagerEvent.getUserAddedInstance(theUser));
 				getMessageSender().sendUDPMessage(aMessageEvent.getSenderAddress(), MMMessageType.CONNECT, MMUser.getMyself());	
 			}
 			// User disconnects:
 			else if (aMessageEvent.isDisconnectMessage())
-			{
-				MMUser theUser = MMUser.valueOf(aMessageEvent.getMessage());	
+			{					
 				if (MMUser.removeUserIfAlreadyAdded(theUser))
-					pushMessageManagerEvents(MMMessageManagerEvent.getUserRemovedInstance(theUser));
+					pushMessageManagerEvent(MMMessageManagerEvent.getUserRemovedInstance(theUser));
 			}
 			// User updates:
 			else if (aMessageEvent.isUpdateMessage())
-			{
-				MMUser theUser = MMUser.valueOf(aMessageEvent.getMessage());
+			{		
 				if (MMUser.updateUserIfAlreadyAdded(theUser))
-					pushMessageManagerEvents(MMMessageManagerEvent.getUserUpdatedInstance(theUser));
+					pushMessageManagerEvent(MMMessageManagerEvent.getUserUpdatedInstance(theUser));
 			}
 		}
 		// Single Messages:
@@ -166,16 +166,14 @@ public class MMMessageManager implements MMMessageListener
 		{
 			// User connects:
 			if (aMessageEvent.isConnectMessage())
-			{
-				MMUser theUser = MMUser.valueOf(aMessageEvent.getMessage());			
+			{		
 				if (MMUser.addUserIfNotAlreadyAdded(theUser))
-					pushMessageManagerEvents(MMMessageManagerEvent.getUserAddedInstance(theUser));
+					pushMessageManagerEvent(MMMessageManagerEvent.getUserAddedInstance(theUser));
 			}
 			// User wants a meeting:
-			if (aMessageEvent.isMeetMeMessage())
-			{
-				MMUser theUser = MMUser.valueOf(aMessageEvent.getMessage());		
-				pushMessageManagerEvents(MMMessageManagerEvent.getUserWantsAMeetingInstance(theUser));
+			else if (aMessageEvent.isMeetMeMessage())
+			{		
+				pushMessageManagerEvent(MMMessageManagerEvent.getUserWantsAMeetingInstance(theUser));
 			}						
 		}
 	}

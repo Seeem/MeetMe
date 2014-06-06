@@ -36,10 +36,6 @@ public class MMMainActivity extends Activity
 	 */
 	public final static String MMUSER_TAG = "Myself";
 
-	/** */
-	private static final int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
-	private static final int REQUEST_CODE_USER_LIST_ACTIVITY = 2;
-
 	/**
 	 * @return A boolean which indicates if a {@link MMUser} object has been
 	 *         created yet or not. If the MeetMe App gets started, and this
@@ -118,7 +114,7 @@ public class MMMainActivity extends Activity
 	protected void onActivityResult(int aRequestCode, int aResultCode,
 			Intent anIntent)
 	{
-		if ((aRequestCode == REQUEST_CODE_SETTINGS_ACTIVITY)
+		if ((aRequestCode == MMSupporting.REQUEST_CODE_SETTINGS_ACTIVITY)
 				&& (aResultCode == RESULT_OK))
 		{
 
@@ -129,7 +125,7 @@ public class MMMainActivity extends Activity
 					Toast.LENGTH_SHORT).show();
 
 		}
-		if ((aRequestCode == REQUEST_CODE_USER_LIST_ACTIVITY)
+		if ((aRequestCode == MMSupporting.REQUEST_CODE_USER_LIST_ACTIVITY)
 				&& (aResultCode == RESULT_OK))
 		{
 		}
@@ -139,7 +135,7 @@ public class MMMainActivity extends Activity
 	public void intentUserListActivity(View aView)
 	{	
 		final Intent theIntent = new Intent(this,de.hfu.meetme.views.MMUserListActivity.class);
-		startActivityForResult(theIntent, REQUEST_CODE_USER_LIST_ACTIVITY);
+		startActivityForResult(theIntent, MMSupporting.REQUEST_CODE_USER_LIST_ACTIVITY);
 	}
 
 	/** Sends an intent to the SettingsActivity */
@@ -147,7 +143,7 @@ public class MMMainActivity extends Activity
 	{
 		final Intent theIntent = new Intent(this,
 				de.hfu.meetme.views.MMSettingsActivity.class);
-		startActivityForResult(theIntent, REQUEST_CODE_SETTINGS_ACTIVITY);
+		startActivityForResult(theIntent, MMSupporting.REQUEST_CODE_SETTINGS_ACTIVITY);
 	}
 
 }

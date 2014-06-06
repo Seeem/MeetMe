@@ -44,7 +44,7 @@ public class MMSendMessageTest implements MMMessageListener
 			messageReceiver.addMessageListener(this);
 			messageReceiver.startReceiver();			
 			messageSender.sendUDPBroadcastMessage(MMNetworkUtil.UDP_MESSAGE_PING);		
-			Thread.sleep(100);
+			Thread.sleep(500);
 		} 
 		catch (Exception anException)
 		{
@@ -67,7 +67,7 @@ public class MMSendMessageTest implements MMMessageListener
 			messageReceiver.addMessageListener(this);
 			messageReceiver.startReceiver();
 			messageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), MMNetworkUtil.UDP_MESSAGE_PING);
-			Thread.sleep(100);
+			Thread.sleep(500);
 		}
 		catch (Exception anException)
 		{

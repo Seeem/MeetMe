@@ -17,6 +17,7 @@ import de.hfu.meetme.model.network.networktask.MMNetworkTask;
  */
 public class MMSettingsActivity extends Activity
 {
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -48,10 +49,9 @@ public class MMSettingsActivity extends Activity
 			theIntent.putExtra(MMMainActivity.IS_USER_CREATED, true);
 			setResult(RESULT_OK, theIntent);
 			MMUser.setMyself(user);
-			MMNetworkTask.sendUpdate();
-			super.finish();
+			MMNetworkTask.sendUpdate();	
 		}
-
+		super.finish();
 	}
 
 }

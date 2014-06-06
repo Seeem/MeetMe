@@ -21,14 +21,6 @@ import de.hfu.meetme.service.MMNetworkService;
 public class MMUserListActivity extends Activity
 {
 
-	// Class-Members:
-
-	/** */
-	private final static int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
-
-	/** */
-	public final static int REQUEST_CODE_USER_PROFILE_ACTIVITY = 2;
-
 	// Internals:
 
 	@Override
@@ -82,11 +74,7 @@ public class MMUserListActivity extends Activity
 	public void onActivityResult(int aRequestCode, int aResultCode,
 			Intent anIntent)
 	{
-		if ((aRequestCode == MMUserListActivity.REQUEST_CODE_USER_PROFILE_ACTIVITY)
-				&& (aResultCode == RESULT_OK))
-		{
-		}
-		if ((aRequestCode == MMUserListActivity.REQUEST_CODE_SETTINGS_ACTIVITY)
+		if ((aRequestCode == MMSupporting.REQUEST_CODE_SETTINGS_ACTIVITY)
 				&& (aResultCode == RESULT_OK))
 		{
 			Toast.makeText(this, "Your profile has been saved",
@@ -109,7 +97,7 @@ public class MMUserListActivity extends Activity
 	{
 		final Intent theIntent = new Intent(this,
 				de.hfu.meetme.views.MMSettingsActivity.class);
-		startActivityForResult(theIntent, REQUEST_CODE_SETTINGS_ACTIVITY);
+		startActivityForResult(theIntent, MMSupporting.REQUEST_CODE_SETTINGS_ACTIVITY);
 	}
 
 }
