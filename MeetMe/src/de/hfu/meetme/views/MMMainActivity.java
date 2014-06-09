@@ -78,8 +78,8 @@ public class MMMainActivity extends Activity
 		{
 			MMUser.setMyself(MMSupporting.getUserFromSharedPreferences(this, false));
 			MMUser.getMyself().print();
+			startService(new Intent(this, MMNetworkService.class));
 		}
-		startService(new Intent(this, MMNetworkService.class));
 	}
 
 	/** */
