@@ -1,8 +1,5 @@
 package de.hfu.meetme.views;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,12 +22,12 @@ import de.hfu.meetme.model.network.networktask.MMNetworkTask;
  */
 public class MMUserProfileFragment extends Fragment
 {
-	
+
 	/**
 	 * The user clicked in the {@link MMUserListActivity}
 	 */
 	private MMUser user;
-	
+
 	/**
 	 * @return the user
 	 */
@@ -40,7 +37,8 @@ public class MMUserProfileFragment extends Fragment
 	}
 
 	/**
-	 * @param aUser the user to set
+	 * @param aUser
+	 *            the user to set
 	 */
 	public void setUser(MMUser aUser)
 	{
@@ -70,14 +68,9 @@ public class MMUserProfileFragment extends Fragment
 			@Override
 			public void onClick(View aView)
 			{
-				try
-				{
-					MMNetworkTask.sendMeetMeMessage(InetAddress
-							.getByName(((MMUserProfileActivity) getActivity())
-									.getUser().getId()));
-				} catch (UnknownHostException e)
-				{
-				}
+				MMNetworkTask
+						.sendMeetMeMessage(((MMUserProfileActivity) getActivity())
+								.getUser().getIpAddress());
 			}
 
 		});
@@ -88,7 +81,6 @@ public class MMUserProfileFragment extends Fragment
 					@Override
 					public void onClick(View aView)
 					{
-						
 						intentChatActivity();
 					}
 
@@ -103,7 +95,7 @@ public class MMUserProfileFragment extends Fragment
 		super.onActivityCreated(aSavedInstanceState);
 		setUser(((MMUserProfileActivity) getActivity()).getUser());
 		fillTableWithUserData();
-		
+
 	}
 
 	/**
@@ -145,13 +137,14 @@ public class MMUserProfileFragment extends Fragment
 		theDescriptionTextView.setText("Description: \n"
 				+ getUser().getDescription());
 	}
-	
-	private void intentChatActivity() {
-		Intent theIntent = new Intent(getActivity(),
-				MMChatActivity.class);
+
+	private void intentChatActivity()
+	{
+		Intent theIntent = new Intent(getActivity(), MMChatActivity.class);
 		theIntent.putExtra(MMSupporting.MMUSER_KEY, getUser());
-		startActivityForResult(theIntent, MMSupporting.REQUEST_CODE_MMCHAT_ACTIVITY);
-		
+		startActivityForResult(theIntent,
+				MMSupporting.REQUEST_CODE_MMCHAT_ACTIVITY);
+
 	}
 
 }

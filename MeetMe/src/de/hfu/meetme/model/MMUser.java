@@ -154,18 +154,21 @@ public class MMUser implements Serializable
 	 * Appends a {@link String} to the chat log.
 	 * @param aChatMessage the {@link String} to append
 	 */
-	public void appendChatMessage(String aChatMessage)
+	public synchronized void appendChatMessage(String aChatMessage, MMUser anUser)
 	{
 		if (aChatMessage == null)
 			throw new NullPointerException("chat message is null.");
 		
-		getChatLog().append(aChatMessage);
+		if (anUser == null)
+			throw new NullPointerException("user is null.");
+		
+		getChatLog().append('<' + anUser.getUsername() + "> " + aChatMessage+"\n\n");
 	}
 
 	/**
 	 * Removes all messages from the chat log.
 	 */
-	public void clearChatLog()
+	public synchronized void clearChatLog()
 	{
 		getChatLog().setLength(0); // or getChatLog().delete(0, getChatLog().length());
 	}
@@ -174,7 +177,7 @@ public class MMUser implements Serializable
 	 * Returns the chat log as {@link String}.
 	 * @return the chat log as {@link String}
 	 */
-	public String getChatLogAsString()
+	public synchronized String getChatLogAsString()
 	{
 		return getChatLog().toString();
 	}
