@@ -133,7 +133,7 @@ public class MMChatFragment extends Fragment implements
 	public void onActivityCreated(Bundle aSavedInstanceState)
 	{
 		super.onActivityCreated(aSavedInstanceState);
-		setUser(((MMChatActivity) getActivity()).getUser());
+		setUser(MMUser.getUserById(((MMChatActivity) getActivity()).getUser().getId()));
 		getChatLog().setText(getUser().getChatLogAsString());
 	}
 
@@ -155,12 +155,9 @@ public class MMChatFragment extends Fragment implements
 	public void managerEventPerformed(MMMessageManagerEvent aMessageManagerEvent)
 	{
 		if (aMessageManagerEvent.isUserMessage()
-				&& aMessageManagerEvent.getUser().equals(getUser()))
+				&& aMessageManagerEvent.getUser() == getUser())
 		{
-			aMessageManagerEvent.getUser().appendChatMessage(
-					aMessageManagerEvent.getMessage(),
-					aMessageManagerEvent.getUser());
-			updateChatView();
+			updateChatView();	
 		}
 	}
 }

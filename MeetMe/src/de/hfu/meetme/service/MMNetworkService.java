@@ -68,7 +68,12 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 		if (aMessageManagerEvent.isUserWantsAMeeting())
 		{
 			generateNotification(aMessageManagerEvent.getUser(), " wants to meet you!");
-		}		
+		}
+		else if (aMessageManagerEvent.isUserMessage())
+		{
+			MMUser theUser = MMUser.getUserById(aMessageManagerEvent.getUser().getId());	
+			theUser.appendChatMessage(aMessageManagerEvent.getMessage(), theUser);
+		}
 	}
 	
 	/**
