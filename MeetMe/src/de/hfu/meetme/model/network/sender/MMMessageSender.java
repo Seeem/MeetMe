@@ -55,9 +55,9 @@ public class MMMessageSender
 	 * @param aMessage the message to send
 	 * @throws RuntimeException
 	 */
-	public void sendUDPMessage(InetAddress anInetAdress, String aMessage)
+	public void sendUDPMessage(MMUser anUser, String aMessage)
 	{
-		sendUDPMessage(anInetAdress, MMNetworkUtil.UDP_PORT, aMessage, MMMessageType.MESSAGE);
+		sendUDPMessage(anUser.getIpAddress(), MMNetworkUtil.UDP_PORT, aMessage, MMMessageType.MESSAGE);
 	}
 	
 	/**
@@ -65,9 +65,9 @@ public class MMMessageSender
 	 * @param aMessageType
 	 * @param anUser
 	 */
-	public void sendUDPMessage(InetAddress anInetAddress, MMMessageType aMessageType, MMUser anUser)
+	public void sendUDPMessage(MMUser anTargetUser, MMMessageType aMessageType, MMUser anUser)
 	{
-		sendUDPMessage(anInetAddress, MMNetworkUtil.UDP_PORT, anUser.toUdpMessage(), aMessageType);
+		sendUDPMessage(anTargetUser.getIpAddress(), MMNetworkUtil.UDP_PORT, anUser.toUdpMessage(), aMessageType);
 	}
 	
 	// Internals:

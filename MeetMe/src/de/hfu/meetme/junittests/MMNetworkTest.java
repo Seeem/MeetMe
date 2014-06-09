@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import de.hfu.meetme.junittests.support.MMTestSupport;
 import de.hfu.meetme.model.network.MMNetworkUtil;
 import de.hfu.meetme.model.network.message.MMMessageEvent;
 import de.hfu.meetme.model.network.message.MMMessageListener;
@@ -77,7 +78,7 @@ public class MMNetworkTest
 		};	
 		theMessageReceiver.addMessageListener(theMessageListener);
 		theMessageReceiver.startReceiver();
-		theMessageSender.sendUDPMessage(MMNetworkUtil.getMyLanAddress(), "Hello World!");
+		theMessageSender.sendUDPMessage(MMTestSupport.createANewValidUser(MMNetworkUtil.getMyLanAddressAsString()), "Hello World!");
 		Thread.sleep(100);
 		theMessageReceiver.stopReceiver();
 		assertFalse(theHasErrorBoolean);
