@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.R;
+import de.hfu.meetme.model.MMUser;
 
 /**
  * 
@@ -16,6 +17,27 @@ import de.hfu.meetme.R;
  */
 public class MMChatActivity extends Activity
 {
+	
+	/** */
+	private MMUser user;
+	
+	//Accessors
+	
+	/**
+	 * @return the user
+	 */
+	public MMUser getUser()
+	{
+		return user;
+	}
+
+	/**
+	 * @param aUser the user to set
+	 */
+	public void setUser(MMUser aUser)
+	{
+		user = aUser;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -30,6 +52,7 @@ public class MMChatActivity extends Activity
 					.getInt(MMSupporting.NOTIFICATION_ID);
 			NotificationManager theManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 			theManager.cancel(theNotificationId);
+			setUser((MMUser) theExtras.getSerializable(MMSupporting.MMUSER_KEY));
 		}
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}

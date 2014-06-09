@@ -77,11 +77,11 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 	 *            the user who sent the message. His username will be used as
 	 *            notification title, his id as notification id to seperate
 	 *            notifications from distinct users.
-	 * @param message
+	 * @param aMessage
 	 *            the message to be shown as notification text, e.g.
 	 *            "wants to meet you!"
 	 */
-	private void generateNotification(final MMUser anUser, final String message)
+	private void generateNotification(final MMUser anUser, final String aMessage)
 	{		
 		if (anUser == null)
 			throw new NullPointerException("user is null.");
@@ -92,13 +92,15 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 			
 		Intent theIntent = new Intent(this, MMChatActivity.class);
 		theIntent.putExtra(MMSupporting.NOTIFICATION_ID, theId);
+		theIntent.putExtra(MMSupporting.MMUSER_KEY, anUser);
 
 		Notification theNotification = new Notification.Builder(this)
-				.setContentTitle(anUser.getUsername()).setContentText(message)
+				.setContentTitle(anUser.getUsername())
+				.setContentText(aMessage)
 				.setWhen(System.currentTimeMillis())
 				.setDefaults(Notification.DEFAULT_ALL)
 				.setSmallIcon(android.R.drawable.ic_dialog_email)
-				.setTicker(anUser.getUsername() + " wants to meet you!")
+				.setTicker(anUser.getUsername() + aMessage)
 				.setLights(0xFFFFFFFF, 2000, 3000)
 				.setContentIntent(PendingIntent.getActivity(this, 0, theIntent, PendingIntent.FLAG_UPDATE_CURRENT))
 				.build();
