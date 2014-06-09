@@ -2,6 +2,7 @@ package de.hfu.meetme.views;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -57,6 +58,11 @@ public class MMChatFragment extends Fragment
 			}
 
 		});
+		
+		//Make TextView scrollable
+		((TextView) theView.findViewById(R.id.mmchat_fragment_chat_text_view))
+			.setMovementMethod(new ScrollingMovementMethod());
+		
 
 		return theView;
 	}
