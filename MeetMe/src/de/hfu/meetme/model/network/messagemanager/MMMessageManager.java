@@ -118,24 +118,24 @@ public class MMMessageManager implements MMMessageListener
 	 * @param anInetAddress the {@link InetAddress} of the target
 	 * @param cChatMessage the chat message to send
 	 */
-	public void sendChatMessage(MMUser anTargetUser, String aChatMessage)
+	public void sendChatMessage(InetAddress anInetAddress, String aChatMessage)
 	{
 		if (MMUser.getMyself() == null)
 			throw new IllegalStateException("myself is null.");
 		
-		getMessageSender().sendUDPMessage(anTargetUser, aChatMessage);	
+		getMessageSender().sendUDPMessage(anInetAddress, aChatMessage);	
 	}
 	
 	/**
 	 * Sends a MEETME message to a single target
 	 * @param anInetAddress the {@link InetAddress} of the target
 	 */
-	public void sendMeetMeMessage(MMUser anTargetUser)
+	public void sendMeetMeMessage(InetAddress anInetAddress)
 	{
 		if (MMUser.getMyself() == null)
 			throw new IllegalStateException("myself is null.");
 		
-		getMessageSender().sendUDPMessage(anTargetUser, MMMessageType.MEETME, MMUser.getMyself());	
+		getMessageSender().sendUDPMessage(anInetAddress, MMMessageType.MEETME, MMUser.getMyself());	
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class MMMessageManager implements MMMessageListener
 			{							
 				if (MMUser.addUserIfNotAlreadyAdded(theUser))
 					pushMessageManagerEvent(MMMessageManagerEvent.getUserAddedInstance(theUser));
-				getMessageSender().sendUDPMessage(theUser, MMMessageType.CONNECT, MMUser.getMyself());	
+				getMessageSender().sendUDPMessage(aMessageEvent.getSenderAddress(), MMMessageType.CONNECT, MMUser.getMyself());	
 			}
 			// User disconnects:
 			else if (aMessageEvent.isDisconnectMessage())

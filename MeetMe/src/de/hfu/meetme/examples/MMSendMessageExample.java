@@ -41,7 +41,7 @@ public class MMSendMessageExample implements MMMessageListener
 			Thread.sleep(100);
 			messageSender.sendUDPBroadcastMessage(MMMessageType.CONNECT, MMTestSupport.createANewValidUser());
 			Thread.sleep(100);
-			messageSender.sendUDPMessage(MMTestSupport.createANewValidUser("127.0.0.1"), "Hallo Welt!");
+			messageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), "Hallo Welt!");
 			Thread.sleep(100);
 		} 
 		catch (Exception anException)

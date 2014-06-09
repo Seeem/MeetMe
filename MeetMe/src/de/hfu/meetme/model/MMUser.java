@@ -3,8 +3,6 @@ package de.hfu.meetme.model;
 
 
 import java.io.Serializable;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -97,22 +95,6 @@ public class MMUser implements Serializable
 	
 	// MM-API (Instance):
 	
-	/**
-	 * Returns the IP address as {@link InetAddress}.
-	 * @return the IP address
-	 */
-	public InetAddress getIpAddress()
-	{
-		try
-		{
-			return InetAddress.getByName(getId());
-		} 
-		catch (UnknownHostException e)
-		{
-			return null;
-		}
-	}
-		
 	/**
 	 * Returns whether the user is a man.
 	 * @return true if the users gender is male, false otherwise

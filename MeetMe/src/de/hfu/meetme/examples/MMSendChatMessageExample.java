@@ -3,9 +3,11 @@
  */
 package de.hfu.meetme.examples;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.junit.Test;
 
-import de.hfu.meetme.junittests.support.MMTestSupport;
 import de.hfu.meetme.model.network.sender.MMMessageSender;
 
 /**
@@ -23,8 +25,15 @@ public class MMSendChatMessageExample
 	// Example as test:
 
 	@Test public void testMain()
-	{	
-		messageSender.sendUDPMessage(MMTestSupport.createANewValidUser("192.168.119.53"), "Bla bla bla.");
+	{
+		try
+		{
+			messageSender.sendUDPMessage(InetAddress.getByName("192.168.119.53"), "Bla bla bla.");
+		} catch (UnknownHostException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import de.hfu.meetme.junittests.support.MMTestSupport;
 import de.hfu.meetme.model.network.MMNetworkUtil;
 import de.hfu.meetme.model.network.message.MMMessageEvent;
 import de.hfu.meetme.model.network.message.MMMessageListener;
@@ -67,7 +66,7 @@ public class MMSendMessageTest implements MMMessageListener
 		{
 			messageReceiver.addMessageListener(this);
 			messageReceiver.startReceiver();
-			messageSender.sendUDPMessage(MMTestSupport.createANewValidUser("127.0.0.1"), MMNetworkUtil.UDP_MESSAGE_PING);
+			messageSender.sendUDPMessage(MMNetworkUtil.getLocalhostAddress(), MMNetworkUtil.UDP_MESSAGE_PING);
 			Thread.sleep(500);
 		}
 		catch (Exception anException)

@@ -5,7 +5,6 @@ package de.hfu.meetme.model.network.networktask;
 
 import java.net.InetAddress;
 
-import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.messagemanager.MMMessageManager;
 import de.hfu.meetme.model.network.messagemanager.MMMessageManagerListener;
 
@@ -25,8 +24,8 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	
 	// Instance-Members:
 	
-	/** The target {@link MMUser} */
-	private MMUser userTarget;
+	/** The {@link InetAddress}. */
+	private InetAddress inetAddress;
 	
 	/** The chat message. */
 	private String chatMessage;
@@ -37,9 +36,9 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	 * Creates a new {@link MMNetworkTask} instance with a specific {@link InetAddress}.
 	 * @param anInetAddress the {@link InetAddress} to set
 	 */
-	private MMNetworkTask(MMUser aTargetUser)
+	private MMNetworkTask(InetAddress anInetAddress)
 	{
-		setUserTarget(aTargetUser);
+		setInetAddress(anInetAddress);
 	}
 	
 	/**
@@ -47,9 +46,9 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	 * @param anInetAddress the {@link InetAddress} to set
 	 * @param aChatMessage the chat message to set
 	 */
-	private MMNetworkTask(MMUser aTargetUser, String aChatMessage)
+	private MMNetworkTask(InetAddress anInetAddress, String aChatMessage)
 	{
-		setUserTarget(aTargetUser);
+		setInetAddress(anInetAddress);
 		setChatMessage(aChatMessage);
 	}
 	
@@ -88,9 +87,9 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	 * Starts a new MEET_ME {@link MMNetworkTask} with a specific {@link InetAddress}.
 	 * @param anInetAddress the {@link InetAddress} to set
 	 */
-	public static void sendMeetMeMessage(MMUser aTargetUser)
+	public static void sendMeetMeMessage(InetAddress anInetAddress)
 	{
-		new MMNetworkTask(aTargetUser).execute(MMNetworkTaskType.MEET_ME);
+		new MMNetworkTask(anInetAddress).execute(MMNetworkTaskType.MEET_ME);
 	}
 	
 	/**
@@ -98,9 +97,9 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	 * @param anInetAddress the {@link InetAddress} to set
 	 * @param aChatMessage the chat message to set
 	 */
-	public static void sendChatMessage(MMUser aTargetUser, String aChatMessage)
+	public static void sendChatMessage(InetAddress anInetAddress, String aChatMessage)
 	{
-		new MMNetworkTask(aTargetUser, aChatMessage).execute(MMNetworkTaskType.CHAT_MESSAGE);
+		new MMNetworkTask(anInetAddress, aChatMessage).execute(MMNetworkTaskType.CHAT_MESSAGE);
 	}
 		
 	/**
@@ -169,7 +168,7 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 		}
 		else if (someParameters[0].isMeetMe())
 		{
-			getMessageManager().sendMeetMeMessage(getUserTarget());
+			getMessageManager().sendMeetMeMessage(getInetAddress());
 		}
 		else if (someParameters[0].isUpdate())
 		{
@@ -177,12 +176,11 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 		}
 		else if (someParameters[0].isChatMessage())
 		{
-			getMessageManager().sendChatMessage(getUserTarget(), getChatMessage());
+			getMessageManager().sendChatMessage(getInetAddress(), getChatMessage());
 		}
 		
 		return null;
 	}
-	
 
 	// Accessors:
 	
@@ -194,7 +192,26 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 		return messageManager;
 	}
 
+	/**
+	 * @return the inetAddress
+	 */
+	private InetAddress getInetAddress()
+	{
+		return inetAddress;
+	}
+	
+	/**
+	 * @param anInetAddress the inetAddress to set
+	 */
+	private void setInetAddress(InetAddress anInetAddress)
+	{
+		if (anInetAddress == null)
+			throw new NullPointerException("internet address is null.");
+		
+		this.inetAddress = anInetAddress;
+	}
 
+	
 	/**
 	 * @return the chatMessage
 	 */
@@ -204,29 +221,12 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	}
 
 	
-	
 	/**
 	 * @param chatMessage the chatMessage to set
 	 */
 	private void setChatMessage(String chatMessage)
 	{
 		this.chatMessage = chatMessage;
-	}
-
-	/**
-	 * @return the userTarget
-	 */
-	public MMUser getUserTarget()
-	{
-		return userTarget;
-	}
-
-	/**
-	 * @param userTarget the userTarget to set
-	 */
-	public void setUserTarget(MMUser userTarget)
-	{
-		this.userTarget = userTarget;
 	}
 
 }
