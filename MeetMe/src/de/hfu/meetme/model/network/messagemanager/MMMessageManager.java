@@ -114,6 +114,19 @@ public class MMMessageManager implements MMMessageListener
 	}
 	
 	/**
+	 * Sends a MESSAGE message to a single target
+	 * @param anInetAddress the {@link InetAddress} of the target
+	 * @param cChatMessage the chat message to send
+	 */
+	public void sendChatMessage(InetAddress anInetAddress, String aChatMessage)
+	{
+		if (MMUser.getMyself() == null)
+			throw new IllegalStateException("myself is null.");
+		
+		getMessageSender().sendUDPMessage(anInetAddress, aChatMessage);	
+	}
+	
+	/**
 	 * Sends a MEETME message to a single target
 	 * @param anInetAddress the {@link InetAddress} of the target
 	 */
@@ -162,7 +175,20 @@ public class MMMessageManager implements MMMessageListener
 		
 		// Get the user:
 		MMUser theUser = MMUser.valueOf(aMessageEvent.getMessage());
+		
+		// Search for silence changes and correct them
+		// This security mechanism probably makes the update-functionality pointless in some ways.
+		// If you feel lucky test it out
+		if (theUser != null)
+		{
+			MMUser theUserToCompare = MMUser.getUserById(theUser.getId());
 			
+			if (theUserToCompare != null && !theUser.equals(theUserToCompare))
+			{
+				MMUser.updateUserIfAlreadyAdded(theUserToCompare);
+			}
+		}
+		
 		// Broadcast Messages:
 		if (aMessageEvent.isUdpProtocol() && aMessageEvent.isBroadcastMessage())
 		{			

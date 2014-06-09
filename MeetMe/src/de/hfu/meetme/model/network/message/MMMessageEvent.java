@@ -222,6 +222,17 @@ public class MMMessageEvent
 	{
 		return timestampAsString;
 	}
+
+
+	// To-String:
 	
+	@Override public String toString()
+	{
+		return "MMMessageEvent [message=" + message  + ", timestampAsString=" + timestampAsString
+				+ ", senderAddress=" + senderAddress + ", senderPort="
+				+ senderPort + ", messageProtocol=" + messageProtocol
+				+ ", messageTargetType=" + messageTargetType + ", messageType="
+				+ messageType + "]";
+	}
 
 }

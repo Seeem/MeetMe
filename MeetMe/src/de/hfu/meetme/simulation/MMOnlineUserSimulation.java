@@ -24,6 +24,8 @@ public class MMOnlineUserSimulation implements MMMessageManagerListener
 	@Test
 	public void testSimulation()
 	{
+		System.out.println("My Lan Address: " + MMNetworkUtil.getMyLanAddressAsString());
+		System.out.println();
 		MMUser.initializeUsers();
 		MMUser.setMyself(new MMUser(MMNetworkUtil.getMyLanAddressAsString(), MMGender.FEMALE, "SimulatedUser", "Geile", "Sau", MMTestSupport.getValidBirthday()));		
 		MMMessageManager theMessageManager = new MMMessageManager();
@@ -71,6 +73,11 @@ public class MMOnlineUserSimulation implements MMMessageManagerListener
 		{
 			System.out.println("User updated:");
 			aMessageManagerEvent.getUser().print();
+		}
+		else if (aMessageManagerEvent.isUserMessage())
+		{
+			System.out.println("User message:");
+			System.out.println(aMessageManagerEvent.getMessage());
 		}
 		System.out.println("-----");
 	}

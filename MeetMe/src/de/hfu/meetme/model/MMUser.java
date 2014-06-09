@@ -41,6 +41,9 @@ public class MMUser implements Serializable
 	/** The additional description of an user. */
 	private String description;
 	
+	/** The chat log of an user. */
+	private StringBuffer chatLog;
+	
 	// Class-Members:
 
 	/** The serial version UID of an MMUser-object. */
@@ -73,6 +76,7 @@ public class MMUser implements Serializable
 		setLastName(aLastName);
 		setBirthday(aBirthday);
 		setDescription(aDescription);
+		setChatLog(new StringBuffer());
 	}
 	
 	/**
@@ -125,6 +129,35 @@ public class MMUser implements Serializable
 	public int getNotificationId()
 	{
 		return Integer.parseInt(getId().replace(".", "").substring(getId().length() - 6));
+	}
+	
+	/**
+	 * Appends a {@link String} to the chat log.
+	 * @param aChatMessage the {@link String} to append
+	 */
+	public void appendChatMessage(String aChatMessage)
+	{
+		if (aChatMessage == null)
+			throw new NullPointerException("chat message is null.");
+		
+		getChatLog().append(aChatMessage);
+	}
+
+	/**
+	 * Removes all messages from the chat log.
+	 */
+	public void clearChatLog()
+	{
+		getChatLog().setLength(0); // or getChatLog().delete(0, getChatLog().length());
+	}
+	
+	/**
+	 * Returns the chat log as {@link String}.
+	 * @return the chat log as {@link String}
+	 */
+	public String getChatLogAsString()
+	{
+		return getChatLog().toString();
 	}
 	
 	// MM-API (Class):
@@ -450,6 +483,25 @@ public class MMUser implements Serializable
 		// TODO Validation
 		
 		this.id = id;
+	}
+	
+	/**
+	 * @return the chatLog
+	 */
+	public StringBuffer getChatLog()
+	{
+		return chatLog;
+	}
+
+	/**
+	 * @param aChatLog the chatLog to set
+	 */
+	public void setChatLog(StringBuffer aChatLog)
+	{
+		if (aChatLog == null)
+			throw new NullPointerException("chat log is null.");
+		
+		this.chatLog = aChatLog;
 	}
 	
 	// Accessors (Class):

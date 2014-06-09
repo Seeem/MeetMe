@@ -27,6 +27,9 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	/** The {@link InetAddress}. */
 	private InetAddress inetAddress;
 	
+	/** The chat message. */
+	private String chatMessage;
+	
 	// Constructor:
 	
 	/**
@@ -36,6 +39,17 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	private MMNetworkTask(InetAddress anInetAddress)
 	{
 		setInetAddress(anInetAddress);
+	}
+	
+	/**
+	 * Creates a new {@link MMNetworkTask} instance with a specific {@link InetAddress} and a chat message.
+	 * @param anInetAddress the {@link InetAddress} to set
+	 * @param aChatMessage the chat message to set
+	 */
+	private MMNetworkTask(InetAddress anInetAddress, String aChatMessage)
+	{
+		setInetAddress(anInetAddress);
+		setChatMessage(aChatMessage);
 	}
 	
 	/**
@@ -78,6 +92,16 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 		new MMNetworkTask(anInetAddress).execute(MMNetworkTaskType.MEET_ME);
 	}
 	
+	/**
+	 * Starts a new CHAT_MESSAGE {@link MMNetworkTask} with a specific {@link InetAddress} and a chat message.
+	 * @param anInetAddress the {@link InetAddress} to set
+	 * @param aChatMessage the chat message to set
+	 */
+	public static void sendChatMessage(InetAddress anInetAddress, String aChatMessage)
+	{
+		new MMNetworkTask(anInetAddress, aChatMessage).execute(MMNetworkTaskType.CHAT_MESSAGE);
+	}
+		
 	/**
 	 * Starts a new UPDATE {@link MMNetworkTask}.
 	 */
@@ -130,25 +154,29 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 	{
 		if (someParameters == null) return null;
 		
-		if (someParameters[0] == MMNetworkTaskType.START_LISTENING)
+		if (someParameters[0].isStartListening())
 		{
 			getMessageManager().startListening();
 		} 
-		else if (someParameters[0] == MMNetworkTaskType.STOP_LISTENING)
+		else if (someParameters[0].isStopListening())
 		{
 			getMessageManager().stopListening();
 		} 
-		else if (someParameters[0] == MMNetworkTaskType.REFRESH_USERLIST)
+		else if (someParameters[0].isRefreshUserlist())
 		{
 			getMessageManager().refreshUsers();
 		}
-		else if (someParameters[0] == MMNetworkTaskType.MEET_ME)
+		else if (someParameters[0].isMeetMe())
 		{
 			getMessageManager().sendMeetMeMessage(getInetAddress());
 		}
-		else if (someParameters[0] == MMNetworkTaskType.UPDATE)
+		else if (someParameters[0].isUpdate())
 		{
 			getMessageManager().sendUpdate();
+		}
+		else if (someParameters[0].isChatMessage())
+		{
+			getMessageManager().sendChatMessage(getInetAddress(), getChatMessage());
 		}
 		
 		return null;
@@ -181,6 +209,24 @@ public class MMNetworkTask extends AsyncTask<MMNetworkTaskType, Void, Void>
 			throw new NullPointerException("internet address is null.");
 		
 		this.inetAddress = anInetAddress;
+	}
+
+	
+	/**
+	 * @return the chatMessage
+	 */
+	private String getChatMessage()
+	{
+		return chatMessage;
+	}
+
+	
+	/**
+	 * @param chatMessage the chatMessage to set
+	 */
+	private void setChatMessage(String chatMessage)
+	{
+		this.chatMessage = chatMessage;
 	}
 
 }

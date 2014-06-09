@@ -10,7 +10,7 @@ package de.hfu.meetme.model.network.networktask;
 public enum MMNetworkTaskType
 {
 	
-	START_LISTENING, STOP_LISTENING, REFRESH_USERLIST, MEET_ME, UPDATE;
+	START_LISTENING, STOP_LISTENING, REFRESH_USERLIST, MEET_ME, UPDATE, CHAT_MESSAGE;
 	
 	// MM-API:
 	
@@ -59,4 +59,13 @@ public enum MMNetworkTaskType
 		return this == UPDATE;
 	}
 	
+	/**
+	 * Returns whether the {@link MMNetworkTaskType} is CHAT_MESSAGE.
+	 * @return true if the {@link MMNetworkTaskType} is CHAT_MESSAGE, false otherwise
+	 */
+	public boolean isChatMessage()
+	{
+		return this == CHAT_MESSAGE;
+	}
+
 }
