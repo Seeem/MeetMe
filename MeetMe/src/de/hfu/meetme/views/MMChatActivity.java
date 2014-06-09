@@ -31,6 +31,7 @@ public class MMChatActivity extends Activity
 			NotificationManager theManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 			theManager.cancel(theNotificationId);
 		}
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -50,7 +51,17 @@ public class MMChatActivity extends Activity
 		{
 			return true;
 		}
+		if (id == android.R.id.home)
+		{
+			finish();
+			return true;
+		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public void finish() {
+		super.finish();
 	}
 
 }

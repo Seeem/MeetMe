@@ -123,5 +123,11 @@
         android:layout_height="match_parent"
         android:onClick="fillTableWithUserData"
         android:text="@string/user_profile_fragment_meet_me_button_text" />
+    
+    <Button 
+        android:id="@+id/user_profile_fragment_chat_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/user_profile_fragment_chat_button_text"/>
 
 </LinearLayout>

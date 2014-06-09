@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMGender;
+import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.networktask.MMNetworkTask;
 
 /**
@@ -22,6 +25,27 @@ import de.hfu.meetme.model.network.networktask.MMNetworkTask;
  */
 public class MMUserProfileFragment extends Fragment
 {
+	
+	/**
+	 * The user clicked in the {@link MMUserListActivity}
+	 */
+	private MMUser user;
+	
+	/**
+	 * @return the user
+	 */
+	public MMUser getUser()
+	{
+		return user;
+	}
+
+	/**
+	 * @param aUser the user to set
+	 */
+	public void setUser(MMUser aUser)
+	{
+		user = aUser;
+	}
 
 	@Override
 	public void onCreate(Bundle aSavedInstanceState)
@@ -35,10 +59,10 @@ public class MMUserProfileFragment extends Fragment
 	{
 
 		// Inflate the layout for this fragment
-		View theView = anInflater.inflate(R.layout.fragment_user_profile,
+		final View theView = anInflater.inflate(R.layout.fragment_user_profile,
 				aContainer, false);
 
-		// Add an onClickListener
+		// Add an onClickListeners
 		Button theMeetMeButton = (Button) theView
 				.findViewById(R.id.user_profile_fragment_meet_me_button);
 		theMeetMeButton.setOnClickListener(new OnClickListener() {
@@ -48,12 +72,27 @@ public class MMUserProfileFragment extends Fragment
 			{
 				try
 				{
-					MMNetworkTask.sendMeetMeMessage(InetAddress.getByName(((MMUserProfileActivity) getActivity()).getUser().getId()));
-				} 
-				catch (UnknownHostException e) {}
+					MMNetworkTask.sendMeetMeMessage(InetAddress
+							.getByName(((MMUserProfileActivity) getActivity())
+									.getUser().getId()));
+				} catch (UnknownHostException e)
+				{
+				}
 			}
 
 		});
+
+		((Button) theView.findViewById(R.id.user_profile_fragment_chat_button))
+				.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View aView)
+					{
+						
+						intentChatActivity();
+					}
+
+				});
 
 		return theView;
 	}
@@ -62,7 +101,9 @@ public class MMUserProfileFragment extends Fragment
 	public void onActivityCreated(Bundle aSavedInstanceState)
 	{
 		super.onActivityCreated(aSavedInstanceState);
+		setUser(((MMUserProfileActivity) getActivity()).getUser());
 		fillTableWithUserData();
+		
 	}
 
 	/**
@@ -74,27 +115,22 @@ public class MMUserProfileFragment extends Fragment
 	{
 		TextView theUserNameTextView = (TextView) getActivity().findViewById(
 				R.id.user_profile_fragment_user_name_value_tv);
-		theUserNameTextView.setText(((MMUserProfileActivity) getActivity())
-				.getUser().getUsername());
+		theUserNameTextView.setText(getUser().getUsername());
 
 		TextView theFirstNameTextView = (TextView) getActivity().findViewById(
 				R.id.user_profile_fragment_first_name_value_tv);
-		theFirstNameTextView.setText(((MMUserProfileActivity) getActivity())
-				.getUser().getFirstName());
+		theFirstNameTextView.setText(getUser().getFirstName());
 
 		TextView theLastNameTextView = (TextView) getActivity().findViewById(
 				R.id.user_profile_fragment_last_name_value_tv);
-		theLastNameTextView.setText(((MMUserProfileActivity) getActivity())
-				.getUser().getLastName());
+		theLastNameTextView.setText(getUser().getLastName());
 
 		TextView theBirthdayTextView = (TextView) getActivity().findViewById(
 				R.id.user_profile_fragment_birthday_value_tv);
-		theBirthdayTextView.setText(((MMUserProfileActivity) getActivity())
-				.getUser().getBirthdayAsString());
+		theBirthdayTextView.setText(getUser().getBirthdayAsString());
 
 		String theGenderText;
-		MMGender theGender = ((MMUserProfileActivity) getActivity()).getUser()
-				.getGender();
+		MMGender theGender = getUser().getGender();
 		if (theGender == MMGender.MALE)
 			theGenderText = "Male";
 		else
@@ -107,8 +143,15 @@ public class MMUserProfileFragment extends Fragment
 		TextView theDescriptionTextView = (TextView) getActivity()
 				.findViewById(R.id.user_profile_fragment_description_tv);
 		theDescriptionTextView.setText("Description: \n"
-				+ ((MMUserProfileActivity) getActivity()).getUser()
-						.getDescription());
+				+ getUser().getDescription());
+	}
+	
+	private void intentChatActivity() {
+		Intent theIntent = new Intent(getActivity(),
+				MMChatActivity.class);
+		theIntent.putExtra(MMSupporting.MMUSER_KEY, getUser());
+		startActivityForResult(theIntent, MMSupporting.REQUEST_CODE_MMCHAT_ACTIVITY);
+		
 	}
 
 }
