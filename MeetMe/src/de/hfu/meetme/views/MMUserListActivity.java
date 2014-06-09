@@ -26,6 +26,7 @@ public class MMUserListActivity extends Activity
 	{
 		super.onCreate(aSavedInstanceState);
 		setContentView(R.layout.activity_user_list);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -46,14 +47,18 @@ public class MMUserListActivity extends Activity
 			intentSettingsActivity();
 			return true;
 		}
-		if (theId == R.id.action_bar_refresh)
+		else if (theId == R.id.action_bar_refresh)
 		{
 			MMNetworkTask.refreshUserlist();
 			return true;
 		}
-		if (theId == R.id.action_stop_service)
+		else if (theId == R.id.action_stop_service)
 		{
 			stopService(new Intent(this, MMNetworkService.class));
+			return true;
+		}
+		else if (theId == android.R.id.home) {
+			finish();
 			return true;
 		}
 		return super.onOptionsItemSelected(anItem);

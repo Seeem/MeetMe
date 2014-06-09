@@ -1,12 +1,11 @@
 package de.hfu.meetme.views;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import de.hfu.meetme.R;
 import de.hfu.meetme.MMSupporting;
+import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.networktask.MMNetworkTask;
 
@@ -23,8 +22,7 @@ public class MMSettingsActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-		final ActionBar theActionBar = getActionBar();
-		theActionBar.setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
