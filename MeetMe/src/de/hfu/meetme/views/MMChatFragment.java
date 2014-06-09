@@ -50,6 +50,8 @@ public class MMChatFragment extends Fragment
 						"very very very very very very very very very very " +
 						"very very very very very very very very very " +
 						"very very very very very very very very very " +
+						"very very very very very very very very very " +
+						"very very very very very very very very very" +
 						"very very very very very very very very very long text");
 				//Test
 			}

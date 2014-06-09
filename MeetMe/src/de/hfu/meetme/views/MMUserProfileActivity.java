@@ -18,10 +18,7 @@ import de.hfu.meetme.model.MMUser;
  */
 public class MMUserProfileActivity extends Activity
 {
-	/**
-	 * The user clicked in the {@link MMUserListActivity}
-	 */
-	private MMUser user;
+	
 
 	// Accessors:
 	
@@ -30,16 +27,9 @@ public class MMUserProfileActivity extends Activity
 	 */
 	protected MMUser getUser()
 	{
-		return user;
+		return (MMUser) getIntent().getExtras().getSerializable(MMSupporting.MMUSER_KEY);
 	}
 
-	/**
-	 * @param anUser the user to set
-	 */
-	protected void setUser(MMUser anUser)
-	{
-		user = anUser;
-	}	
 	
 	@Override
 	protected void onCreate(Bundle aSavedInstanceState)
@@ -49,9 +39,6 @@ public class MMUserProfileActivity extends Activity
 		
 		final ActionBar theActionBar = getActionBar();
 		theActionBar.setDisplayHomeAsUpEnabled(true);
-		
-		Bundle theExtras = getIntent().getExtras();
-		setUser((MMUser) theExtras.getSerializable(MMSupporting.MMUSER_KEY));
 	}
 
 	@Override

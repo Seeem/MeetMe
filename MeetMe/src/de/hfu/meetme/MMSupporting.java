@@ -37,6 +37,9 @@ public final class MMSupporting
 	/** */
 	public final static int REQUEST_CODE_USER_PROFILE_ACTIVITY = 3;
 	
+	/** */
+	public final static int REQUEST_CODE_MMCHAT_ACTIVITY = 4;
+	
 	/**
 	 * Reads the user profile data from the SharedPreferences, set in the
 	 * settings.

@@ -79,10 +79,7 @@ public class MMMainActivity extends Activity
 			MMUser.setMyself(MMSupporting.getUserFromSharedPreferences(this, false));
 			MMUser.getMyself().print();
 		}
-		
 		startService(new Intent(this, MMNetworkService.class));
-		Intent intent = new Intent(this, MMChatActivity.class); //TODO: Remove
-		startActivity(intent);
 	}
 
 	/** */
