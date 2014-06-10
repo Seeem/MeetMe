@@ -4,11 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import de.hfu.meetme.model.validation.MMUserValidation;
 import android.content.Context;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.util.AttributeSet;
+import de.hfu.meetme.model.validation.MMUserValidation;
 
 /**
  * 
@@ -93,13 +93,14 @@ public class MMEditTextPreference extends EditTextPreference
 		Calendar theCal = Calendar.getInstance();
 		SimpleDateFormat theDateFormat = (SimpleDateFormat) SimpleDateFormat
 				.getDateInstance();
-
+		theDateFormat.setLenient(false);
+		
 		try
 		{
 			theCal.setTime(theDateFormat.parse(aBirthday));
 		} catch (ParseException e)
 		{
-			e.printStackTrace();
+			return false;
 		}
 
 		return MMUserValidation.isValidBirthday(theCal).isValid();

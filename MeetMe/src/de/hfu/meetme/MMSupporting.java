@@ -74,6 +74,7 @@ public final class MMSupporting
 		final String theDescription = theSettings.getString("description", "");
 
 		Calendar theCal = Calendar.getInstance();
+		theCal.setLenient(false);
 		SimpleDateFormat theDateFormat = (SimpleDateFormat) SimpleDateFormat
 				.getDateInstance();
 
