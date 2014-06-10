@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <PreferenceCategory 
-        android:title="@string/pref_category_name" >
+        android:title="@string/pref_category_title_user_profile" >
         <de.hfu.meetme.views.MMEditTextPreference
             android:inputType="text"
             android:key="username"
@@ -37,6 +37,18 @@
             android:key="description"
             android:summary="@string/pref_summary_description"
             android:title="@string/pref_title_description" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="@string/pref_category_title_network">
+        
+        <de.hfu.meetme.views.MMSwitchPreference
+            android:title="@string/pref_service_switch"
+            android:switchTextOff="@string/pref_service_switch_text_off"
+            android:switchTextOn="@string/pref_service_switch_text_on"
+            android:summaryOn="@string/pref_service_switch_summary_on"
+            android:summaryOff="@string/pref_service_switch_summary_off"
+            android:key="service_state_on" />
     </PreferenceCategory>
 
 </PreferenceScreen>

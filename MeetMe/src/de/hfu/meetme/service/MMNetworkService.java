@@ -23,6 +23,10 @@ import de.hfu.meetme.views.MMChatActivity;
  */
 public class MMNetworkService extends Service implements MMMessageManagerListener
 {
+	
+	//Class members:
+	
+	public static boolean SERVICE_STATE_ON;
 
 	//Instance Members:
 	
@@ -41,14 +45,17 @@ public class MMNetworkService extends Service implements MMMessageManagerListene
 		MMNetworkTask.addMessageManagerListener(this);
 		MMNetworkTask.startListening();
 		Toast.makeText(this, "Service started", Toast.LENGTH_SHORT).show();
+		SERVICE_STATE_ON = true;
 		return START_STICKY;
 	}
 	
 	@Override
 	public void onDestroy() {
+		super.onDestroy();
 		MMNetworkTask.removeMessageManagerListener(this);
 		MMNetworkTask.stopListening();
 		Toast.makeText(this, "Service stopped", Toast.LENGTH_SHORT).show();
+		SERVICE_STATE_ON = false;
 	}
 
 	@Override

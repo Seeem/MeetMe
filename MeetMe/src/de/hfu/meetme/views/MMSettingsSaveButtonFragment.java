@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.R;
+import de.hfu.meetme.model.MMUser;
+import de.hfu.meetme.model.network.networktask.MMNetworkTask;
 
 /**
  * 
@@ -39,7 +42,12 @@ public class MMSettingsSaveButtonFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				getActivity().finish();
+				MMUser user = MMSupporting.getUserFromSharedPreferences(getActivity(), false);
+				if (user != null)
+				{
+					MMUser.setMyself(user);
+					MMNetworkTask.sendUpdate();	
+				}
 			}
 
 		});

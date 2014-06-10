@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
@@ -12,6 +13,7 @@ import de.hfu.meetme.model.MMGender;
 import de.hfu.meetme.model.MMUser;
 import de.hfu.meetme.model.network.MMNetworkUtil;
 import de.hfu.meetme.model.validation.MMUserValidation;
+import de.hfu.meetme.service.MMNetworkService;
 
 /**
  * 
@@ -28,18 +30,20 @@ public final class MMSupporting
 	/** */
 	public final static String MMUSER_KEY = "MMUserKey";
 
+	// public final static String[] SETTINGS_KEYS = {}; TODO
+
 	/** */
-	public static final int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
-	
+	public final static int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
+
 	/** */
-	public static final int REQUEST_CODE_USER_LIST_ACTIVITY = 2;
-	
+	public final static int REQUEST_CODE_USER_LIST_ACTIVITY = 2;
+
 	/** */
 	public final static int REQUEST_CODE_USER_PROFILE_ACTIVITY = 3;
-	
+
 	/** */
 	public final static int REQUEST_CODE_MMCHAT_ACTIVITY = 4;
-	
+
 	/**
 	 * Reads the user profile data from the SharedPreferences, set in the
 	 * settings.
@@ -63,9 +67,9 @@ public final class MMSupporting
 
 		// Get Data
 		final String theId = MMNetworkUtil.getMyLanAddressAsString();
-		final String theUsername = theSettings.getString("username", "Unknown");
-		final String theFirstName = theSettings.getString("first_name", "John");
-		final String theLastName = theSettings.getString("last_name", "Doe");
+		final String theUsername = theSettings.getString("username", "");
+		final String theFirstName = theSettings.getString("first_name", "");
+		final String theLastName = theSettings.getString("last_name", "");
 		final boolean isGenderMale = theSettings.getBoolean("gender", true);
 		final String theDescription = theSettings.getString("description", "");
 
@@ -75,8 +79,8 @@ public final class MMSupporting
 
 		try
 		{
-			theCal.setTime(theDateFormat.parse(theSettings.getString("date_of_birth",
-					"01.01.2001")));
+			theCal.setTime(theDateFormat.parse(theSettings.getString(
+					"date_of_birth", "01.01.01")));
 		} catch (ParseException e)
 		{
 			e.printStackTrace();
@@ -97,9 +101,10 @@ public final class MMSupporting
 				isValid = false;
 				Toast.makeText(
 						aContext,
-						MMUserValidation.isValidUsername(theUsername).getMessage(),
-						Toast.LENGTH_SHORT).show();
-			} else if (!MMUserValidation.isValidFirstName(theFirstName).isValid())
+						MMUserValidation.isValidUsername(theUsername)
+								.getMessage(), Toast.LENGTH_SHORT).show();
+			} else if (!MMUserValidation.isValidFirstName(theFirstName)
+					.isValid())
 			{
 				isValid = false;
 				Toast.makeText(
@@ -111,8 +116,8 @@ public final class MMSupporting
 				isValid = false;
 				Toast.makeText(
 						aContext,
-						MMUserValidation.isValidLastName(theLastName).getMessage(),
-						Toast.LENGTH_SHORT).show();
+						MMUserValidation.isValidLastName(theLastName)
+								.getMessage(), Toast.LENGTH_SHORT).show();
 			} else if (!MMUserValidation.isValidBirthday(theCal).isValid())
 			{
 				isValid = false;
@@ -137,9 +142,28 @@ public final class MMSupporting
 		}
 
 		if (isValid)
-			return new MMUser(theId, gender, theUsername, theFirstName, theLastName, theCal,
-					theDescription);
+		{
+			controlService(aContext);
+			return new MMUser(theId, gender, theUsername, theFirstName,
+					theLastName, theCal, theDescription);
+		}
 		return null;
+	}
+
+	public static void controlService(Context aContext)
+	{
+		final SharedPreferences theSettings = PreferenceManager
+				.getDefaultSharedPreferences(aContext);
+
+		if (theSettings.getBoolean("service_state_on", true))
+		{
+			if (!MMNetworkService.SERVICE_STATE_ON)
+				aContext.startService(new Intent(aContext,
+						MMNetworkService.class));
+		} else
+		{
+			aContext.stopService(new Intent(aContext, MMNetworkService.class));
+		}
 	}
 
 }
