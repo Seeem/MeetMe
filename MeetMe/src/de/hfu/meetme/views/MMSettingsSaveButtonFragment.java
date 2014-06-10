@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
@@ -47,6 +48,8 @@ public class MMSettingsSaveButtonFragment extends Fragment
 				{
 					MMUser.setMyself(user);
 					MMNetworkTask.sendUpdate();	
+					Toast.makeText(getActivity(), "Your profile has been saved",
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 

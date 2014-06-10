@@ -9,14 +9,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="de.hfu.meetme.MMChatActivity" >
 
-    <TextView
-        android:id="@+id/mmchat_fragment_chat_text_view"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:id="@+id/mmchat_fragment_scroll_view"
+        android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="8"
-        android:scrollbars="vertical"
-        android:text="" 
-        android:textSize="18sp" />
+        android:fillViewport="true"
+        android:scrollbars="vertical" >
+
+        <TextView
+            android:id="@+id/mmchat_fragment_chat_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="18sp" />
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,18 +34,18 @@
         <EditText
             android:id="@+id/mmchat_fragment_chat_edit_text"
             android:layout_width="0dp"
-            android:layout_weight="8"
             android:layout_height="wrap_content"
+            android:layout_weight="8"
             android:inputType="textAutoCorrect|textMultiLine"
-            android:minEms="11"
             android:maxEms="13"
+            android:minEms="11"
             android:textSize="18sp" />
 
         <ImageButton
             android:id="@+id/mmchat_fragment_chat_send_button"
             android:layout_width="0dp"
-            android:layout_weight="2"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:contentDescription="@string/mm_chat_fragment_send_button_description"
             android:src="@android:drawable/ic_media_play" />
     </LinearLayout>

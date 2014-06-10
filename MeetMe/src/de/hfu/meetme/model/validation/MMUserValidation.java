@@ -88,7 +88,9 @@ public final class MMUserValidation
 			return new MMValidation("username is null");
 		
 		if (!USERNAME_PATTERN.matcher(aUsername).matches())
-			return new MMValidation("username does not match");
+			return new MMValidation("The username has to start with a capital letter " +
+					"and must have a size between 2 and 20. Only letters and numbers " +
+					"allowed.");
 		
 		return new MMValidation();
 	}
@@ -105,7 +107,8 @@ public final class MMUserValidation
 			return new MMValidation("first name is null");
 		
 		if (!FIRSTNAME_PATTERN.matcher(aFirstName).matches())
-			return new MMValidation("first name does not match");
+			return new MMValidation("The first name has to start with a capital letter " +
+					"and must have a size between 2 and 20. Only letters allowed.");
 		
 		return new MMValidation();
 	}
@@ -122,7 +125,8 @@ public final class MMUserValidation
 			return new MMValidation("last name is null");
 		
 		if (!LASTNAME_PATTERN.matcher(aLastName).matches())
-			return new MMValidation("last name does not match");
+			return new MMValidation("The last name has to start with a capital letter " +
+					"and must have a size between 2 and 20. Only letters allowed.");
 		
 		return new MMValidation();
 	}
@@ -139,7 +143,7 @@ public final class MMUserValidation
 			return new MMValidation("description is null");
 		
 		if (!DESCRIPTION_PATTERN.matcher(aDescription).matches())
-			return new MMValidation("description does not match");
+			return new MMValidation("The description allows a maximum of 100 characters");
 		
 		return new MMValidation();
 	}
@@ -158,17 +162,17 @@ public final class MMUserValidation
 		Calendar theTodayDate = Calendar.getInstance();
 		
 		if (aBirthday.compareTo(theTodayDate) == 1)
-			return new MMValidation("birthday is in the future");
+			return new MMValidation("Your are not born yet");
 		
 		int theDeltaYears  = theTodayDate.get(Calendar.YEAR) - aBirthday.get(Calendar.YEAR);
 		int theDeltaMonths = theTodayDate.get(Calendar.MONTH) - aBirthday.get(Calendar.MONTH);
 		int theDeltaDays   = theTodayDate.get(Calendar.DAY_OF_MONTH) - aBirthday.get(Calendar.DAY_OF_MONTH);
 		
 		if (theDeltaYears < MINIMUM_AGE_OF_AN_USER || (theDeltaYears == MINIMUM_AGE_OF_AN_USER && (theDeltaMonths > 0 || (theDeltaMonths == 0 && (theDeltaDays > 0)))))
-			return new MMValidation("user is not old enough");
+			return new MMValidation("You have to be at least 12 years old");
 				
 		if (theDeltaYears > MAXIMUM_AGE_OF_AN_USER || (theDeltaYears == MAXIMUM_AGE_OF_AN_USER && (theDeltaMonths < 0 || (theDeltaMonths == 0 && (theDeltaDays < 0)))))
-			return new MMValidation("user is too old");
+			return new MMValidation("You are a little too old to meet other people");
 		
 		return new MMValidation();
 	}

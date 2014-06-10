@@ -30,8 +30,6 @@ public final class MMSupporting
 	/** */
 	public final static String MMUSER_KEY = "MMUserKey";
 
-	// public final static String[] SETTINGS_KEYS = {}; TODO
-
 	/** */
 	public final static int REQUEST_CODE_SETTINGS_ACTIVITY = 1;
 

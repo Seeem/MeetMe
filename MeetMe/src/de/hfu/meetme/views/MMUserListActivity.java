@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.network.networktask.MMNetworkTask;
@@ -55,18 +54,6 @@ public class MMUserListActivity extends Activity
 			return true;
 		}
 		return super.onOptionsItemSelected(anItem);
-	}
-
-	@Override
-	public void onActivityResult(int aRequestCode, int aResultCode,
-			Intent anIntent)
-	{
-		if ((aRequestCode == MMSupporting.REQUEST_CODE_SETTINGS_ACTIVITY)
-				&& (aResultCode == RESULT_OK))
-		{
-			Toast.makeText(this, "Your profile has been saved",
-					Toast.LENGTH_SHORT).show();
-		}
 	}
 
 	@Override

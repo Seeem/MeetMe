@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
@@ -117,10 +116,6 @@ public class MMMainActivity extends Activity
 
 			Bundle theBundle = anIntent.getExtras();
 			setIsUserCreated(theBundle.getBoolean(IS_USER_CREATED));
-
-			Toast.makeText(this, "Your profile has been saved",
-					Toast.LENGTH_SHORT).show();
-
 		}
 		if ((aRequestCode == MMSupporting.REQUEST_CODE_USER_LIST_ACTIVITY)
 				&& (aResultCode == RESULT_OK))

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
@@ -39,6 +38,8 @@ public class MMUserProfileActivity extends Activity
 		
 		final ActionBar theActionBar = getActionBar();
 		theActionBar.setDisplayHomeAsUpEnabled(true);
+		
+		setTitle(getUser().getUsername());
 	}
 
 	@Override
@@ -78,18 +79,6 @@ public class MMUserProfileActivity extends Activity
 		final Intent theIntent = new Intent(this,
 				de.hfu.meetme.views.MMSettingsActivity.class);
 		startActivityForResult(theIntent, MMSupporting.REQUEST_CODE_SETTINGS_ACTIVITY);
-	}
-
-	/** */
-	@Override protected void onActivityResult(int aRequestCode, int aResultCode,
-			Intent anIntent)
-	{
-		if ((aRequestCode == MMSupporting.REQUEST_CODE_SETTINGS_ACTIVITY)
-				&& (aResultCode == RESULT_OK))
-		{
-			Toast.makeText(this, "Your profile has been saved",
-					Toast.LENGTH_SHORT).show();
-		}
 	}
 
 }

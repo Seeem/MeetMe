@@ -2,13 +2,13 @@ package de.hfu.meetme.views;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
@@ -27,6 +27,7 @@ public class MMChatFragment extends Fragment implements
 
 	private MMUser user;
 	private TextView chatLog;
+	private ScrollView mScrollView;
 
 	// Accessors:
 
@@ -45,6 +46,23 @@ public class MMChatFragment extends Fragment implements
 	public void setChatLog(TextView aChatLog)
 	{
 		chatLog = aChatLog;
+	}
+
+	/**
+	 * @return the mScrollView
+	 */
+	public ScrollView getmScrollView()
+	{
+		return mScrollView;
+	}
+
+	/**
+	 * @param aMScrollView
+	 *            the mScrollView to set
+	 */
+	public void setmScrollView(ScrollView aMScrollView)
+	{
+		mScrollView = aMScrollView;
 	}
 
 	/**
@@ -94,8 +112,13 @@ public class MMChatFragment extends Fragment implements
 		final View theView = anInflater.inflate(R.layout.fragment_mmchat,
 				aContainer, false);
 
-		setChatLog((TextView) theView
+
+		setmScrollView((ScrollView) theView
+				.findViewById(R.id.mmchat_fragment_scroll_view));
+		
+		setChatLog((TextView) getmScrollView()
 				.findViewById(R.id.mmchat_fragment_chat_text_view));
+
 
 		final EditText theChatEditText = (EditText) theView
 				.findViewById(R.id.mmchat_fragment_chat_edit_text);
@@ -122,10 +145,6 @@ public class MMChatFragment extends Fragment implements
 
 		});
 
-		// Make TextView scrollable TODO
-		((TextView) theView.findViewById(R.id.mmchat_fragment_chat_text_view))
-				.setMovementMethod(new ScrollingMovementMethod());
-
 		return theView;
 	}
 
@@ -133,7 +152,8 @@ public class MMChatFragment extends Fragment implements
 	public void onActivityCreated(Bundle aSavedInstanceState)
 	{
 		super.onActivityCreated(aSavedInstanceState);
-		setUser(MMUser.getUserById(((MMChatActivity) getActivity()).getUser().getId()));
+		setUser(MMUser.getUserById(((MMChatActivity) getActivity()).getUser()
+				.getId()));
 		getChatLog().setText(getUser().getChatLogAsString());
 	}
 
@@ -146,6 +166,7 @@ public class MMChatFragment extends Fragment implements
 			public void run()
 			{
 				getChatLog().setText(getUser().getChatLogAsString());
+				getmScrollView().fullScroll(View.FOCUS_DOWN);
 			}
 
 		});
@@ -157,7 +178,7 @@ public class MMChatFragment extends Fragment implements
 		if (aMessageManagerEvent.isUserMessage()
 				&& aMessageManagerEvent.getUser() == getUser())
 		{
-			updateChatView();	
+			updateChatView();
 		}
 	}
 }
