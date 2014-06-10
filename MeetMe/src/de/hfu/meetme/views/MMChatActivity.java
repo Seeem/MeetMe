@@ -18,6 +18,8 @@ import de.hfu.meetme.model.MMUser;
 public class MMChatActivity extends Activity
 {
 	
+	public static boolean CHAT_ACTIVITY_ACTIVE;
+	
 	/** */
 	private MMUser user;
 	
@@ -80,6 +82,20 @@ public class MMChatActivity extends Activity
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		CHAT_ACTIVITY_ACTIVE = true;
+	}
+	
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		CHAT_ACTIVITY_ACTIVE = false;
 	}
 	
 	@Override

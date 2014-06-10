@@ -49,7 +49,7 @@ public class MMEditTextPreference extends EditTextPreference
 						isValid = false;
 					}
 				}
-				if (theKey.equals(theKeys[1]))
+				else if (theKey.equals(theKeys[1]))
 				{
 					if (!MMUserValidation
 							.isValidFirstName(theChange.toString()).isValid())
@@ -57,7 +57,7 @@ public class MMEditTextPreference extends EditTextPreference
 						isValid = false;
 					}
 				}
-				if (theKey.equals(theKeys[2]))
+				else if (theKey.equals(theKeys[2]))
 				{
 					if (!MMUserValidation.isValidLastName(theChange.toString())
 							.isValid())
@@ -65,14 +65,14 @@ public class MMEditTextPreference extends EditTextPreference
 						isValid = false;
 					}
 				}
-				if (theKey.equals(theKeys[3]))
+				else if (theKey.equals(theKeys[3]))
 				{
 					if (!isValidBirthday(theChange.toString()))
 					{
 						isValid = false;
 					}
 				}
-				if (theKey.equals(theKeys[4]))
+				else if (theKey.equals(theKeys[4]))
 				{
 					if (!MMUserValidation.isValidDescription(
 							theChange.toString()).isValid())
