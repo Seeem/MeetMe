@@ -157,7 +157,7 @@ public class MMMessageReceiver
 		{
 			try
 			{
-				pushMessageEvent(aDatagramPacket, aMessageTargetType, MMMessageType.valueOf(theSplittedString[0]), theSplittedString[1]);
+				pushMessageEvent(aDatagramPacket, aMessageTargetType, MMMessageType.valueOf(theSplittedString[0]), theMessageAsString.substring(theMessageAsString.indexOf(":")+1));
 			}
 			catch (Exception anException) // valueOf, not valid MMMessageType
 			{
