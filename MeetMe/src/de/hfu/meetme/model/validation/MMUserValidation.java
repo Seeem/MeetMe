@@ -163,7 +163,7 @@ public final class MMUserValidation
 		int theDeltaYears  = theTodayDate.get(Calendar.YEAR) - aBirthday.get(Calendar.YEAR);
 		int theDeltaMonths = theTodayDate.get(Calendar.MONTH) - aBirthday.get(Calendar.MONTH);
 		int theDeltaDays   = theTodayDate.get(Calendar.DAY_OF_MONTH) - aBirthday.get(Calendar.DAY_OF_MONTH);
-
+		
 		if (theDeltaYears < MINIMUM_AGE_OF_AN_USER || (theDeltaYears == MINIMUM_AGE_OF_AN_USER && (theDeltaMonths > 0 || (theDeltaMonths == 0 && (theDeltaDays > 0)))))
 			return new MMValidation("user is not old enough");
 				
