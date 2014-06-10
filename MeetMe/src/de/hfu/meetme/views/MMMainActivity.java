@@ -8,10 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-import de.hfu.meetme.R;
 import de.hfu.meetme.MMSupporting;
+import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
-import de.hfu.meetme.service.MMNetworkService;
 
 /**
  * 
@@ -78,7 +77,6 @@ public class MMMainActivity extends Activity
 		{
 			MMUser.setMyself(MMSupporting.getUserFromSharedPreferences(this, false));
 			MMUser.getMyself().print();
-			startService(new Intent(this, MMNetworkService.class));
 		}
 	}
 

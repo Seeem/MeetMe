@@ -48,8 +48,9 @@ public class MMSettingsActivity extends Activity
 			setResult(RESULT_OK, theIntent);
 			MMUser.setMyself(user);
 			MMNetworkTask.sendUpdate();	
+			super.finish();
 		}
-		super.finish();
+		
 	}
 
 }
