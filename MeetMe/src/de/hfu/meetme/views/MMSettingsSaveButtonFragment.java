@@ -48,7 +48,7 @@ public class MMSettingsSaveButtonFragment extends Fragment
 				{
 					MMUser.setMyself(user);
 					MMNetworkTask.sendUpdate();	
-					Toast.makeText(getActivity(), "Your profile has been saved",
+					Toast.makeText(getActivity(), "Your settings have been saved",
 							Toast.LENGTH_SHORT).show();
 				}
 			}
