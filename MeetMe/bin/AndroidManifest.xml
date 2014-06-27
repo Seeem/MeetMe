@@ -31,7 +31,8 @@
         </activity>
         <activity
             android:name="de.hfu.meetme.views.MMUserListActivity"
-            android:label="@string/title_activity_user_list" >
+            android:label="@string/title_activity_user_list" 
+            android:screenOrientation="portrait" >
             
         </activity>
         <activity

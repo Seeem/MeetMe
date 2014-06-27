@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
@@ -43,7 +44,6 @@ public class MMMainActivity extends Activity
 	 *         {@link MMUser} object will be built from the data saved in the
 	 *         SharedPreferences.
 	 */
-	//TODO: Move to MMUser
 	public boolean isUserCreated()
 	{
 		SharedPreferences theSettings = getSharedPreferences(
@@ -55,7 +55,6 @@ public class MMMainActivity extends Activity
 	 * @param isUserCreated
 	 *            the isUserCreated to set
 	 */
-	//TODO: Move to MMUser
 	public void setIsUserCreated(boolean isUserCreated)
 	{
 		SharedPreferences thePrefs = getSharedPreferences(SHARED_PREFERENCES_NAME,
@@ -82,7 +81,11 @@ public class MMMainActivity extends Activity
 	/** */
 	@Override protected void onResume()
 	{
-		super.onResume();			
+		super.onResume();		
+		if (isUserCreated()) {
+			((TextView) findViewById(R.id.welcome_text_view)).setText("Hello "
+					+ MMUser.getMyself().getUsername());
+		}
 	}
 	
 	@Override
