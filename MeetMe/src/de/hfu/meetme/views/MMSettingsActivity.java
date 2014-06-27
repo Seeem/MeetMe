@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 import de.hfu.meetme.MMSupporting;
 import de.hfu.meetme.R;
 import de.hfu.meetme.model.MMUser;
@@ -49,6 +50,7 @@ public class MMSettingsActivity extends Activity
 			MMUser.setMyself(user);
 			MMNetworkTask.sendUpdate();	
 			super.finish();
+			Toast.makeText(this, "Your settings have been saved", Toast.LENGTH_SHORT).show();
 		}
 		
 	}
